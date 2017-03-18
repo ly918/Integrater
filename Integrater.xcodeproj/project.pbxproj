@@ -1,0 +1,508 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		42A64D9547220B5CAA686312 /* libPods-Integrater.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D8CE435B2068BB4A0AB94D4A /* libPods-Integrater.a */; };
+		D96B63661E7CC05000A9A41D /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D96B63651E7CC05000A9A41D /* Info.plist */; };
+		D96B63711E7CC10000A9A41D /* GNRBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D96B63701E7CC10000A9A41D /* GNRBaseViewController.m */; };
+		D96B63761E7CC14300A9A41D /* GNRRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D96B63751E7CC14300A9A41D /* GNRRootViewController.m */; };
+		D96B63831E7D289200A9A41D /* GNRObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D96B63821E7D289200A9A41D /* GNRObject.m */; };
+		D96B63861E7D28C800A9A41D /* GNRArchiveTask.m in Sources */ = {isa = PBXBuildFile; fileRef = D96B63851E7D28C800A9A41D /* GNRArchiveTask.m */; };
+		D96B63891E7D29B100A9A41D /* GNRGitTask.m in Sources */ = {isa = PBXBuildFile; fileRef = D96B63881E7D29B100A9A41D /* GNRGitTask.m */; };
+		D96B638C1E7D29D600A9A41D /* GNRUploadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = D96B638B1E7D29D600A9A41D /* GNRUploadTask.m */; };
+		D98736351E7D378E006A84CB /* GNRError.m in Sources */ = {isa = PBXBuildFile; fileRef = D98736341E7D378E006A84CB /* GNRError.m */; };
+		D987363C1E7D3F0D006A84CB /* GNRTaskInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D987363B1E7D3F0D006A84CB /* GNRTaskInfo.m */; };
+		D9A851B21E7D2C7C00F9EC54 /* GNRIntegrater.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A851B11E7D2C7C00F9EC54 /* GNRIntegrater.m */; };
+		D9A851B81E7D315500F9EC54 /* GNRBaseTask.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A851B71E7D315500F9EC54 /* GNRBaseTask.m */; };
+		D9CAC9711E7BB61D00CBFA81 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D9CAC9701E7BB61D00CBFA81 /* AppDelegate.m */; };
+		D9CAC9741E7BB61D00CBFA81 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D9CAC9731E7BB61D00CBFA81 /* main.m */; };
+		D9CAC9791E7BB61D00CBFA81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9CAC9781E7BB61D00CBFA81 /* Assets.xcassets */; };
+		D9CAC97C1E7BB61D00CBFA81 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9CAC97A1E7BB61D00CBFA81 /* Main.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0BB1458C646669185C09F47B /* Pods-Integrater.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Integrater.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Integrater/Pods-Integrater.debug.xcconfig"; sourceTree = "<group>"; };
+		B7C9C8509DA11CB504954B43 /* Pods-Integrater.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Integrater.release.xcconfig"; path = "Pods/Target Support Files/Pods-Integrater/Pods-Integrater.release.xcconfig"; sourceTree = "<group>"; };
+		D8CE435B2068BB4A0AB94D4A /* libPods-Integrater.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Integrater.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D96B63651E7CC05000A9A41D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D96B636F1E7CC10000A9A41D /* GNRBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRBaseViewController.h; sourceTree = "<group>"; };
+		D96B63701E7CC10000A9A41D /* GNRBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRBaseViewController.m; sourceTree = "<group>"; };
+		D96B63741E7CC14300A9A41D /* GNRRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRRootViewController.h; sourceTree = "<group>"; };
+		D96B63751E7CC14300A9A41D /* GNRRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRRootViewController.m; sourceTree = "<group>"; };
+		D96B63811E7D289200A9A41D /* GNRObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRObject.h; sourceTree = "<group>"; };
+		D96B63821E7D289200A9A41D /* GNRObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRObject.m; sourceTree = "<group>"; };
+		D96B63841E7D28C800A9A41D /* GNRArchiveTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRArchiveTask.h; sourceTree = "<group>"; };
+		D96B63851E7D28C800A9A41D /* GNRArchiveTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRArchiveTask.m; sourceTree = "<group>"; };
+		D96B63871E7D29B100A9A41D /* GNRGitTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRGitTask.h; sourceTree = "<group>"; };
+		D96B63881E7D29B100A9A41D /* GNRGitTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRGitTask.m; sourceTree = "<group>"; };
+		D96B638A1E7D29D600A9A41D /* GNRUploadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRUploadTask.h; sourceTree = "<group>"; };
+		D96B638B1E7D29D600A9A41D /* GNRUploadTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRUploadTask.m; sourceTree = "<group>"; };
+		D98736321E7D36CF006A84CB /* GNRHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GNRHeader.h; sourceTree = "<group>"; };
+		D98736331E7D378E006A84CB /* GNRError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRError.h; sourceTree = "<group>"; };
+		D98736341E7D378E006A84CB /* GNRError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRError.m; sourceTree = "<group>"; };
+		D987363A1E7D3F0D006A84CB /* GNRTaskInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRTaskInfo.h; sourceTree = "<group>"; };
+		D987363B1E7D3F0D006A84CB /* GNRTaskInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRTaskInfo.m; sourceTree = "<group>"; };
+		D9A851B01E7D2C7C00F9EC54 /* GNRIntegrater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRIntegrater.h; sourceTree = "<group>"; };
+		D9A851B11E7D2C7C00F9EC54 /* GNRIntegrater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRIntegrater.m; sourceTree = "<group>"; };
+		D9A851B61E7D315500F9EC54 /* GNRBaseTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRBaseTask.h; sourceTree = "<group>"; };
+		D9A851B71E7D315500F9EC54 /* GNRBaseTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRBaseTask.m; sourceTree = "<group>"; };
+		D9CAC96C1E7BB61D00CBFA81 /* Integrater.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Integrater.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9CAC96F1E7BB61D00CBFA81 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		D9CAC9701E7BB61D00CBFA81 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		D9CAC9731E7BB61D00CBFA81 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D9CAC9781E7BB61D00CBFA81 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D9CAC97B1E7BB61D00CBFA81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D9CAC9691E7BB61D00CBFA81 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				42A64D9547220B5CAA686312 /* libPods-Integrater.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3084D60D5FA654E3410D9766 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0BB1458C646669185C09F47B /* Pods-Integrater.debug.xcconfig */,
+				B7C9C8509DA11CB504954B43 /* Pods-Integrater.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		9AE05AAD2D21137B6D4575A3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D8CE435B2068BB4A0AB94D4A /* libPods-Integrater.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D96B636C1E7CC08E00A9A41D /* Roots */ = {
+			isa = PBXGroup;
+			children = (
+				D98736391E7D3EFC006A84CB /* models */,
+				D96B63771E7D222D00A9A41D /* utils */,
+				D96B63721E7CC12600A9A41D /* controllers */,
+				D96B63731E7CC12600A9A41D /* tools */,
+			);
+			path = Roots;
+			sourceTree = "<group>";
+		};
+		D96B636D1E7CC0B200A9A41D /* Basic */ = {
+			isa = PBXGroup;
+			children = (
+				D96B63801E7D289200A9A41D /* utils */,
+				D96B636E1E7CC0C300A9A41D /* controllers */,
+			);
+			path = Basic;
+			sourceTree = "<group>";
+		};
+		D96B636E1E7CC0C300A9A41D /* controllers */ = {
+			isa = PBXGroup;
+			children = (
+				D96B636F1E7CC10000A9A41D /* GNRBaseViewController.h */,
+				D96B63701E7CC10000A9A41D /* GNRBaseViewController.m */,
+			);
+			path = controllers;
+			sourceTree = "<group>";
+		};
+		D96B63721E7CC12600A9A41D /* controllers */ = {
+			isa = PBXGroup;
+			children = (
+				D96B63741E7CC14300A9A41D /* GNRRootViewController.h */,
+				D96B63751E7CC14300A9A41D /* GNRRootViewController.m */,
+			);
+			path = controllers;
+			sourceTree = "<group>";
+		};
+		D96B63731E7CC12600A9A41D /* tools */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = tools;
+			sourceTree = "<group>";
+		};
+		D96B63771E7D222D00A9A41D /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				D9A851B61E7D315500F9EC54 /* GNRBaseTask.h */,
+				D9A851B71E7D315500F9EC54 /* GNRBaseTask.m */,
+				D96B63841E7D28C800A9A41D /* GNRArchiveTask.h */,
+				D96B63851E7D28C800A9A41D /* GNRArchiveTask.m */,
+				D96B63871E7D29B100A9A41D /* GNRGitTask.h */,
+				D96B63881E7D29B100A9A41D /* GNRGitTask.m */,
+				D96B638A1E7D29D600A9A41D /* GNRUploadTask.h */,
+				D96B638B1E7D29D600A9A41D /* GNRUploadTask.m */,
+				D9A851B01E7D2C7C00F9EC54 /* GNRIntegrater.h */,
+				D9A851B11E7D2C7C00F9EC54 /* GNRIntegrater.m */,
+			);
+			path = utils;
+			sourceTree = "<group>";
+		};
+		D96B63801E7D289200A9A41D /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				D96B63811E7D289200A9A41D /* GNRObject.h */,
+				D96B63821E7D289200A9A41D /* GNRObject.m */,
+				D98736331E7D378E006A84CB /* GNRError.h */,
+				D98736341E7D378E006A84CB /* GNRError.m */,
+			);
+			path = utils;
+			sourceTree = "<group>";
+		};
+		D98736391E7D3EFC006A84CB /* models */ = {
+			isa = PBXGroup;
+			children = (
+				D987363A1E7D3F0D006A84CB /* GNRTaskInfo.h */,
+				D987363B1E7D3F0D006A84CB /* GNRTaskInfo.m */,
+			);
+			path = models;
+			sourceTree = "<group>";
+		};
+		D9CAC9631E7BB61D00CBFA81 = {
+			isa = PBXGroup;
+			children = (
+				D9CAC96E1E7BB61D00CBFA81 /* Integrater */,
+				D9CAC96D1E7BB61D00CBFA81 /* Products */,
+				3084D60D5FA654E3410D9766 /* Pods */,
+				9AE05AAD2D21137B6D4575A3 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		D9CAC96D1E7BB61D00CBFA81 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D9CAC96C1E7BB61D00CBFA81 /* Integrater.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D9CAC96E1E7BB61D00CBFA81 /* Integrater */ = {
+			isa = PBXGroup;
+			children = (
+				D98736321E7D36CF006A84CB /* GNRHeader.h */,
+				D9CAC96F1E7BB61D00CBFA81 /* AppDelegate.h */,
+				D9CAC9701E7BB61D00CBFA81 /* AppDelegate.m */,
+				D9CAC9781E7BB61D00CBFA81 /* Assets.xcassets */,
+				D9CAC97A1E7BB61D00CBFA81 /* Main.storyboard */,
+				D96B63651E7CC05000A9A41D /* Info.plist */,
+				D96B636D1E7CC0B200A9A41D /* Basic */,
+				D96B636C1E7CC08E00A9A41D /* Roots */,
+				D9CAC9721E7BB61D00CBFA81 /* Supporting Files */,
+			);
+			path = Integrater;
+			sourceTree = "<group>";
+		};
+		D9CAC9721E7BB61D00CBFA81 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D9CAC9731E7BB61D00CBFA81 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D9CAC96B1E7BB61D00CBFA81 /* Integrater */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9CAC9801E7BB61D00CBFA81 /* Build configuration list for PBXNativeTarget "Integrater" */;
+			buildPhases = (
+				416741AB53B42B4234082EA6 /* [CP] Check Pods Manifest.lock */,
+				D9CAC9681E7BB61D00CBFA81 /* Sources */,
+				D9CAC9691E7BB61D00CBFA81 /* Frameworks */,
+				D9CAC96A1E7BB61D00CBFA81 /* Resources */,
+				F69116092AE1A894ED73CC5B /* [CP] Embed Pods Frameworks */,
+				12406ED142FF9F2C4A2D3182 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Integrater;
+			productName = Integrater;
+			productReference = D9CAC96C1E7BB61D00CBFA81 /* Integrater.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D9CAC9641E7BB61D00CBFA81 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = LvYuan;
+				TargetAttributes = {
+					D9CAC96B1E7BB61D00CBFA81 = {
+						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = 3637NJMX7D;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = D9CAC9671E7BB61D00CBFA81 /* Build configuration list for PBXProject "Integrater" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D9CAC9631E7BB61D00CBFA81;
+			productRefGroup = D9CAC96D1E7BB61D00CBFA81 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D9CAC96B1E7BB61D00CBFA81 /* Integrater */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D9CAC96A1E7BB61D00CBFA81 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9CAC9791E7BB61D00CBFA81 /* Assets.xcassets in Resources */,
+				D9CAC97C1E7BB61D00CBFA81 /* Main.storyboard in Resources */,
+				D96B63661E7CC05000A9A41D /* Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		12406ED142FF9F2C4A2D3182 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Integrater/Pods-Integrater-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		416741AB53B42B4234082EA6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F69116092AE1A894ED73CC5B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Integrater/Pods-Integrater-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D9CAC9681E7BB61D00CBFA81 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D96B63761E7CC14300A9A41D /* GNRRootViewController.m in Sources */,
+				D9A851B21E7D2C7C00F9EC54 /* GNRIntegrater.m in Sources */,
+				D987363C1E7D3F0D006A84CB /* GNRTaskInfo.m in Sources */,
+				D96B638C1E7D29D600A9A41D /* GNRUploadTask.m in Sources */,
+				D96B63861E7D28C800A9A41D /* GNRArchiveTask.m in Sources */,
+				D98736351E7D378E006A84CB /* GNRError.m in Sources */,
+				D96B63891E7D29B100A9A41D /* GNRGitTask.m in Sources */,
+				D9A851B81E7D315500F9EC54 /* GNRBaseTask.m in Sources */,
+				D9CAC9741E7BB61D00CBFA81 /* main.m in Sources */,
+				D96B63711E7CC10000A9A41D /* GNRBaseViewController.m in Sources */,
+				D9CAC9711E7BB61D00CBFA81 /* AppDelegate.m in Sources */,
+				D96B63831E7D289200A9A41D /* GNRObject.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		D9CAC97A1E7BB61D00CBFA81 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D9CAC97B1E7BB61D00CBFA81 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D9CAC97E1E7BB61D00CBFA81 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		D9CAC97F1E7BB61D00CBFA81 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		D9CAC9811E7BB61D00CBFA81 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0BB1458C646669185C09F47B /* Pods-Integrater.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 3637NJMX7D;
+				INFOPLIST_FILE = Integrater/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_BUNDLE_IDENTIFIER = com.occode.Integrater;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D9CAC9821E7BB61D00CBFA81 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B7C9C8509DA11CB504954B43 /* Pods-Integrater.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 3637NJMX7D;
+				INFOPLIST_FILE = Integrater/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_BUNDLE_IDENTIFIER = com.occode.Integrater;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D9CAC9671E7BB61D00CBFA81 /* Build configuration list for PBXProject "Integrater" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9CAC97E1E7BB61D00CBFA81 /* Debug */,
+				D9CAC97F1E7BB61D00CBFA81 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D9CAC9801E7BB61D00CBFA81 /* Build configuration list for PBXNativeTarget "Integrater" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9CAC9811E7BB61D00CBFA81 /* Debug */,
+				D9CAC9821E7BB61D00CBFA81 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D9CAC9641E7BB61D00CBFA81 /* Project object */;
+}

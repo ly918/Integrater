@@ -13,14 +13,20 @@ typedef NS_ENUM(NSInteger,GNRTaskInfoPlatform) {
     GNRTaskInfoPlatform_Android
 };
 
+typedef NS_ENUM(NSInteger,GNRProjectType) {
+    GNRProjectType_Proj,
+    GNRProjectType_Workspace
+};
+
 @interface GNRTaskInfo : GNRObject
 
 @property (nonatomic, assign)GNRTaskInfoPlatform platform;
 //in
+@property (nonatomic, assign, readonly)GNRProjectType projectType;
 @property (nonatomic, copy)NSString * projectPath;
-@property (nonatomic, copy)NSString * workspacePath;
+@property (nonatomic, copy,readonly)NSString * importInPath;
 @property (nonatomic, copy)NSString * schemeName;
-@property (nonatomic, assign)BOOL isDebug;
+@property (nonatomic, copy)NSString * releaseStr;
 //out
 @property (nonatomic, copy)NSString * archivePath;
 @property (nonatomic, copy)NSString * ipaPath;

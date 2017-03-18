@@ -22,7 +22,7 @@
 - (GNRTaskInfo *)taskInfo{
     if (!_taskInfo) {
         _taskInfo = [GNRTaskInfo new];
-        _taskInfo.isDebug = YES;
+        _taskInfo.releaseStr = @"Debug";
     }
     return _taskInfo;
 }
@@ -51,7 +51,7 @@
     NSOpenPanel * panel = [NSOpenPanel openPanel];
     [panel setMessage:canCreateDir?@"请选择文件夹":@"请选择文件"];
     [panel setPrompt:@"确定"];
-    [panel setCanChooseDirectories:NO];//是否可选择目录
+    [panel setCanChooseDirectories:canCreateDir];//是否可选择目录
     [panel setCanCreateDirectories:canCreateDir];//是否可创建目录
     [panel setCanChooseFiles:!canCreateDir];//是否可选择文件
     NSString * path = nil;
@@ -97,8 +97,7 @@
 
 //选择debug release 触发
 - (IBAction)selectDebug:(id)sender{
-    BOOL isDebug = [[(NSMenu *)sender title] isEqualToString:@"Debug"];
-    _taskInfo.isDebug = isDebug;
+    _taskInfo.releaseStr = [(NSMenu *)sender title];
 }
 
 //MARK: - 开始点击 事件
@@ -115,7 +114,7 @@
     _taskInfo.schemeName = _schemeNameField.stringValue;
     WEAK_SELF;
     [wself.integrater runTaskInfo:wself.taskInfo completion:^(BOOL succee, NSString * printInfo,GNRError * error) {
-        wself.printTextView.string = printInfo;
+        wself.printTextView.string = [NSString stringWithFormat:@"%@\n--------------------------分割线--------------------------\n%@",wself.printTextView.string,printInfo];
         self.runing = NO;
     }];
 }

@@ -11,6 +11,8 @@
 #import "GNRGitTask.h"
 #import "GNRUploadTask.h"
 #import "GNRTaskInfo.h"
+#import "GNRTaskStatus.h"
+
 @interface GNRIntegrater : GNRObject
 
 /**
@@ -28,6 +30,6 @@
  @param completion 回调 成功 或 失败
  @return self
  */
-- (GNRIntegrater *)runTaskInfo:(GNRTaskInfo *)taskInfo completion:(void(^)(BOOL,NSString *,GNRError *))completion;
+- (GNRIntegrater *)runTaskInfo:(GNRTaskInfo *)taskInfo completion:(void(^)(BOOL,NSString *,NSDictionary *))completion;
 
 @end

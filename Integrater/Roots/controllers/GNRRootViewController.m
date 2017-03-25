@@ -18,6 +18,10 @@
 
 @implementation GNRRootViewController
 
+- (void)dealloc{
+    GLog(@"dealloc");
+}
+
 //getter
 - (GNRTaskInfo *)taskInfo{
     if (!_taskInfo) {
@@ -109,13 +113,17 @@
     }
 }
 
+- (IBAction)closeAction:(id)sender {
+    [self dismissController:nil];
+}
+
 - (void)startTask{
     self.runing = YES;
+    _printTextView.string = @"Cleaning...";
     _taskInfo.schemeName = _schemeNameField.stringValue;
     WEAK_SELF;
-    [wself.integrater runTaskInfo:wself.taskInfo completion:^(BOOL succee, NSString * printInfo,GNRError * error) {
-        wself.printTextView.string = [NSString stringWithFormat:@"%@\n--------------------------分割线--------------------------\n%@",wself.printTextView.string,printInfo];
-        self.runing = NO;
+    [wself.integrater runTaskInfo:wself.taskInfo completion:^(BOOL succee, NSString * printInfo,NSDictionary * error) {
+        wself.printTextView.string = printInfo;
     }];
 }
 

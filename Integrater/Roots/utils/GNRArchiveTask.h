@@ -18,6 +18,6 @@
  
  @return error
  */
-- (GNRError *)runScrip;
+- (NSDictionary *)runScrip;
 
 @end

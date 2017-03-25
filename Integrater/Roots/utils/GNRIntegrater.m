@@ -14,10 +14,12 @@
 @property (nonatomic, strong)NSMutableDictionary * taskGroup;
 @property (nonatomic, strong)dispatch_queue_t taskQueue;//任务异步队列
 
-@property (nonatomic, strong)GNRTaskInfo * taskInfo;
-@property (nonatomic, strong)GNRArchiveTask * archiveTask;
-@property (nonatomic, strong)GNRArchiveTask * ipaTask;
+@property (nonatomic, strong)GNRTaskInfo * taskInfo;//任务信息汇总
 
+@property (nonatomic, strong)GNRArchiveTask * cleanTask;//clean
+@property (nonatomic, strong)GNRArchiveTask * archiveTask;//build
+@property (nonatomic, strong)GNRArchiveTask * ipaTask;//导出ipa
+@property (nonatomic, strong)GNRUploadTask * uploadTask;//上传
 @end
 
 @implementation GNRIntegrater
@@ -28,6 +30,14 @@
         _taskGroup = [NSMutableDictionary dictionary];
     }
     return _taskGroup;
+}
+
+- (GNRArchiveTask *)cleanTask{
+    if (!_cleanTask) {
+        _cleanTask = [GNRArchiveTask new];
+        _cleanTask.identifier = @"kArchiveTask_Clean";
+    }
+    return _cleanTask;
 }
 
 - (GNRArchiveTask *)archiveTask{
@@ -46,23 +56,41 @@
     return _ipaTask;
 }
 
+- (GNRUploadTask *)uploadTask{
+    if (!_uploadTask) {
+        _uploadTask = [GNRUploadTask new];
+        _uploadTask.identifier = @"kUploadTask_IPA";
+    }
+    return _uploadTask;
+}
+
 - (void)setTaskInfo:(GNRTaskInfo *)taskInfo{
     _taskInfo = taskInfo;
     if (taskInfo) {
-        //1 archive
         NSString * archivePath = [NSString stringWithFormat:@"%@/archive_iOS",taskInfo.archivePath];
-        NSString * ipaPath = [NSString stringWithFormat:@"%@/ipa_iOS",taskInfo.ipaPath];
-        NSString * importIPAPath = [NSString stringWithFormat:@"%@.xcarchive",archivePath];
+        NSString * importPath = [NSString stringWithFormat:@"%@.xcarchive",archivePath];
 
+        //1 clean
+        self.cleanTask.scriptFormat = [NSString stringWithFormat:taskInfo.projectType==GNRProjectType_Proj?k_ScripFromat_Project_Clean:k_ScripFromat_Workspace_Clean,
+                                         taskInfo.projectPath,
+                                       taskInfo.schemeName,
+                                       taskInfo.releaseStr];
+        
+        //2 archive
         self.archiveTask.scriptFormat = [NSString stringWithFormat:taskInfo.projectType==GNRProjectType_Proj?k_ScripFromat_Project:k_ScripFromat_Workspace,
                                          taskInfo.projectPath,
                                          taskInfo.schemeName,
                                          archivePath,
                                          taskInfo.releaseStr];
-        //2 ipa
+        //3 ipa
         self.ipaTask.scriptFormat = [NSString stringWithFormat:k_ScriptFormat_IPA,
-                                     importIPAPath,
-                                     ipaPath];
+                                     importPath,
+                                     taskInfo.ipaPath];
+        //4 upload
+        self.uploadTask.uploadUrl = k_Upload_URL_Pgyer;
+        self.uploadTask.appkey = k_Appkey_Pgyer;
+        self.uploadTask.userkey = k_UserKey_Pgyer;
+        self.uploadTask.importIPAPath = [NSString stringWithFormat:@"%@/app.ipa",taskInfo.ipaPath];
     }
 }
 
@@ -85,17 +113,26 @@ MARK: - 初始化方法
 
 
 //TODO: - 总任务
-- (GNRIntegrater *)runTaskInfo:(GNRTaskInfo *)taskInfo completion:(void(^)(BOOL,NSString *,GNRError *))completion{
+- (GNRIntegrater *)runTaskInfo:(GNRTaskInfo *)taskInfo completion:(void(^)(BOOL,NSString *,NSDictionary *))completion{
     self.taskInfo = taskInfo;
     //archive task
     WEAK_SELF;
-    [[self runArchiveTask:wself.archiveTask completion:^(BOOL state,GNRError * error) {//archive
+    
+    [[[[self runArchiveTask:wself.cleanTask completion:^(BOOL state,NSDictionary * error) {//clean
         if (completion) {
-            completion(state,state?@"编译成功正在导出ipa包......":error.description,error);
+            completion(state,state?@"Clean Succeeded\nBuilding...":error.description,error);
         }
-    }] runArchiveTask:wself.ipaTask completion:^(BOOL state,GNRError * error) {//ipa
+    }] runArchiveTask:wself.archiveTask completion:^(BOOL state,NSDictionary * error) {//archive
         if (completion) {
-            completion(state,state?@"ipa 导出成功！":error.description,error);
+            completion(state,state?@"Build Succeeded\nExporting...":error.description,error);
+        }
+    }] runArchiveTask:wself.ipaTask completion:^(BOOL state,NSDictionary * error) {//ipa
+        if (completion) {
+            completion(state,state?@"Export ipa Succeeded！":error.description,error);
+        }
+    }] uploadTask:wself.uploadTask completion:^(BOOL state, NSString * msg, NSDictionary * error) {
+        if (completion) {
+            completion(state,msg,error);
         }
     }];
     return self;
@@ -104,7 +141,7 @@ MARK: - 初始化方法
 /**
 TODO: - 打包任务
  */
-- (GNRIntegrater *)runArchiveTask:(GNRArchiveTask *)task completion:(void(^)(BOOL,GNRError *))completion{
+- (GNRIntegrater *)runArchiveTask:(GNRArchiveTask *)task completion:(void(^)(BOOL,NSDictionary *))completion{
     //1 加入任务组
     [self addToGroupWithTask:task];
     //2 异步执行队列
@@ -112,17 +149,46 @@ TODO: - 打包任务
     dispatch_async(wself.taskQueue, ^{
         //队列中
         //1 执行
-        GNRError * error = [task runScrip];
+        NSDictionary * error = [task runScrip];
         //2 删除此任务
         [wself removeFromGroupWithTask:task];
         //3 主线程回调
         dispatch_async(dispatch_get_main_queue(), ^{
-            completion(error?NO:YES,error);
+            if (completion) {
+                completion(error.allKeys.count?NO:YES,error);
+            }
         });
     });
     return self;
 }
 
+/**
+ TODO: - 上传
+ */
+- (GNRIntegrater *)uploadTask:(GNRUploadTask *)task completion:(void(^)(BOOL,NSString *,NSDictionary *))completion{
+    //1 加入任务组
+    [self addToGroupWithTask:task];
+    //2 异步执行队列
+    WEAK_SELF;
+    dispatch_async(wself.taskQueue, ^{
+        [task uploadIPAWithrogress:^(NSProgress * progress) {
+            //3 上传进度
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (completion) {
+                    completion(NO,[NSString stringWithFormat:@"Updating %lldMB/%lldMB %.2f",progress.completedUnitCount/(1024*1024),progress.totalUnitCount/(1024*1024),(double)progress.completedUnitCount/(double)progress.totalUnitCount],nil);
+                }
+            });
+        } completion:^(BOOL state, id responseObject, NSError * error) {
+            //4 上传结束
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (completion) {
+                    completion(state,state?@"Upload Succeeded!":error.description,error.userInfo);
+                }
+            });
+        }];
+    });
+    return self;
+}
 
 /**
  增加到任务组

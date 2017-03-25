@@ -21,10 +21,10 @@
 /**
  运行脚本
  */
-- (GNRError *)runScrip{
-    GNRError * error = nil;
+- (NSDictionary *)runScrip{
+    NSDictionary * error = nil;
     if (_script) {
-        error = [GNRError new];
+        error = [NSDictionary new];
         [self.script executeAndReturnError:&error];
     }
     return error;

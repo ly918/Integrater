@@ -7,6 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "GNRUtil.h"
+#import "GNRHeader.h"
 
 @interface GNRBaseViewController : NSViewController
 

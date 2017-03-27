@@ -14,22 +14,23 @@
 #import "GNRTaskStatus.h"
 
 @interface GNRIntegrater : GNRObject
+@property (nonatomic, copy)NSString * name;
+@property (nonatomic, strong)GNRTaskInfo * taskInfo;//任务信息汇总
 
 /**
  初始化方法
 
- @param name 给我起个别名吧 有名了我才能加入队列
+ @param taskInfo 任务信息
  @return self
  */
-- (instancetype)initWithName:(NSString *)name;
+- (instancetype)initWithTaskInfo:(GNRTaskInfo *)taskInfo;
 
 /**
  执行打包任务
 
- @param taskInfo 打包信息
- @param completion 回调 成功 或 失败
+ @param completion 任务状态
  @return self
  */
-- (GNRIntegrater *)runTaskInfo:(GNRTaskInfo *)taskInfo completion:(void(^)(BOOL,NSString *,NSDictionary *))completion;
+- (GNRIntegrater *)runTaskWithCompletion:(void(^)(GNRTaskStatus *))completion;
 
 @end

@@ -18,10 +18,14 @@
 		D987363C1E7D3F0D006A84CB /* GNRTaskInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D987363B1E7D3F0D006A84CB /* GNRTaskInfo.m */; };
 		D9A851B21E7D2C7C00F9EC54 /* GNRIntegrater.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A851B11E7D2C7C00F9EC54 /* GNRIntegrater.m */; };
 		D9A851B81E7D315500F9EC54 /* GNRBaseTask.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A851B71E7D315500F9EC54 /* GNRBaseTask.m */; };
+		D9C6DFEE1E88B9470006FE50 /* GNRHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D9C6DFED1E88B9470006FE50 /* GNRHelper.m */; };
 		D9CAC9711E7BB61D00CBFA81 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D9CAC9701E7BB61D00CBFA81 /* AppDelegate.m */; };
 		D9CAC9741E7BB61D00CBFA81 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D9CAC9731E7BB61D00CBFA81 /* main.m */; };
 		D9CAC9791E7BB61D00CBFA81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9CAC9781E7BB61D00CBFA81 /* Assets.xcassets */; };
 		D9CAC97C1E7BB61D00CBFA81 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9CAC97A1E7BB61D00CBFA81 /* Main.storyboard */; };
+		D9E70F991E88F3BA00D00C69 /* NSObject+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E70F981E88F3BA00D00C69 /* NSObject+Extension.m */; };
+		D9E70F9C1E88FA5700D00C69 /* GNRTaskManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E70F9B1E88FA5700D00C69 /* GNRTaskManager.m */; };
+		D9E70F9F1E88FD1800D00C69 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E70F9E1E88FD1800D00C69 /* NSString+Extension.m */; };
 		D9EFF3A71E8654F200585C5D /* GNRTaskListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D9EFF3A61E8654F200585C5D /* GNRTaskListCell.m */; };
 		D9EFF3A91E8654FE00585C5D /* GNRTaskListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9EFF3A81E8654FE00585C5D /* GNRTaskListCell.xib */; };
 		D9EFF3AD1E865E9300585C5D /* GNRTaskListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D9EFF3AC1E865E9300585C5D /* GNRTaskListModel.m */; };
@@ -55,6 +59,8 @@
 		D9A851B11E7D2C7C00F9EC54 /* GNRIntegrater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRIntegrater.m; sourceTree = "<group>"; };
 		D9A851B61E7D315500F9EC54 /* GNRBaseTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRBaseTask.h; sourceTree = "<group>"; };
 		D9A851B71E7D315500F9EC54 /* GNRBaseTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRBaseTask.m; sourceTree = "<group>"; };
+		D9C6DFEC1E88B9470006FE50 /* GNRHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRHelper.h; sourceTree = "<group>"; };
+		D9C6DFED1E88B9470006FE50 /* GNRHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRHelper.m; sourceTree = "<group>"; };
 		D9CAC96C1E7BB61D00CBFA81 /* Integrater.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Integrater.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9CAC96F1E7BB61D00CBFA81 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D9CAC9701E7BB61D00CBFA81 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -62,6 +68,12 @@
 		D9CAC9781E7BB61D00CBFA81 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D9CAC97B1E7BB61D00CBFA81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D9DA8A9C1E7D83A700CE12BA /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		D9E70F971E88F3BA00D00C69 /* NSObject+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Extension.h"; sourceTree = "<group>"; };
+		D9E70F981E88F3BA00D00C69 /* NSObject+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Extension.m"; sourceTree = "<group>"; };
+		D9E70F9A1E88FA5700D00C69 /* GNRTaskManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRTaskManager.h; sourceTree = "<group>"; };
+		D9E70F9B1E88FA5700D00C69 /* GNRTaskManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRTaskManager.m; sourceTree = "<group>"; };
+		D9E70F9D1E88FD1800D00C69 /* NSString+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extension.h"; sourceTree = "<group>"; };
+		D9E70F9E1E88FD1800D00C69 /* NSString+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extension.m"; sourceTree = "<group>"; };
 		D9EFF3A51E8654F200585C5D /* GNRTaskListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRTaskListCell.h; sourceTree = "<group>"; };
 		D9EFF3A61E8654F200585C5D /* GNRTaskListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRTaskListCell.m; sourceTree = "<group>"; };
 		D9EFF3A81E8654FE00585C5D /* GNRTaskListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GNRTaskListCell.xib; sourceTree = "<group>"; };
@@ -164,6 +176,8 @@
 				D96B638B1E7D29D600A9A41D /* GNRUploadTask.m */,
 				D9A851B01E7D2C7C00F9EC54 /* GNRIntegrater.h */,
 				D9A851B11E7D2C7C00F9EC54 /* GNRIntegrater.m */,
+				D9E70F9A1E88FA5700D00C69 /* GNRTaskManager.h */,
+				D9E70F9B1E88FA5700D00C69 /* GNRTaskManager.m */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -215,6 +229,7 @@
 				D9CAC9781E7BB61D00CBFA81 /* Assets.xcassets */,
 				D9CAC97A1E7BB61D00CBFA81 /* Main.storyboard */,
 				D96B63651E7CC05000A9A41D /* Info.plist */,
+				D9E70F961E88F39D00D00C69 /* Extension */,
 				D9EFF3AE1E865FE600585C5D /* Commons */,
 				D9F241861E8621BD00210FC8 /* TaskDetail */,
 				D9F241881E8621BD00210FC8 /* TaskList */,
@@ -231,6 +246,17 @@
 				D9CAC9731E7BB61D00CBFA81 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D9E70F961E88F39D00D00C69 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				D9E70F971E88F3BA00D00C69 /* NSObject+Extension.h */,
+				D9E70F981E88F3BA00D00C69 /* NSObject+Extension.m */,
+				D9E70F9D1E88FD1800D00C69 /* NSString+Extension.h */,
+				D9E70F9E1E88FD1800D00C69 /* NSString+Extension.m */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		D9EFF3A21E8653E900585C5D /* cells */ = {
@@ -257,6 +283,8 @@
 			children = (
 				D9EFF3AF1E86601300585C5D /* GNRUtil.h */,
 				D9EFF3B01E86601300585C5D /* GNRUtil.m */,
+				D9C6DFEC1E88B9470006FE50 /* GNRHelper.h */,
+				D9C6DFED1E88B9470006FE50 /* GNRHelper.m */,
 			);
 			path = Commons;
 			sourceTree = "<group>";
@@ -433,10 +461,14 @@
 				D9A851B81E7D315500F9EC54 /* GNRBaseTask.m in Sources */,
 				D9CAC9741E7BB61D00CBFA81 /* main.m in Sources */,
 				D9EFF3AD1E865E9300585C5D /* GNRTaskListModel.m in Sources */,
+				D9E70F9C1E88FA5700D00C69 /* GNRTaskManager.m in Sources */,
+				D9E70F9F1E88FD1800D00C69 /* NSString+Extension.m in Sources */,
 				D9EFF3B41E866B5D00585C5D /* GNRTaskDetailViewController.m in Sources */,
+				D9C6DFEE1E88B9470006FE50 /* GNRHelper.m in Sources */,
 				D96B63711E7CC10000A9A41D /* GNRBaseViewController.m in Sources */,
 				D9CAC9711E7BB61D00CBFA81 /* AppDelegate.m in Sources */,
 				D9EFF3B11E86601300585C5D /* GNRUtil.m in Sources */,
+				D9E70F991E88F3BA00D00C69 /* NSObject+Extension.m in Sources */,
 				D96B63831E7D289200A9A41D /* GNRObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

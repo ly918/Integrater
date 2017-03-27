@@ -10,10 +10,15 @@
 
 @interface GNRTaskListModel : GNRObject
 
+@property (nonatomic, copy) NSString * taskName;
 @property (nonatomic, copy) NSString * appName;
+
 @property (nonatomic, copy) NSString * iconLetter;
+
 @property (nonatomic, copy) NSString * statusMsg;
 @property (nonatomic, copy) NSString * lastTime;
 @property (nonatomic, assign) CGFloat progress;
+
+- (instancetype)initWithTaskName:(NSString *)taskName appName:(NSString *)appName;
 
 @end

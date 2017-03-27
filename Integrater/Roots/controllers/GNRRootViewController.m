@@ -26,7 +26,7 @@
 - (GNRTaskInfo *)taskInfo{
     if (!_taskInfo) {
         _taskInfo = [GNRTaskInfo new];
-        _taskInfo.releaseStr = @"Debug";
+        _taskInfo.buildEnvironment = k_Debug;
     }
     return _taskInfo;
 }
@@ -39,7 +39,6 @@
 
 - (void)initIntegrater{
     self.taskInfo.platform = GNRTaskInfoPlatform_iOS;
-    self.integrater = [[GNRIntegrater alloc]initWithName:k_Integrater_Name_iOS];
 }
 
 //选择路径按钮
@@ -101,7 +100,7 @@
 
 //选择debug release 触发
 - (IBAction)selectDebug:(id)sender{
-    _taskInfo.releaseStr = [(NSMenu *)sender title];
+    _taskInfo.buildEnvironment = [(NSMenu *)sender title];
 }
 
 //MARK: - 开始点击 事件
@@ -119,11 +118,12 @@
 
 - (void)startTask{
     self.runing = YES;
-    _printTextView.string = @"Cleaning...";
     _taskInfo.schemeName = _schemeNameField.stringValue;
+    _integrater = [[GNRIntegrater new]initWithTaskInfo:_taskInfo];
+    
     WEAK_SELF;
-    [wself.integrater runTaskInfo:wself.taskInfo completion:^(BOOL succee, NSString * printInfo,NSDictionary * error) {
-        wself.printTextView.string = printInfo;
+    [_integrater runTaskWithCompletion:^(GNRTaskStatus * taskStatus) {
+        wself.printTextView.string = taskStatus.statusMsg;
     }];
 }
 

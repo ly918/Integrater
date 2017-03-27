@@ -8,57 +8,40 @@
 
 #import "GNRTaskListViewController.h"
 #import "GNRTaskListCell.h"
-
+#import "GNRTaskManager.h"
 
 @interface GNRTaskListViewController ()<NSTableViewDelegate,NSTableViewDataSource>
 {
     NSString * kTaskLiskCellID;
+    NSMutableArray * _taskList;
 }
 @property (weak) IBOutlet NSTableView *tableView;
 @property (weak) IBOutlet NSButton *addTaskBtn;
-@property (nonatomic, strong)NSMutableArray * taskList;
 
 @end
 
 @implementation GNRTaskListViewController
 //getter
-- (NSMutableArray *)taskList{
-    if (!_taskList) {
-        _taskList = [NSMutableArray array];
-    }
-    return _taskList;
-}
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initData];
     [self configUI];
-
 }
 
 - (void)initData{
-    kTaskLiskCellID = @"GNRTaskListCell";
-    for (int i=0; i<26; i++) {
-        GNRTaskListModel * model = [GNRTaskListModel new];
-        NSString * ch = [NSString stringWithFormat:@"%c",i+'A'];
-        model.appName = [NSString stringWithFormat:@"%@ app name",ch];
-        model.iconLetter = ch;
-        model.statusMsg = @"状态描述";
-        model.lastTime = [GNRUtil showDetailTime:[[NSDate date] timeIntervalSince1970]];
-        model.progress = rand()%100;
-        [self.taskList addObject:model];
-    }
+    _taskList = [[GNRTaskManager manager]taskListModels];
     [self refreshUI];
 }
 
 - (void)configUI{
+    kTaskLiskCellID = @"GNRTaskListCell";
     NSNib * nib = [[NSNib alloc]initWithNibNamed:kTaskLiskCellID bundle:nil];
     [self.tableView registerNib:nib forIdentifier:kTaskLiskCellID];
 }
 
 - (void)refreshUI{
     [self.tableView reloadData];
+    
     if (_taskList.count) {
         _addTaskBtn.hidden = YES;
     }else{
@@ -68,12 +51,12 @@
 
 #pragma mark - table delegate
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView{
-    return self.taskList.count;
+    return _taskList.count;
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row{
     GNRTaskListCell * cell = (GNRTaskListCell *)[tableView makeViewWithIdentifier:kTaskLiskCellID owner:self];
-    GNRTaskListModel * model = [self.taskList objectAtIndex:row];
+    GNRTaskListModel * model = [_taskList objectAtIndex:row];
     cell.model = model;
     return cell;
 }

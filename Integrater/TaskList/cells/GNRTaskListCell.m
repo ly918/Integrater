@@ -8,12 +8,14 @@
 
 #import "GNRTaskListCell.h"
 
+@interface GNRTaskListCell ()<NSMenuDelegate>
+
+@end
+
 @implementation GNRTaskListCell
 
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
-    
-    // Drawing code here.
 }
 
 - (void)setModel:(GNRTaskListModel *)model{

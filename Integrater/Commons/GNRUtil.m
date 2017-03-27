@@ -10,6 +10,37 @@
 
 @implementation GNRUtil
 
++ (void)alertMessage:(NSString *)msg{
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert addButtonWithTitle:@"知道了"];
+    [alert setMessageText:msg];
+    [alert setAlertStyle:NSAlertStyleWarning];
+    [alert beginSheetModalForWindow:[NSApplication sharedApplication].keyWindow completionHandler:^(NSModalResponse returnCode) {
+    }];
+}
+
+//MARK: - path select board
++ (NSString *)openPanelForCanCreateDir:(BOOL)canCreateDir canChooseDir:(BOOL)canChooseDir canChooseFiles:(BOOL)canChooseFiles{
+    NSOpenPanel * panel = [NSOpenPanel openPanel];
+    [panel setMessage:canCreateDir?@"请选择文件夹":@"请选择文件"];
+    [panel setPrompt:@"确定"];
+    [panel setCanChooseDirectories:canCreateDir];//是否可选择目录
+    [panel setCanCreateDirectories:canChooseDir];//是否可创建目录
+    [panel setCanChooseFiles:canChooseFiles];//是否可选择文件
+    NSString * path = nil;
+    NSInteger result = [panel runModal];
+    if (result == NSFileHandlingPanelOKButton) {
+        path = [panel URL].path;
+    }
+    return path;
+}
+
++ (NSString*)standardTime:(NSDate*)date{
+    NSDateFormatter *Formatter=[[NSDateFormatter alloc]init];
+    [Formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    return [Formatter stringFromDate:date];
+}
+
 + (NSString*)showDetailTime:(NSTimeInterval) msglastTime{
     return [GNRUtil showTime:msglastTime showDetail:YES];
 }

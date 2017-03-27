@@ -10,4 +10,42 @@
 
 @implementation GNRTaskStatus
 
+- (instancetype)init{
+    if (self = [super init]) {
+        self.taskStatus = GNRIntegraterTaskStatusPreparing;
+    }
+    return self;
+}
+
+- (void)configWithCode:(NSInteger)code userInfo:(NSDictionary *)userInfo{
+    if (userInfo) {
+        _error = [[NSError new]initWithDomain:self.statusMsg code:code userInfo:userInfo];
+    }
+}
+
+- (void)setTaskStatus:(GNRIntegraterTaskStatus)taskStatus{
+    _taskStatus = taskStatus;
+    _statusMsg = [GNRTaskStatus statusMsgWithStatus:self.taskStatus];
+}
+
++ (NSString *)statusMsgWithStatus:(GNRIntegraterTaskStatus)status{
+    NSNumber * number = @(status);
+    NSDictionary * infos = @{@(GNRIntegraterTaskStatusPreparing):@"Preparing",
+                             @(GNRIntegraterTaskStatusPrepared):@"Prepared",
+                             @(GNRIntegraterTaskStatusGitting):@"Pulling",
+                             @(GNRIntegraterTaskStatusCleaning):@"Cleaning",
+                             @(GNRIntegraterTaskStatusBuilding):@"Building",
+                             @(GNRIntegraterTaskStatusArchiving):@"Archiving",
+                             @(GNRIntegraterTaskStatusUpdating):@"Updating",
+                             @(GNRIntegraterTaskStatusSucceeded):@"Update Succeeded",
+                             @(GNRIntegraterTaskStatusPrepareError):@"Prepare Error",
+                             @(GNRIntegraterTaskStatusGitError):@"Git Error",
+                             @(GNRIntegraterTaskStatusCleanError):@"Clean Error",
+                             @(GNRIntegraterTaskStatusBuildError):@"Build Error",
+                             @(GNRIntegraterTaskStatusArchiveError):@"Archive Error",
+                             @(GNRIntegraterTaskStatusUpdateError):@"Update Error",
+                             };
+    return [infos objectForKey:number];
+}
+
 @end

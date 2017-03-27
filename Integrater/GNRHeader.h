@@ -12,6 +12,12 @@
 #define WEAK_SELF __weak typeof(self) wself = self
 
 #define k_Integrater_Name_iOS @"k_Integrater_Name_iOS"
+#define k_Debug @"Debug"
+#define k_Release @"Release"
+
+#define k_XcodeProject @".xcodeproj"
+#define k_Xcworkspace @".xcworkspace"
+
 
 //clean
 #define k_ScripFromat_Project_Clean @"do shell script \"xcodebuild clean -project %@ -scheme %@ CONFIGURATION=%@\""
@@ -44,5 +50,11 @@
 //        application/octet-stream
 //        application/iphone    pxl ipa
 //        application/vnd.android.package-archive  apk
+
+
+#import "GNRUtil.h"
+#import "GNRHelper.h"
+#import "NSObject+Extension.h"
+#import "NSString+Extension.h"
 
 #endif /* GNRHeader_h */

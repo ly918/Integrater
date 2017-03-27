@@ -10,11 +10,8 @@
 
 
 @interface GNRIntegrater ()
-@property (nonatomic, copy)NSString * name;//执行者名称
 @property (nonatomic, strong)NSMutableDictionary * taskGroup;
 @property (nonatomic, strong)dispatch_queue_t taskQueue;//任务异步队列
-
-@property (nonatomic, strong)GNRTaskInfo * taskInfo;//任务信息汇总
 
 @property (nonatomic, strong)GNRArchiveTask * cleanTask;//clean
 @property (nonatomic, strong)GNRArchiveTask * archiveTask;//build
@@ -74,14 +71,14 @@
         self.cleanTask.scriptFormat = [NSString stringWithFormat:taskInfo.projectType==GNRProjectType_Proj?k_ScripFromat_Project_Clean:k_ScripFromat_Workspace_Clean,
                                          taskInfo.projectPath,
                                        taskInfo.schemeName,
-                                       taskInfo.releaseStr];
+                                       taskInfo.buildEnvironment];
         
         //2 archive
         self.archiveTask.scriptFormat = [NSString stringWithFormat:taskInfo.projectType==GNRProjectType_Proj?k_ScripFromat_Project:k_ScripFromat_Workspace,
                                          taskInfo.projectPath,
                                          taskInfo.schemeName,
                                          archivePath,
-                                         taskInfo.releaseStr];
+                                         taskInfo.buildEnvironment];
         //3 ipa
         self.ipaTask.scriptFormat = [NSString stringWithFormat:k_ScriptFormat_IPA,
                                      importPath,
@@ -104,35 +101,60 @@ MARK: - 初始化方法
     return self;
 }
 
-- (instancetype)initWithName:(NSString *)name{
+- (instancetype)initWithTaskInfo:(GNRTaskInfo *)taskInfo{
     if (self = [super init]) {
-        _taskQueue = dispatch_queue_create([name cStringUsingEncoding:NSUTF8StringEncoding], DISPATCH_QUEUE_SERIAL);
+        _name = taskInfo.taskName;
+        self.taskInfo = taskInfo;
+        _taskQueue = dispatch_queue_create([taskInfo.taskName cStringUsingEncoding:NSUTF8StringEncoding], DISPATCH_QUEUE_SERIAL);
     }
     return self;
 }
 
 
 //TODO: - 总任务
-- (GNRIntegrater *)runTaskInfo:(GNRTaskInfo *)taskInfo completion:(void(^)(BOOL,NSString *,NSDictionary *))completion{
-    self.taskInfo = taskInfo;
+- (GNRIntegrater *)runTaskWithCompletion:(void(^)(GNRTaskStatus *))completion{
+    
     //archive task
+    GNRTaskStatus * taskStatus = [GNRTaskStatus new];
+    taskStatus.taskStatus = GNRIntegraterTaskStatusCleaning;
+
     WEAK_SELF;
     
     [[[[self runArchiveTask:wself.cleanTask completion:^(BOOL state,NSDictionary * error) {//clean
+        if (error) {
+            [taskStatus configWithCode:GNRIntegraterTaskStatusCleanError userInfo:error];
+        }else{
+            taskStatus.taskStatus = GNRIntegraterTaskStatusBuilding;
+        }
         if (completion) {
-            completion(state,state?@"Clean Succeeded\nBuilding...":error.description,error);
+            completion(taskStatus);
         }
     }] runArchiveTask:wself.archiveTask completion:^(BOOL state,NSDictionary * error) {//archive
+        if (error) {
+            [taskStatus configWithCode:GNRIntegraterTaskStatusBuildError userInfo:error];
+        }else{
+            taskStatus.taskStatus = GNRIntegraterTaskStatusArchiving;
+        }
         if (completion) {
-            completion(state,state?@"Build Succeeded\nExporting...":error.description,error);
+            completion(taskStatus);
         }
     }] runArchiveTask:wself.ipaTask completion:^(BOOL state,NSDictionary * error) {//ipa
+        if (error) {
+            [taskStatus configWithCode:GNRIntegraterTaskStatusArchiveError userInfo:error];
+        }else{
+            taskStatus.taskStatus = GNRIntegraterTaskStatusUpdating;
+        }
         if (completion) {
-            completion(state,state?@"Export ipa Succeeded！":error.description,error);
+            completion(taskStatus);
         }
     }] uploadTask:wself.uploadTask completion:^(BOOL state, NSString * msg, NSDictionary * error) {
+        if (error) {
+            [taskStatus configWithCode:GNRIntegraterTaskStatusUpdateError userInfo:error];
+        }else{
+            taskStatus.taskStatus = GNRIntegraterTaskStatusSucceeded;
+        }
         if (completion) {
-            completion(state,msg,error);
+            completion(taskStatus);
         }
     }];
     return self;

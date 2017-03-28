@@ -10,6 +10,7 @@
 
 
 @interface GNRIntegrater ()
+
 @property (nonatomic, strong)NSMutableDictionary * taskGroup;
 @property (nonatomic, strong)dispatch_queue_t taskQueue;//任务异步队列
 
@@ -17,6 +18,9 @@
 @property (nonatomic, strong)GNRArchiveTask * archiveTask;//build
 @property (nonatomic, strong)GNRArchiveTask * ipaTask;//导出ipa
 @property (nonatomic, strong)GNRUploadTask * uploadTask;//上传
+
+@property (nonatomic, copy)GNRTaskRunStatusBlock taskBlock;
+
 @end
 
 @implementation GNRIntegrater
@@ -64,30 +68,28 @@
 - (void)setTaskInfo:(GNRTaskInfo *)taskInfo{
     _taskInfo = taskInfo;
     if (taskInfo) {
-        NSString * archivePath = [NSString stringWithFormat:@"%@/archive_iOS",taskInfo.archivePath];
-        NSString * importPath = [NSString stringWithFormat:@"%@.xcarchive",archivePath];
-
         //1 clean
         self.cleanTask.scriptFormat = [NSString stringWithFormat:taskInfo.projectType==GNRProjectType_Proj?k_ScripFromat_Project_Clean:k_ScripFromat_Workspace_Clean,
-                                         taskInfo.projectPath,
+                                       taskInfo.projectType==GNRProjectType_Proj?taskInfo.projectPath:taskInfo.workspacePath,
                                        taskInfo.schemeName,
                                        taskInfo.buildEnvironment];
         
         //2 archive
         self.archiveTask.scriptFormat = [NSString stringWithFormat:taskInfo.projectType==GNRProjectType_Proj?k_ScripFromat_Project:k_ScripFromat_Workspace,
-                                         taskInfo.projectPath,
+                                         taskInfo.projectType==GNRProjectType_Proj?taskInfo.projectPath:taskInfo.workspacePath,
                                          taskInfo.schemeName,
-                                         archivePath,
+                                         taskInfo.archiveOutputDir,
                                          taskInfo.buildEnvironment];
         //3 ipa
         self.ipaTask.scriptFormat = [NSString stringWithFormat:k_ScriptFormat_IPA,
-                                     importPath,
-                                     taskInfo.ipaPath];
+                                     taskInfo.archiveFileOutputPath,
+                                     taskInfo.ipaPath,
+                                     taskInfo.optionsPlistPath];
         //4 upload
-        self.uploadTask.uploadUrl = k_Upload_URL_Pgyer;
-        self.uploadTask.appkey = k_Appkey_Pgyer;
-        self.uploadTask.userkey = k_UserKey_Pgyer;
-        self.uploadTask.importIPAPath = [NSString stringWithFormat:@"%@/app.ipa",taskInfo.ipaPath];
+        self.uploadTask.uploadUrl = taskInfo.uploadURL;
+        self.uploadTask.appkey = taskInfo.appkey;
+        self.uploadTask.userkey = taskInfo.userkey;
+        self.uploadTask.importIPAPath = taskInfo.ipaFileOutputPath;
     }
 }
 
@@ -110,51 +112,78 @@ MARK: - 初始化方法
     return self;
 }
 
+- (void)taskStatusCallback:(GNRTaskRunStatusBlock)block{
+    _taskBlock = nil;
+    _taskBlock = [block copy];
+    [self runTask];
+}
 
 //TODO: - 总任务
-- (GNRIntegrater *)runTaskWithCompletion:(void(^)(GNRTaskStatus *))completion{
+- (GNRIntegrater *)runTask{
     
-    //archive task
+    if (_running==YES) {//防止重复调用
+        return self;
+    }
+    
+    _running = YES;
+    
+    //状态对象
     GNRTaskStatus * taskStatus = [GNRTaskStatus new];
     taskStatus.taskStatus = GNRIntegraterTaskStatusCleaning;
-
-    WEAK_SELF;
+    if (_taskBlock) {
+        _taskBlock(taskStatus);
+    }
     
+    WEAK_SELF;
+    //archive task
     [[[[self runArchiveTask:wself.cleanTask completion:^(BOOL state,NSDictionary * error) {//clean
         if (error) {
             [taskStatus configWithCode:GNRIntegraterTaskStatusCleanError userInfo:error];
         }else{
             taskStatus.taskStatus = GNRIntegraterTaskStatusBuilding;
+            taskStatus.progress = 10;
         }
-        if (completion) {
-            completion(taskStatus);
+        if (_taskBlock) {
+            _taskBlock(taskStatus);
         }
     }] runArchiveTask:wself.archiveTask completion:^(BOOL state,NSDictionary * error) {//archive
         if (error) {
             [taskStatus configWithCode:GNRIntegraterTaskStatusBuildError userInfo:error];
         }else{
             taskStatus.taskStatus = GNRIntegraterTaskStatusArchiving;
+            taskStatus.progress = 20;
         }
-        if (completion) {
-            completion(taskStatus);
+        if (_taskBlock) {
+            _taskBlock(taskStatus);
         }
     }] runArchiveTask:wself.ipaTask completion:^(BOOL state,NSDictionary * error) {//ipa
         if (error) {
             [taskStatus configWithCode:GNRIntegraterTaskStatusArchiveError userInfo:error];
         }else{
             taskStatus.taskStatus = GNRIntegraterTaskStatusUpdating;
+            taskStatus.progress = 30;
         }
-        if (completion) {
-            completion(taskStatus);
+        if (_taskBlock) {
+            _taskBlock(taskStatus);
         }
-    }] uploadTask:wself.uploadTask completion:^(BOOL state, NSString * msg, NSDictionary * error) {
+    }] uploadTask:wself.uploadTask completion:^(BOOL state, CGFloat progress, NSError * error) {
         if (error) {
-            [taskStatus configWithCode:GNRIntegraterTaskStatusUpdateError userInfo:error];
+            taskStatus.taskStatus = GNRIntegraterTaskStatusUpdateError;
+            taskStatus.error = error;
         }else{
-            taskStatus.taskStatus = GNRIntegraterTaskStatusSucceeded;
+            if (state) {//上传成功
+                taskStatus.showTime = [GNRUtil showDetailTime:[[NSDate date] timeIntervalSince1970]];
+                taskStatus.taskStatus = GNRIntegraterTaskStatusSucceeded;
+                taskStatus.progress = 30 + progress;//30 ~ 100
+                _running = NO;
+            }else{//上传中
+                taskStatus.taskStatus = GNRIntegraterTaskStatusUpdating;
+                taskStatus.progress = 30 + progress;//30 ~ 100
+                _running = YES;
+            }
         }
-        if (completion) {
-            completion(taskStatus);
+        if (_taskBlock) {
+            _taskBlock(taskStatus);
         }
     }];
     return self;
@@ -177,7 +206,7 @@ TODO: - 打包任务
         //3 主线程回调
         dispatch_async(dispatch_get_main_queue(), ^{
             if (completion) {
-                completion(error.allKeys.count?NO:YES,error);
+                completion(error.allKeys.count?NO:YES,error.allKeys.count?error:nil);
             }
         });
     });
@@ -187,7 +216,7 @@ TODO: - 打包任务
 /**
  TODO: - 上传
  */
-- (GNRIntegrater *)uploadTask:(GNRUploadTask *)task completion:(void(^)(BOOL,NSString *,NSDictionary *))completion{
+- (GNRIntegrater *)uploadTask:(GNRUploadTask *)task completion:(void(^)(BOOL,CGFloat,NSError *))completion{
     //1 加入任务组
     [self addToGroupWithTask:task];
     //2 异步执行队列
@@ -197,14 +226,14 @@ TODO: - 打包任务
             //3 上传进度
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (completion) {
-                    completion(NO,[NSString stringWithFormat:@"Updating %lldMB/%lldMB %.2f",progress.completedUnitCount/(1024*1024),progress.totalUnitCount/(1024*1024),(double)progress.completedUnitCount/(double)progress.totalUnitCount],nil);
+                    completion(NO,100.f*(double)progress.completedUnitCount/(double)progress.totalUnitCount,nil);
                 }
             });
         } completion:^(BOOL state, id responseObject, NSError * error) {
             //4 上传结束
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (completion) {
-                    completion(state,state?@"Upload Succeeded!":error.description,error.userInfo);
+                    completion(state,100.f,state?nil:error);
                 }
             });
         }];

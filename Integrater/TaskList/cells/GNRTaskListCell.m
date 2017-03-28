@@ -7,6 +7,7 @@
 //
 
 #import "GNRTaskListCell.h"
+#import "GNRTaskManager.h"
 
 @interface GNRTaskListCell ()<NSMenuDelegate>
 
@@ -21,14 +22,14 @@
 - (void)setModel:(GNRTaskListModel *)model{
     _model = model;
     if (model) {
-        _nameL.stringValue = model.appName;
-        _iconL.stringValue = model.iconLetter;
-        _statusMsgL.stringValue = model.statusMsg;
-        _updateTimeL.stringValue = model.lastTime;
-        _progressIndicator.doubleValue = model.progress;
+        _nameL.stringValue = _model.appName;
+        _iconL.stringValue = _model.iconLetter;
+        _statusMsgL.stringValue = _model.statusMsg;
+        _updateTimeL.stringValue = [NSString stringWithFormat:@"最后更新：%@",_model.lastTime];
+        _statusMsgL.textColor = _model.textColor;
+        _progressIndicator.doubleValue = _model.progress;
+        _progressIndicator.hidden = _model.progress==_progressIndicator.maxValue?YES:NO;
     }
 }
-
-
 
 @end

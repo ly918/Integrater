@@ -122,7 +122,8 @@
     _integrater = [[GNRIntegrater new]initWithTaskInfo:_taskInfo];
     
     WEAK_SELF;
-    [_integrater runTaskWithCompletion:^(GNRTaskStatus * taskStatus) {
+    [_integrater runTask];
+    [_integrater taskStatusCallback:^(GNRTaskStatus * taskStatus) {
         wself.printTextView.string = taskStatus.statusMsg;
     }];
 }

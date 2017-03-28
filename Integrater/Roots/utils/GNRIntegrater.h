@@ -13,8 +13,11 @@
 #import "GNRTaskInfo.h"
 #import "GNRTaskStatus.h"
 
+typedef void(^GNRTaskRunStatusBlock)(GNRTaskStatus *);
+
 @interface GNRIntegrater : GNRObject
 @property (nonatomic, copy)NSString * name;
+@property (nonatomic, assign, getter=isRunning)BOOL running;//运行中？
 @property (nonatomic, strong)GNRTaskInfo * taskInfo;//任务信息汇总
 
 /**
@@ -27,10 +30,10 @@
 
 /**
  执行打包任务
-
- @param completion 任务状态
  @return self
  */
-- (GNRIntegrater *)runTaskWithCompletion:(void(^)(GNRTaskStatus *))completion;
+- (GNRIntegrater *)runTask;
+
+- (void)taskStatusCallback:(GNRTaskRunStatusBlock)block;
 
 @end

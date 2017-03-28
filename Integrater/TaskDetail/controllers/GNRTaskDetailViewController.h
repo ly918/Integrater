@@ -18,6 +18,10 @@
 @property (weak) IBOutlet NSTextField *archivePathField;
 @property (weak) IBOutlet NSTextField *ipaPathField;
 
+@property (weak) IBOutlet NSTextField *uploadUrlField;
+@property (weak) IBOutlet NSTextField *appkeyField;
+@property (weak) IBOutlet NSTextField *userKeyField;
+
 - (IBAction)selectProjPath:(id)sender;//本地工程目录
 - (IBAction)selectDebug:(id)sender;
 - (IBAction)selectArchivePath:(id)sender;

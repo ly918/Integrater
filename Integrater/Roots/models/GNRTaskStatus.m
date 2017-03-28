@@ -12,6 +12,7 @@
 
 - (instancetype)init{
     if (self = [super init]) {
+        _showTime = [GNRUtil showDetailTime:[[NSDate date] timeIntervalSince1970]];
         self.taskStatus = GNRIntegraterTaskStatusPreparing;
     }
     return self;
@@ -19,7 +20,9 @@
 
 - (void)configWithCode:(NSInteger)code userInfo:(NSDictionary *)userInfo{
     if (userInfo) {
-        _error = [[NSError new]initWithDomain:self.statusMsg code:code userInfo:userInfo];
+        NSLog(@"error %@",userInfo);
+        self.taskStatus = code;
+        _error = [NSError errorWithDomain:self.statusMsg code:code userInfo:userInfo];
     }
 }
 

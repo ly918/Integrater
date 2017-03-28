@@ -10,10 +10,9 @@
 #import "GNRTaskListCell.h"
 #import "GNRTaskManager.h"
 
-@interface GNRTaskListViewController ()<NSTableViewDelegate,NSTableViewDataSource>
+@interface GNRTaskListViewController ()<NSTableViewDelegate,NSTableViewDataSource,GNRTaskManagerDelegate>
 {
     NSString * kTaskLiskCellID;
-    NSMutableArray * _taskList;
 }
 @property (weak) IBOutlet NSTableView *tableView;
 @property (weak) IBOutlet NSButton *addTaskBtn;
@@ -29,8 +28,13 @@
 }
 
 - (void)initData{
-    _taskList = [[GNRTaskManager manager]taskListModels];
+    [[GNRTaskManager manager] setDelegate:self];
+    [self reloadData];
+}
+
+- (void)reloadData{
     [self refreshUI];
+
 }
 
 - (void)configUI{
@@ -41,8 +45,8 @@
 
 - (void)refreshUI{
     [self.tableView reloadData];
-    
-    if (_taskList.count) {
+
+    if ([[GNRTaskManager manager] taskListModels].count) {
         _addTaskBtn.hidden = YES;
     }else{
         _addTaskBtn.hidden = NO;
@@ -51,12 +55,12 @@
 
 #pragma mark - table delegate
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView{
-    return _taskList.count;
+    return [[GNRTaskManager manager] taskListModels].count;
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row{
     GNRTaskListCell * cell = (GNRTaskListCell *)[tableView makeViewWithIdentifier:kTaskLiskCellID owner:self];
-    GNRTaskListModel * model = [_taskList objectAtIndex:row];
+    GNRTaskListModel * model = [[[GNRTaskManager manager] taskListModels] objectAtIndex:row];
     cell.model = model;
     return cell;
 }
@@ -69,8 +73,35 @@
     return tableView.bounds.size.width;
 }
 
-- (void)tableView:(NSTableView *)tableView didClickTableColumn:(NSTableColumn *)tableColumn{
-    NSLog(@"%@",tableColumn);
+- (void)updateListModel:(GNRTaskListModel *)model status:(GNRTaskStatus *)status{
+    if (status && model) {
+        model.statusMsg = status.statusMsg;
+        model.progress = status.progress;
+        model.lastTime = status.showTime;
+        if (status.taskStatus<0) {
+            model.textColor = [NSColor redColor];
+        }else if(status.taskStatus>0){
+            model.textColor = [NSColor greenColor];
+        }
+    }
+}
+
+- (void)reloadRow:(NSInteger)row{
+    [self.tableView reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row] columnIndexes:[NSIndexSet indexSetWithIndex:0]];
+}
+
+#pragma mark - task manager delegate
+- (void)manager:(GNRTaskManager *)manager addTask:(GNRIntegrater *)task taskListModel:(GNRTaskListModel *)taskListModel{
+    [self reloadData];
+    WEAK_SELF;
+    [task taskStatusCallback:^(GNRTaskStatus * status) {
+        [wself updateListModel:taskListModel status:status];
+        [wself reloadRow:[[[GNRTaskManager manager] taskListModels] indexOfObject:taskListModel]];
+    }];
+}
+
+- (void)manager:(GNRTaskManager *)manager removeTask:(GNRIntegrater *)task taskListModel:(GNRTaskListModel *)taskListModel{
+    [self reloadData];
 }
 
 @end

@@ -30,7 +30,7 @@
 #define k_ScripFromat_Workspace @"do shell script \"xcodebuild archive -workspace %@ -scheme %@ -archivePath %@ CONFIGURATION=%@\""
 
 //导出ipa
-#define k_ScriptFormat_IPA @"do shell script \"xcodebuild -exportArchive -archivePath %@ -exportPath %@ -exportOptionsPlist /Users/lvyuan/Projects/BuildLocal/build.plist\""
+#define k_ScriptFormat_IPA @"do shell script \"xcodebuild -exportArchive -archivePath %@ -exportPath %@ -exportOptionsPlist %@\""
 
 #define k_Appkey_Pgyer @"c17ad8d42627eca76e8901148463ee25"
 

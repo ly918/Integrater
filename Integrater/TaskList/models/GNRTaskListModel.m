@@ -19,8 +19,11 @@
 
 - (instancetype)initWithTaskName:(NSString *)taskName appName:(NSString *)appName{
     if (self = [super init]) {
+        _iconLetter = @"";
+        _lastTime = @"";
+        _textColor = [NSColor textColor];
         _taskName = taskName;
-        _appName = appName;
+        self.appName = appName;
         [self initData];
     }
     return self;
@@ -35,7 +38,7 @@
 
 - (void)setAppName:(NSString *)appName{
     _appName = appName;
-    _iconLetter = [appName substringToIndex:0];
+    _iconLetter = [appName substringToIndex:1];
 }
 
 + (instancetype)initModel{

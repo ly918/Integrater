@@ -75,25 +75,43 @@
         return;
     }
     if ([GNRHelper validPath:_archivePathField.stringValue]==NO) {
-        [GNRUtil alertMessage:@"请选择archive输出目录"];
+        [GNRUtil alertMessage:@"请archive输出目录"];
         return;
     }
     if ([GNRHelper validPath:_ipaPathField.stringValue]==NO) {
         [GNRUtil alertMessage:@"请选择ipa输出目录"];
         return;
     }
+    if ([GNRHelper validPath:_uploadUrlField.stringValue]==NO) {
+        [GNRUtil alertMessage:@"请填写ipa上传URL"];
+        return;
+    }
+    if ([GNRHelper validPath:_appkeyField.stringValue]==NO) {
+        [GNRUtil alertMessage:@"请填写appkey"];
+        return;
+    }
+    if ([GNRHelper validPath:_userKeyField.stringValue]==NO) {
+        [GNRUtil alertMessage:@"请填写userkey"];
+        return;
+    }
     self.taskInfo.projectDir = _projPathField.stringValue;//本地工程目录
     self.taskInfo.archivePath = _archivePathField.stringValue;
     self.taskInfo.ipaPath = _ipaPathField.stringValue;
-    
+    self.taskInfo.uploadURL = _uploadUrlField.stringValue;
+    self.taskInfo.appkey = _appkeyField.stringValue;
+    self.taskInfo.userkey = _userKeyField.stringValue;
+
     [self saveTask];
 }
 
 //MARK: - 保存该任务
 - (void)saveTask{
+    [self.taskInfo configValues];
+
     GLog(@"%@",self.taskInfo);
     GNRIntegrater * task = [[GNRIntegrater alloc]initWithTaskInfo:self.taskInfo];
     [[GNRTaskManager manager] addTask:task];
+    [self dismissController:nil];
 }
 
 @end

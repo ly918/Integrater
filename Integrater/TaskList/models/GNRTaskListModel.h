@@ -17,6 +17,9 @@
 
 @property (nonatomic, copy) NSString * statusMsg;
 @property (nonatomic, copy) NSString * lastTime;
+
+@property (nonatomic, copy) NSColor * textColor;
+
 @property (nonatomic, assign) CGFloat progress;
 
 - (instancetype)initWithTaskName:(NSString *)taskName appName:(NSString *)appName;

@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "GNRUserNotificationCenter.h"
 
 @interface AppDelegate ()<NSUserNotificationCenterDelegate>
 
@@ -15,7 +16,7 @@
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-
+    [[GNRUserNotificationCenter center] removeAllNotification];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {

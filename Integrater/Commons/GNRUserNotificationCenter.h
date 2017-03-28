@@ -14,4 +14,6 @@
 
 - (void)pushTitle:(NSString *)title msg:(NSString *)msg;
 
+- (void)removeAllNotification;
+
 @end

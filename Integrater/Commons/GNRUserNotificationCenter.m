@@ -35,11 +35,16 @@
     NSUserNotification *notification = [[NSUserNotification alloc] init];
     notification.title = title;
     notification.subtitle = msg;
+    [self addNotification:notification];
+}
+
+- (void)addNotification:(NSUserNotification*)notification{
+    
     [notification setSoundName:NSUserNotificationDefaultSoundName];
     //设置通知提交的时间
     [notification setDeliveryDate:[NSDate dateWithTimeInterval:1 sinceDate:[NSDate date]]];
     
-    /* 
+    /*
      
      //设置通知的循环(必须大于1分钟，估计是防止软件刷屏)
      NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
@@ -64,10 +69,25 @@
      }
      
      */
-    
     //递交通知
     [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+}
 
+- (void)removeAllNotification{
+    [[NSUserNotificationCenter defaultUserNotificationCenter] removeAllDeliveredNotifications];
+    //删除已经在执行的通知(比如那些循环递交的通知)
+    for (NSUserNotification *notify in [[NSUserNotificationCenter defaultUserNotificationCenter] scheduledNotifications])
+    {
+        [[NSUserNotificationCenter defaultUserNotificationCenter] removeScheduledNotification:notify];
+    }
+    //删除已经在执行的通知(比如那些循环递交的通知)
+    for (NSUserNotification *notify in [[NSUserNotificationCenter defaultUserNotificationCenter] deliveredNotifications])
+    {
+        [[NSUserNotificationCenter defaultUserNotificationCenter] removeDeliveredNotification:notify];
+    }
+    
+    NSLog(@"%@",    [[NSUserNotificationCenter defaultUserNotificationCenter]scheduledNotifications]);
+    NSLog(@"%@",    [[NSUserNotificationCenter defaultUserNotificationCenter]deliveredNotifications]);
 }
 
 - (void)userNotificationCenter:(NSUserNotificationCenter *)center didDeliverNotification:(NSUserNotification *)notification{

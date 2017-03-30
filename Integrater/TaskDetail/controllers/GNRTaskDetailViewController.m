@@ -50,19 +50,13 @@
 }
 
 - (IBAction)selectDebug:(id)sender {
-    self.taskInfo.buildEnvironment = [(NSMenu *)sender title];
+    self.taskInfo.configuration = [(NSMenu *)sender title];
 }
 
 - (IBAction)selectArchivePath:(id)sender {
     NSString * path = [GNRUtil openPanelForCanCreateDir:YES canChooseDir:YES canChooseFiles:NO];
     _archivePathField.stringValue = path;
 }
-
-- (IBAction)selectIPAPath:(id)sender {
-    NSString * path = [GNRUtil openPanelForCanCreateDir:YES canChooseDir:YES canChooseFiles:NO];
-    _ipaPathField.stringValue = path;
-}
-
 
 //MARK: - toolbar
 - (IBAction)closeAction:(id)sender {
@@ -78,10 +72,6 @@
         [GNRUtil alertMessage:@"请archive输出目录"];
         return;
     }
-    if ([GNRHelper validPath:_ipaPathField.stringValue]==NO) {
-        [GNRUtil alertMessage:@"请选择ipa输出目录"];
-        return;
-    }
     if ([GNRHelper validPath:_uploadUrlField.stringValue]==NO) {
         [GNRUtil alertMessage:@"请填写ipa上传URL"];
         return;
@@ -94,9 +84,9 @@
         [GNRUtil alertMessage:@"请填写userkey"];
         return;
     }
+    
     self.taskInfo.projectDir = _projPathField.stringValue;//本地工程目录
     self.taskInfo.archivePath = _archivePathField.stringValue;
-    self.taskInfo.ipaPath = _ipaPathField.stringValue;
     self.taskInfo.uploadURL = _uploadUrlField.stringValue;
     self.taskInfo.appkey = _appkeyField.stringValue;
     self.taskInfo.userkey = _userKeyField.stringValue;
@@ -107,7 +97,6 @@
 //MARK: - 保存该任务
 - (void)saveTask{
     [self.taskInfo configValues];
-
     GLog(@"%@",self.taskInfo);
     GNRIntegrater * task = [[GNRIntegrater alloc]initWithTaskInfo:self.taskInfo];
     [[GNRTaskManager manager] addTask:task];

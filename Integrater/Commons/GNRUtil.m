@@ -19,6 +19,29 @@
     }];
 }
 
++ (BOOL)createPlist:(id)data path:(NSString *)path{
+    BOOL flag = NO;
+    if ([data isKindOfClass:[NSDictionary class]]||
+        [data isKindOfClass:[NSArray class]]) {
+        flag = [data writeToFile:path atomically:YES];
+        if (flag) {
+            GLog(@"plist 文件写入成功");
+        }else{
+            GLog(@"plist 文件写入失败");
+        }
+    }else{
+        GLog(@"写入数据错误！");
+    }
+    return flag;
+}
+
++ (BOOL)createDir:(NSString *)path{
+    NSError * error = nil;
+    BOOL ret = [[NSFileManager defaultManager]createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error];
+    GLog(@"Create path error %@",error.domain);
+    return ret;
+}
+
 //MARK: - path select board
 + (NSString *)openPanelForCanCreateDir:(BOOL)canCreateDir canChooseDir:(BOOL)canChooseDir canChooseFiles:(BOOL)canChooseFiles{
     NSOpenPanel * panel = [NSOpenPanel openPanel];
@@ -33,6 +56,18 @@
         path = [panel URL].path;
     }
     return path;
+}
+
++ (NSString*)standardTimeForFile:(NSDate*)date{
+    NSDateFormatter *Formatter=[[NSDateFormatter alloc]init];
+    [Formatter setDateFormat:@"yyyy_MM_dd_HH_mm_ss"];
+    return [Formatter stringFromDate:date];
+}
+
++ (NSString*)standardDateForFile:(NSDate*)date{
+    NSDateFormatter *Formatter=[[NSDateFormatter alloc]init];
+    [Formatter setDateFormat:@"yyyy_MM_dd"];
+    return [Formatter stringFromDate:date];
 }
 
 + (NSString*)standardTime:(NSDate*)date{

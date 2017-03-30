@@ -8,86 +8,144 @@
 
 #import "GNRTaskInfo.h"
 
+
+@interface GNRTaskInfo ()
+
+@property (nonatomic, strong) NSString * nowTime;
+@property (nonatomic, strong) NSString * nowDate;
+
+@end
+
 @implementation GNRTaskInfo
 
 - (instancetype)init{
     if (self = [super init]) {
-        _buildEnvironment = k_Debug;
+        _configuration = k_Configuration_Debug;
         _platform = GNRTaskInfoPlatform_iOS;
+        _createTime = @"";
+        _lastUploadTime = @"";
     }
     return self;
 }
 
 //自动生成其他字段
 - (void)configValues{
-    if (_projectDir) {
-        //自动构建project 或者 workspace 路径
-        NSFileManager * fm = [NSFileManager defaultManager];
-        NSError * error = nil;
-        NSArray * paths = [fm contentsOfDirectoryAtPath:_projectDir error:&error];
-        GLog(@"path %@ \n error %@",paths,error);
+    if ([GNRHelper validPath:_projectDir]) {
+        //设置工程类型和scheme
+        [self setupProjTypeAndScheme];
         
-        BOOL hasProj = NO;
-        BOOL hasWorkspace = NO;
-        NSString * projectContent = nil;
-        NSString * workspaceContent = nil;
-        //proj path
-        for (NSString * content in paths) {
-            if ([content hasSuffix:k_XcodeProject]) {
-                self.projectPath = [_projectDir stringByAppendingPathComponent:content];
-                hasProj = YES;
-                projectContent = content;
-            }else if ([content hasSuffix:k_Xcworkspace]){
-                self.workspacePath = [_projectDir stringByAppendingPathComponent:content];
-                hasWorkspace = YES;
-                workspaceContent = content;
-            }
-        }
-        //type proj schemeName
-        if (hasWorkspace) {
-            _projectType = GNRProjectType_Workspace;
-            self.schemeName = [projectContent substringWithRange:NSMakeRange(0,workspaceContent.length - k_Xcworkspace.length)];
-        }else if (hasProj) {
-            _projectType = GNRProjectType_Proj;
-            self.schemeName = [workspaceContent substringWithRange:NSMakeRange(0, projectContent.length - k_XcodeProject.length)];
-        }
+        //create output dir
+        [GNRUtil createDir:self.archiveOutputDir];
         
-        //taskName
-        _taskName = [self createTaskName];
-        
-        //output path
-        _archiveOutputDir = [NSString stringWithFormat:@"%@/archive_%@",_archivePath,_schemeName];
-        _archiveFileOutputPath = [NSString stringWithFormat:@"%@.xcarchive",_archiveOutputDir];
-        
-        //ipa path
-        _ipaFileOutputPath = [NSString stringWithFormat:@"%@/%@.ipa",_ipaPath,_schemeName];
-        
-        //OptionsPlist path
-        _optionsPlistPath = [_projectDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_exportOptionsPlist.plist",_schemeName]];
+        //create plist
         [self createOptionsPlist];
+    }else{
+        GLog(@"project path error!");
+    }
+}
+
+//设置工程类型 和 scheme
+- (void)setupProjTypeAndScheme{
+    NSError * error = nil;
+    //自动构建project 或者 workspace 路径
+    NSFileManager * fm = [NSFileManager defaultManager];
+    NSArray * paths = [fm contentsOfDirectoryAtPath:_projectDir error:&error];
+    GLog(@"path %@ \n error %@",paths,error);
+    
+    BOOL hasProj = NO;
+    BOOL hasWorkspace = NO;
+    NSString * projectContent = nil;
+    NSString * workspaceContent = nil;
+    
+    //proj path
+    for (NSString * content in paths) {
+        if ([content hasSuffix:k_XcodeProject]) {
+            self.projectPath = [_projectDir stringByAppendingPathComponent:content];
+            hasProj = YES;
+            projectContent = content;
+        }else if ([content hasSuffix:k_Xcworkspace]){
+            self.workspacePath = [_projectDir stringByAppendingPathComponent:content];
+            hasWorkspace = YES;
+            workspaceContent = content;
+        }
+    }
+    
+    //type proj schemeName
+    if (hasWorkspace) {
+        _projectType = GNRProjectType_Workspace;
+        self.schemeName = [projectContent substringWithRange:NSMakeRange(0,workspaceContent.length - k_Xcworkspace.length)];
+    }else if (hasProj) {
+        _projectType = GNRProjectType_Proj;
+        self.schemeName = [workspaceContent substringWithRange:NSMakeRange(0, projectContent.length - k_XcodeProject.length)];
+    }
+    
+    NSDate * date = [NSDate date];
+    _nowDate = [GNRUtil standardDateForFile:date];
+    _nowTime = [GNRUtil standardTimeForFile:date];
+}
+
+- (NSString *)ipaFileOutputPath{
+    if (self.ipaFileOutputHeadPath.length&&_schemeName.length) {
+        _ipaFileOutputPath = [NSString stringWithFormat:@"%@/%@.ipa",self.ipaFileOutputHeadPath,_schemeName];
+    }
+    return _ipaFileOutputPath;
+}
+
+- (NSString *)ipaFileOutputHeadPath{
+    if (self.archiveOutputDir.length&&_schemeName.length) {
+        _ipaFileOutputHeadPath = [NSString stringWithFormat:@"%@/%@_%@_%@",_archiveOutputDir,_schemeName,_nowTime,_configuration];
+    }
+    return _ipaFileOutputHeadPath;
+}
+
+//archive path
+- (NSString *)archiveFileOutputPath{
+    if (self.archiveOutputDir.length&&_schemeName.length) {
+        _archiveFileOutputPath = [NSString stringWithFormat:@"%@/%@_%@_%@.xcarchive",_archiveOutputDir,_schemeName,_nowTime,_configuration];
+    }
+    return _archiveFileOutputPath;
+}
+
+//OptionsPlist path
+- (NSString *)optionsPlistPath{
+    if (self.archiveOutputParentDir.length&&_schemeName.length) {
+        _optionsPlistPath = [_archiveOutputParentDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_ExportOptions.plist",_schemeName]];
+    }
+    return _optionsPlistPath;
+}
+
+//xxx/archive_app/app_2017-03-30
+- (NSString *)archiveOutputDir{
+    if (self.archiveOutputParentDir.length&&_schemeName.length) {
+        _archiveOutputDir =  [NSString stringWithFormat:@"%@/%@_%@_%@",_archiveOutputParentDir,_schemeName,_nowDate,_configuration];
+
+    }
+    return _archiveOutputDir;
+}
+
+
+//xxx/archive_app
+- (NSString *)archiveOutputParentDir{
+    if (_archivePath.length&&_schemeName.length) {
+        _archiveOutputParentDir = [NSString stringWithFormat:@"%@/archive_%@",_archivePath,_schemeName];
+    }
+    return _archiveOutputParentDir;
+}
+
+- (void)setSchemeName:(NSString *)schemeName{
+    _schemeName = schemeName;
+    if (schemeName.length&&_projectDir.length) {
+        //taskName
+        _taskName = [NSString stringWithFormat:@"%@_%@",[_projectDir MD5],_schemeName];
     }
 }
 
 //MARK: - 生存plist文件
 - (void)createOptionsPlist{
-    NSDictionary * dict = @{@"compileBitcode":@NO,
-                            @"method":@"development"};
-    BOOL flag = [dict writeToFile:_optionsPlistPath atomically:YES];
-    if (flag) {
-        GLog(@"plist 文件写入成功");
-    }else{
-        GLog(@"plist 文件写入失败");
-    }
+    NSDictionary * dict = @{k_Key_ExportPlist_BitCode:@NO,
+                            k_Key_ExportPlist_Method:@"development"};
     
-}
-
-//MARK: - 生成任务队列name
-- (NSString *)createTaskName{
-    if (_projectDir.length&&
-        _schemeName.length) {
-        return [NSString stringWithFormat:@"%@_%@",[_projectDir MD5],_schemeName];
-    }
-    return nil;
+    [GNRUtil createPlist:dict path:self.optionsPlistPath];
 }
 
 - (NSString *)description{

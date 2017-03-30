@@ -12,13 +12,18 @@ PODS:
   - AFNetworking/Reachability (3.1.0)
   - AFNetworking/Security (3.1.0)
   - AFNetworking/Serialization (3.1.0)
+  - FMDB (2.6.2):
+    - FMDB/standard (= 2.6.2)
+  - FMDB/standard (2.6.2)
 
 DEPENDENCIES:
   - AFNetworking (~> 3.0)
+  - FMDB
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
 
-PODFILE CHECKSUM: 78df1395191f4fff30742342d856fbc886b1ebb4
+PODFILE CHECKSUM: fb657417e32975dd6a7ede6379baeaa92595b34d
 
 COCOAPODS: 1.1.1

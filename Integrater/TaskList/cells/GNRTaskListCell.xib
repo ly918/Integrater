@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="12118" systemVersion="16B2555" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12118"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -13,7 +13,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="R05-1t-myD">
-                    <rect key="frame" x="41" y="53" width="300" height="17"/>
+                    <rect key="frame" x="41" y="53" width="36" height="17"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="17" id="OMQ-5c-xYy"/>
                     </constraints>
@@ -61,22 +61,39 @@
                         <color key="backgroundColor" red="1" green="0.5450980392" blue="0.01176470588" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </textFieldCell>
                 </textField>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rWd-gU-p1p">
+                    <rect key="frame" x="83" y="52" width="96" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="6zQ-oC-oFW"/>
+                        <constraint firstAttribute="width" constant="96" id="gSa-eU-iFz"/>
+                    </constraints>
+                    <buttonCell key="cell" type="bevel" title="查看错误日志" bezelStyle="regularSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="Ti3-8M-VgZ">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="errorLogAction:" target="x2I-EA-wv3" id="qC2-NQ-zB4"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="Ixa-u0-NR0" firstAttribute="top" secondItem="R05-1t-myD" secondAttribute="bottom" constant="8" id="3fR-3Y-f3u"/>
+                <constraint firstItem="rWd-gU-p1p" firstAttribute="centerY" secondItem="R05-1t-myD" secondAttribute="centerY" id="HbQ-58-VGz"/>
                 <constraint firstItem="uLu-uc-jhZ" firstAttribute="centerY" secondItem="x2I-EA-wv3" secondAttribute="centerY" id="JGy-24-yhh"/>
                 <constraint firstItem="IAN-Cd-BtL" firstAttribute="leading" secondItem="x2I-EA-wv3" secondAttribute="leading" constant="3" id="QEU-2P-gnH"/>
                 <constraint firstAttribute="trailing" secondItem="Ixa-u0-NR0" secondAttribute="trailing" constant="61" id="RYZ-K1-nYp"/>
                 <constraint firstAttribute="trailing" secondItem="uLu-uc-jhZ" secondAttribute="trailing" constant="11" id="SZx-rB-IJO"/>
                 <constraint firstItem="BqV-0v-Zjd" firstAttribute="leading" secondItem="x2I-EA-wv3" secondAttribute="leading" constant="43" id="Yy2-zg-pBx"/>
                 <constraint firstItem="BqV-0v-Zjd" firstAttribute="top" secondItem="Ixa-u0-NR0" secondAttribute="bottom" constant="3" id="buU-w0-Lnv"/>
-                <constraint firstAttribute="trailing" secondItem="R05-1t-myD" secondAttribute="trailing" constant="61" id="d4M-UP-S61"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="R05-1t-myD" secondAttribute="trailing" constant="150" id="d4M-UP-S61"/>
                 <constraint firstItem="R05-1t-myD" firstAttribute="top" secondItem="x2I-EA-wv3" secondAttribute="top" constant="10" id="hGv-g7-1Pr"/>
                 <constraint firstItem="Ixa-u0-NR0" firstAttribute="leading" secondItem="R05-1t-myD" secondAttribute="leading" id="n28-HG-opQ"/>
+                <constraint firstItem="rWd-gU-p1p" firstAttribute="leading" secondItem="R05-1t-myD" secondAttribute="trailing" constant="8" id="ncN-ua-8gf"/>
                 <constraint firstItem="R05-1t-myD" firstAttribute="leading" secondItem="IAN-Cd-BtL" secondAttribute="trailing" constant="8" id="nt2-pk-oow"/>
                 <constraint firstItem="IAN-Cd-BtL" firstAttribute="top" secondItem="x2I-EA-wv3" secondAttribute="top" constant="3" id="pQf-g5-Gc7"/>
             </constraints>
             <connections>
+                <outlet property="errorLogBtn" destination="rWd-gU-p1p" id="m1j-mK-MhU"/>
                 <outlet property="iconL" destination="IAN-Cd-BtL" id="p8I-qU-7wR"/>
                 <outlet property="nameL" destination="R05-1t-myD" id="kd3-qD-WII"/>
                 <outlet property="progressIndicator" destination="uLu-uc-jhZ" id="Z8G-T5-5sD"/>

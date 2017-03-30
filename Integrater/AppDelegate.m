@@ -7,16 +7,15 @@
 //
 
 #import "AppDelegate.h"
-#import "GNRUserNotificationCenter.h"
 
-@interface AppDelegate ()<NSUserNotificationCenterDelegate>
+@interface AppDelegate ()
 
 @end
 
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    [[GNRUserNotificationCenter center] pushTitle:@"哈哈哈哈" msg:@"哈师大哈斯大市口街道哈匡山街道哈框架"];
+
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {

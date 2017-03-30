@@ -11,14 +11,6 @@
 
 #define WEAK_SELF __weak typeof(self) wself = self
 
-#define k_Integrater_Name_iOS @"k_Integrater_Name_iOS"
-#define k_Debug @"Debug"
-#define k_Release @"Release"
-
-#define k_XcodeProject @".xcodeproj"
-#define k_Xcworkspace @".xcworkspace"
-
-
 //clean
 #define k_ScripFromat_Project_Clean @"do shell script \"xcodebuild clean -project %@ -scheme %@ CONFIGURATION=%@\""
 
@@ -40,13 +32,6 @@
 
 #define k_Upload_URL_Pgyer @"https://qiniu-storage.pgyer.com/apiv1/app/upload"
 
-//log
-#if DEBUG
-#define GLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
-#else
-#define GLog(...)
-#endif
-
 //        application/octet-stream
 //        application/iphone    pxl ipa
 //        application/vnd.android.package-archive  apk
@@ -54,6 +39,7 @@
 
 #import "GNRUtil.h"
 #import "GNRHelper.h"
+#import "GNRConstString.h"
 #import "NSObject+Extension.h"
 #import "NSString+Extension.h"
 

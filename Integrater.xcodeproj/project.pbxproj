@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		42A64D9547220B5CAA686312 /* libPods-Integrater.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D8CE435B2068BB4A0AB94D4A /* libPods-Integrater.a */; };
+		D92CBB601E8CF25A00AE93A8 /* GNRConstString.m in Sources */ = {isa = PBXBuildFile; fileRef = D92CBB5F1E8CF25A00AE93A8 /* GNRConstString.m */; };
+		D92CBB631E8D038000AE93A8 /* GNRDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D92CBB621E8D038000AE93A8 /* GNRDBManager.m */; };
 		D96B63661E7CC05000A9A41D /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D96B63651E7CC05000A9A41D /* Info.plist */; };
 		D96B63711E7CC10000A9A41D /* GNRBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D96B63701E7CC10000A9A41D /* GNRBaseViewController.m */; };
 		D96B63761E7CC14300A9A41D /* GNRRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D96B63751E7CC14300A9A41D /* GNRRootViewController.m */; };
@@ -40,6 +42,11 @@
 		0BB1458C646669185C09F47B /* Pods-Integrater.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Integrater.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Integrater/Pods-Integrater.debug.xcconfig"; sourceTree = "<group>"; };
 		B7C9C8509DA11CB504954B43 /* Pods-Integrater.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Integrater.release.xcconfig"; path = "Pods/Target Support Files/Pods-Integrater/Pods-Integrater.release.xcconfig"; sourceTree = "<group>"; };
 		D8CE435B2068BB4A0AB94D4A /* libPods-Integrater.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Integrater.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D92CBB5D1E8CF0DC00AE93A8 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		D92CBB5E1E8CF25A00AE93A8 /* GNRConstString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRConstString.h; sourceTree = "<group>"; };
+		D92CBB5F1E8CF25A00AE93A8 /* GNRConstString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRConstString.m; sourceTree = "<group>"; };
+		D92CBB611E8D038000AE93A8 /* GNRDBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRDBManager.h; sourceTree = "<group>"; };
+		D92CBB621E8D038000AE93A8 /* GNRDBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRDBManager.m; sourceTree = "<group>"; };
 		D96B63651E7CC05000A9A41D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D96B636F1E7CC10000A9A41D /* GNRBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRBaseViewController.h; sourceTree = "<group>"; };
 		D96B63701E7CC10000A9A41D /* GNRBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRBaseViewController.m; sourceTree = "<group>"; };
@@ -181,6 +188,8 @@
 				D9A851B11E7D2C7C00F9EC54 /* GNRIntegrater.m */,
 				D9E70F9A1E88FA5700D00C69 /* GNRTaskManager.h */,
 				D9E70F9B1E88FA5700D00C69 /* GNRTaskManager.m */,
+				D92CBB611E8D038000AE93A8 /* GNRDBManager.h */,
+				D92CBB621E8D038000AE93A8 /* GNRDBManager.m */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -190,6 +199,8 @@
 			children = (
 				D96B63811E7D289200A9A41D /* GNRObject.h */,
 				D96B63821E7D289200A9A41D /* GNRObject.m */,
+				D92CBB5E1E8CF25A00AE93A8 /* GNRConstString.h */,
+				D92CBB5F1E8CF25A00AE93A8 /* GNRConstString.m */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -247,6 +258,7 @@
 			isa = PBXGroup;
 			children = (
 				D9CAC9731E7BB61D00CBFA81 /* main.m */,
+				D92CBB5D1E8CF0DC00AE93A8 /* PrefixHeader.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -464,12 +476,14 @@
 				D9EFF3A71E8654F200585C5D /* GNRTaskListCell.m in Sources */,
 				D96B63861E7D28C800A9A41D /* GNRArchiveTask.m in Sources */,
 				D96B63891E7D29B100A9A41D /* GNRGitTask.m in Sources */,
+				D92CBB601E8CF25A00AE93A8 /* GNRConstString.m in Sources */,
 				D9A851B81E7D315500F9EC54 /* GNRBaseTask.m in Sources */,
 				D9CAC9741E7BB61D00CBFA81 /* main.m in Sources */,
 				D9EFF3AD1E865E9300585C5D /* GNRTaskListModel.m in Sources */,
 				D9E70F9C1E88FA5700D00C69 /* GNRTaskManager.m in Sources */,
 				D9E70F9F1E88FD1800D00C69 /* NSString+Extension.m in Sources */,
 				D9EFF3B41E866B5D00585C5D /* GNRTaskDetailViewController.m in Sources */,
+				D92CBB631E8D038000AE93A8 /* GNRDBManager.m in Sources */,
 				D9C6DFEE1E88B9470006FE50 /* GNRHelper.m in Sources */,
 				D96B63711E7CC10000A9A41D /* GNRBaseViewController.m in Sources */,
 				D9CAC9711E7BB61D00CBFA81 /* AppDelegate.m in Sources */,
@@ -590,6 +604,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 3637NJMX7D;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "${SRCROOT}/Integrater/PrefixHeader.pch";
 				INFOPLIST_FILE = Integrater/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
@@ -605,6 +622,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 3637NJMX7D;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "${SRCROOT}/Integrater/PrefixHeader.pch";
 				INFOPLIST_FILE = Integrater/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;

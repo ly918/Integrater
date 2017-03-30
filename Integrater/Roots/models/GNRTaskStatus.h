@@ -27,6 +27,7 @@ typedef NS_ENUM(NSInteger,GNRIntegraterTaskStatus) {
 
 
 @interface GNRTaskStatus : GNRObject
+
 @property (nonatomic, assign) GNRIntegraterTaskStatus taskStatus;//任务状态
 @property (nonatomic, copy) NSString * statusMsg;//状态信息、
 @property (nonatomic, copy) NSString * showTime;//状态更新时间

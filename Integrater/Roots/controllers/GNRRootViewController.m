@@ -26,7 +26,6 @@
 - (GNRTaskInfo *)taskInfo{
     if (!_taskInfo) {
         _taskInfo = [GNRTaskInfo new];
-        _taskInfo.buildEnvironment = k_Debug;
     }
     return _taskInfo;
 }
@@ -85,7 +84,6 @@
             break;
         case 2://ipa path
         {
-            _taskInfo.ipaPath = path;
             _pathIPAField.stringValue = path;
         }
             break;
@@ -100,7 +98,7 @@
 
 //选择debug release 触发
 - (IBAction)selectDebug:(id)sender{
-    _taskInfo.buildEnvironment = [(NSMenu *)sender title];
+    _taskInfo.configuration = [(NSMenu *)sender title];
 }
 
 //MARK: - 开始点击 事件

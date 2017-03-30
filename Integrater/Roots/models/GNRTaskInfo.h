@@ -33,13 +33,14 @@ typedef NS_ENUM(NSInteger,GNRProjectType) {
 @property (nonatomic, copy)NSString * schemeName;
 /********/
 
-@property (nonatomic, copy)NSString * buildEnvironment;//构建环境: Debug Release
+@property (nonatomic, copy)NSString * configuration;//构建环境: Debug Release
 //out
 @property (nonatomic, copy)NSString * archivePath;
-@property (nonatomic, copy)NSString * ipaPath;
 
+@property (nonatomic, copy)NSString * archiveOutputParentDir;
 @property (nonatomic, copy)NSString * archiveOutputDir;
 @property (nonatomic, copy)NSString * archiveFileOutputPath;//.xcarchive输出path
+@property (nonatomic, copy)NSString * ipaFileOutputHeadPath;
 @property (nonatomic, copy)NSString * ipaFileOutputPath;//ipa输出path
 
 //upload
@@ -48,6 +49,9 @@ typedef NS_ENUM(NSInteger,GNRProjectType) {
 @property (nonatomic, copy)NSString * userkey;
 
 @property (nonatomic, copy)NSString * optionsPlistPath;
+
+@property (nonatomic, copy)NSString * createTime;//创建时间
+@property (nonatomic, copy)NSString * lastUploadTime;//最后上传时间
 
 //生成其他字段
 - (void)configValues;

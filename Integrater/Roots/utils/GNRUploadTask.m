@@ -74,7 +74,7 @@
                                   }
                               }else{
                                   if (completion) {
-                                      NSError * error_g = [[NSError new]initWithDomain:[responseObject objectForKey:@"message"] code:-1 userInfo:nil];
+                                      NSError * error_g = [NSError errorWithDomain:[responseObject objectForKey:@"message"] code:[[responseObject objectForKey:@"code"] integerValue] userInfo:nil];
                                       completion(NO,responseObject,error_g);
                                   }
                               }

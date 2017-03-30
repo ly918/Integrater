@@ -9,6 +9,7 @@
 #import "GNRTaskListViewController.h"
 #import "GNRTaskListCell.h"
 #import "GNRTaskManager.h"
+#import "GNRDBManager.h"
 
 @interface GNRTaskListViewController ()<NSTableViewDelegate,NSTableViewDataSource,GNRTaskManagerDelegate>
 {
@@ -74,6 +75,7 @@
 }
 
 - (void)updateListModel:(GNRTaskListModel *)model status:(GNRTaskStatus *)status{
+    
     if (status && model) {
         model.statusMsg = status.statusMsg;
         model.progress = status.progress;

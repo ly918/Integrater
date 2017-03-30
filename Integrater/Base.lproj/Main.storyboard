@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16B2555" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12118"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -971,46 +971,10 @@
                                                 <action selector="selectDebug:" target="6o3-x8-Ftf" id="Vs0-6e-qVJ"/>
                                             </connections>
                                         </popUpButton>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ojx-hR-uoE">
-                                            <rect key="frame" x="13" y="167" width="104" height="17"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="17" id="65p-Oi-yTv"/>
-                                                <constraint firstAttribute="width" constant="100" id="fNJ-tE-KBI"/>
-                                            </constraints>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="输出ipa目录" id="6el-m4-W9N">
-                                                <font key="font" size="13" name=".PingFangSC-Regular"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gVC-Z6-C7U">
-                                            <rect key="frame" x="123" y="164" width="291" height="22"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="22" id="ZDY-wt-Xd7"/>
-                                            </constraints>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="请填写ipa输出目录" drawsBackground="YES" id="yHk-Ad-V0H">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Bhp-4q-Zhj">
-                                            <rect key="frame" x="414" y="158" width="81" height="32"/>
-                                            <buttonCell key="cell" type="push" title="选择目录" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4bW-qd-6RJ">
-                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="selectIPAPath:" target="6o3-x8-Ftf" id="Z5O-VB-MSh"/>
-                                            </connections>
-                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="wRU-fi-vT7" firstAttribute="leading" secondItem="Fkq-CZ-fM6" secondAttribute="trailing" constant="6" id="00n-Mn-QPC"/>
-                                        <constraint firstAttribute="trailing" secondItem="gVC-Z6-C7U" secondAttribute="trailing" constant="80" id="09E-yd-T8E"/>
                                         <constraint firstItem="Sz3-7J-0ip" firstAttribute="top" secondItem="UGx-pf-94x" secondAttribute="bottom" constant="10" id="14H-IQ-zYs"/>
-                                        <constraint firstItem="gVC-Z6-C7U" firstAttribute="leading" secondItem="ojx-hR-uoE" secondAttribute="trailing" constant="8" id="6IU-zN-NVp"/>
-                                        <constraint firstItem="Bhp-4q-Zhj" firstAttribute="leading" secondItem="gVC-Z6-C7U" secondAttribute="trailing" constant="6" id="6Ly-pX-9BC"/>
                                         <constraint firstItem="wRU-fi-vT7" firstAttribute="centerY" secondItem="Fkq-CZ-fM6" secondAttribute="centerY" id="BDY-fG-GC6"/>
                                         <constraint firstAttribute="trailing" secondItem="gks-4a-BIb" secondAttribute="trailing" constant="80" id="Cdw-mD-O3E"/>
                                         <constraint firstItem="pFM-ee-eKe" firstAttribute="centerY" secondItem="UGx-pf-94x" secondAttribute="centerY" id="DG7-Ks-x4U"/>
@@ -1022,17 +986,12 @@
                                         <constraint firstItem="QSP-2f-lDa" firstAttribute="centerY" secondItem="gks-4a-BIb" secondAttribute="centerY" id="Uwe-vI-5Nu"/>
                                         <constraint firstItem="Fkq-CZ-fM6" firstAttribute="leading" secondItem="Sz3-7J-0ip" secondAttribute="trailing" constant="8" id="V7W-71-ibo"/>
                                         <constraint firstItem="UGx-pf-94x" firstAttribute="leading" secondItem="lZ3-jX-pZw" secondAttribute="leading" constant="15" id="auS-oN-nvP"/>
-                                        <constraint firstItem="ojx-hR-uoE" firstAttribute="leading" secondItem="lZ3-jX-pZw" secondAttribute="leading" constant="15" id="bbf-fB-sWb"/>
                                         <constraint firstItem="QSP-2f-lDa" firstAttribute="leading" secondItem="gks-4a-BIb" secondAttribute="trailing" constant="6" id="dhw-gP-czJ"/>
                                         <constraint firstItem="gks-4a-BIb" firstAttribute="leading" secondItem="UmL-mv-qXG" secondAttribute="trailing" constant="8" id="fHn-Ne-Ofz"/>
                                         <constraint firstItem="Sz3-7J-0ip" firstAttribute="leading" secondItem="lZ3-jX-pZw" secondAttribute="leading" constant="15" id="kG9-7w-o3e"/>
-                                        <constraint firstItem="Bhp-4q-Zhj" firstAttribute="centerY" secondItem="gVC-Z6-C7U" secondAttribute="centerY" id="lFY-HL-2al"/>
                                         <constraint firstItem="UmL-mv-qXG" firstAttribute="leading" secondItem="lZ3-jX-pZw" secondAttribute="leading" constant="15" id="mjH-s3-pFA"/>
                                         <constraint firstAttribute="trailing" secondItem="QSP-2f-lDa" secondAttribute="trailing" constant="5" id="nRV-PL-zLK"/>
-                                        <constraint firstItem="gVC-Z6-C7U" firstAttribute="centerY" secondItem="ojx-hR-uoE" secondAttribute="centerY" id="q01-3y-1e2"/>
                                         <constraint firstItem="UGx-pf-94x" firstAttribute="top" secondItem="UmL-mv-qXG" secondAttribute="bottom" constant="10" id="q1x-GL-V3Q"/>
-                                        <constraint firstAttribute="trailing" secondItem="Bhp-4q-Zhj" secondAttribute="trailing" constant="5" id="rZ0-qp-1Nk"/>
-                                        <constraint firstItem="ojx-hR-uoE" firstAttribute="top" secondItem="Sz3-7J-0ip" secondAttribute="bottom" constant="10" id="s4r-vg-Mbv"/>
                                         <constraint firstItem="UmL-mv-qXG" firstAttribute="top" secondItem="lZ3-jX-pZw" secondAttribute="top" constant="5" id="zuk-ZR-uKm"/>
                                     </constraints>
                                 </view>
@@ -1137,7 +1096,6 @@
                     <connections>
                         <outlet property="appkeyField" destination="x7A-Ek-84h" id="OOy-KV-di8"/>
                         <outlet property="archivePathField" destination="Fkq-CZ-fM6" id="INC-4b-wb9"/>
-                        <outlet property="ipaPathField" destination="gVC-Z6-C7U" id="gdU-qr-Lcd"/>
                         <outlet property="projPathField" destination="gks-4a-BIb" id="cux-Ey-UBg"/>
                         <outlet property="saveBtn" destination="hgm-9U-qxs" id="Zlx-uT-41p"/>
                         <outlet property="tabView" destination="4e0-xW-h5h" id="kpr-Hf-3ZY"/>

@@ -7,7 +7,7 @@
 //
 
 #import "GNRTaskManager.h"
-
+#import "GNRDBManager.h"
 @implementation GNRTaskManager
 
 + (instancetype)manager{
@@ -23,14 +23,37 @@
     if (self = [super init]) {
         _tasks = [NSMutableArray array];
         _taskListModels = [NSMutableArray array];
+        [self readTaskInfoListFromDB];
     }
     return self;
 }
 
+- (void)readTaskInfoListFromDB{
+    WEAK_SELF;
+    NSMutableArray <GNRTaskInfo *>* taskList = [[GNRDBManager manager] taskInfos];
+    [taskList enumerateObjectsUsingBlock:^(GNRTaskInfo * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [obj configValues];
+        GNRIntegrater * task = [[GNRIntegrater alloc]initWithTaskInfo:obj];
+        [wself addTaskFromDB:task];
+    }];
+
+}
+
+//数据库的
+- (void)addTaskFromDB:(GNRIntegrater *)task{
+    if (task) {
+        [_tasks addObject:task];
+        [self addTaskListModelWithTask:task];
+    }
+}
+
+//新建的
 - (void)addTask:(GNRIntegrater *)task{
     if (task) {
         [_tasks addObject:task];
         [self addTaskListModelWithTask:task];
+        task.taskInfo.createTime = [GNRUtil standardTime:[NSDate date]];//创建时间
+        [[GNRDBManager manager] insertNewTaskInfo:task.taskInfo];
     }
 }
 

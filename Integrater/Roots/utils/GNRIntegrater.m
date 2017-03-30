@@ -7,6 +7,7 @@
 //
 
 #import "GNRIntegrater.h"
+#import "GNRUserNotificationCenter.h"
 
 
 @interface GNRIntegrater ()
@@ -72,19 +73,20 @@
         self.cleanTask.scriptFormat = [NSString stringWithFormat:taskInfo.projectType==GNRProjectType_Proj?k_ScripFromat_Project_Clean:k_ScripFromat_Workspace_Clean,
                                        taskInfo.projectType==GNRProjectType_Proj?taskInfo.projectPath:taskInfo.workspacePath,
                                        taskInfo.schemeName,
-                                       taskInfo.buildEnvironment];
+                                       taskInfo.configuration];
         
         //2 archive
         self.archiveTask.scriptFormat = [NSString stringWithFormat:taskInfo.projectType==GNRProjectType_Proj?k_ScripFromat_Project:k_ScripFromat_Workspace,
                                          taskInfo.projectType==GNRProjectType_Proj?taskInfo.projectPath:taskInfo.workspacePath,
                                          taskInfo.schemeName,
-                                         taskInfo.archiveOutputDir,
-                                         taskInfo.buildEnvironment];
+                                         taskInfo.archiveFileOutputPath,
+                                         taskInfo.configuration];
         //3 ipa
         self.ipaTask.scriptFormat = [NSString stringWithFormat:k_ScriptFormat_IPA,
                                      taskInfo.archiveFileOutputPath,
-                                     taskInfo.ipaPath,
+                                     taskInfo.ipaFileOutputHeadPath,
                                      taskInfo.optionsPlistPath];
+        
         //4 upload
         self.uploadTask.uploadUrl = taskInfo.uploadURL;
         self.uploadTask.appkey = taskInfo.appkey;
@@ -129,6 +131,8 @@ MARK: - 初始化方法
     
     //状态对象
     GNRTaskStatus * taskStatus = [GNRTaskStatus new];
+    self.taskStatus = taskStatus;
+    
     taskStatus.taskStatus = GNRIntegraterTaskStatusCleaning;
     if (_taskBlock) {
         _taskBlock(taskStatus);
@@ -176,6 +180,8 @@ MARK: - 初始化方法
                 taskStatus.taskStatus = GNRIntegraterTaskStatusSucceeded;
                 taskStatus.progress = 30 + progress;//30 ~ 100
                 _running = NO;
+                _taskInfo.lastUploadTime = [GNRUtil standardTime:[NSDate date]];//最后上传时间
+                [wself pushSucceededMsg];
             }else{//上传中
                 taskStatus.taskStatus = GNRIntegraterTaskStatusUpdating;
                 taskStatus.progress = 30 + progress;//30 ~ 100
@@ -187,6 +193,12 @@ MARK: - 初始化方法
         }
     }];
     return self;
+}
+
+- (void)pushSucceededMsg{
+    NSString * title = [NSString stringWithFormat:@"%@",_taskInfo.schemeName];
+    NSString * msg = [NSString stringWithFormat:@"%@",_taskStatus.statusMsg];
+    [[GNRUserNotificationCenter center] pushTitle:title msg:msg];
 }
 
 /**

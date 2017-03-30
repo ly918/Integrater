@@ -17,6 +17,7 @@
 
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
+    _errorLogBtn.bezelColor = [NSColor blueColor];
 }
 
 - (void)setModel:(GNRTaskListModel *)model{
@@ -29,7 +30,14 @@
         _statusMsgL.textColor = _model.textColor;
         _progressIndicator.doubleValue = _model.progress;
         _progressIndicator.hidden = _model.progress==_progressIndicator.maxValue?YES:NO;
+        
+        GNRIntegrater * task = [[GNRTaskManager manager]getTaskWithModel:model];
+        _errorLogBtn.hidden = !(task.taskStatus<0);
     }
+}
+
+- (IBAction)errorLogAction:(id)sender {
+    
 }
 
 @end

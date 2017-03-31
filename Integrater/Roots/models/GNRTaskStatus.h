@@ -30,7 +30,6 @@ typedef NS_ENUM(NSInteger,GNRIntegraterTaskStatus) {
 
 @property (nonatomic, assign) GNRIntegraterTaskStatus taskStatus;//任务状态
 @property (nonatomic, copy) NSString * statusMsg;//状态信息、
-@property (nonatomic, copy) NSString * showTime;//状态更新时间
 @property (nonatomic, strong)NSError * error;//错误信息 如果是脚本错误信息(为字典类型) 则为error的userinfo
 //TODO: - 任务进度
 @property (nonatomic, assign)CGFloat progress;

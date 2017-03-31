@@ -14,7 +14,7 @@
 @property (nonatomic, strong)NSMutableURLRequest * request;
 @property (nonatomic, strong)NSMutableDictionary * parameters;
 @property (nonatomic, strong)AFURLSessionManager * manager;
-
+@property (nonatomic, strong)NSURLSessionUploadTask * uploadTask;
 @end
 
 @implementation GNRUploadTask
@@ -47,10 +47,8 @@
 }
 
 - (void)uploadIPAWithrogress:(void(^)(NSProgress *))progress completion:(void(^)(BOOL,id responseObject,NSError *))completion{
-    
-    NSURLSessionUploadTask *uploadTask;
-    
-    uploadTask = [self.manager
+
+    _uploadTask = [self.manager
                   uploadTaskWithStreamedRequest:self.request
                   progress:^(NSProgress * _Nonnull uploadProgress) {
 
@@ -84,8 +82,14 @@
                       
                   }];
     
-    [uploadTask resume];//开始上传
+    [_uploadTask resume];//开始上传
 
+}
+
+- (void)cancel{
+    if (_uploadTask) {
+        [_uploadTask cancel];
+    }
 }
 
 @end

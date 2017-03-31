@@ -35,6 +35,9 @@ typedef void(^GNRTaskRunStatusBlock)(GNRTaskStatus *);
  */
 - (GNRIntegrater *)runTask;
 
+//停止
+- (GNRIntegrater *)stopTask;
+
 - (void)taskStatusCallback:(GNRTaskRunStatusBlock)block;
 
 @end

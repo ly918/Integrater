@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		42A64D9547220B5CAA686312 /* libPods-Integrater.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D8CE435B2068BB4A0AB94D4A /* libPods-Integrater.a */; };
+		D903384E1E8E034600BB5332 /* GNRButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D903384D1E8E034600BB5332 /* GNRButton.m */; };
 		D92CBB601E8CF25A00AE93A8 /* GNRConstString.m in Sources */ = {isa = PBXBuildFile; fileRef = D92CBB5F1E8CF25A00AE93A8 /* GNRConstString.m */; };
 		D92CBB631E8D038000AE93A8 /* GNRDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D92CBB621E8D038000AE93A8 /* GNRDBManager.m */; };
 		D96B63661E7CC05000A9A41D /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D96B63651E7CC05000A9A41D /* Info.plist */; };
@@ -42,6 +43,8 @@
 		0BB1458C646669185C09F47B /* Pods-Integrater.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Integrater.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Integrater/Pods-Integrater.debug.xcconfig"; sourceTree = "<group>"; };
 		B7C9C8509DA11CB504954B43 /* Pods-Integrater.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Integrater.release.xcconfig"; path = "Pods/Target Support Files/Pods-Integrater/Pods-Integrater.release.xcconfig"; sourceTree = "<group>"; };
 		D8CE435B2068BB4A0AB94D4A /* libPods-Integrater.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Integrater.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D903384C1E8E034600BB5332 /* GNRButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRButton.h; sourceTree = "<group>"; };
+		D903384D1E8E034600BB5332 /* GNRButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRButton.m; sourceTree = "<group>"; };
 		D92CBB5D1E8CF0DC00AE93A8 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		D92CBB5E1E8CF25A00AE93A8 /* GNRConstString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRConstString.h; sourceTree = "<group>"; };
 		D92CBB5F1E8CF25A00AE93A8 /* GNRConstString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRConstString.m; sourceTree = "<group>"; };
@@ -128,6 +131,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D903384B1E8E033100BB5332 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				D903384C1E8E034600BB5332 /* GNRButton.h */,
+				D903384D1E8E034600BB5332 /* GNRButton.m */,
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
 		D96B636C1E7CC08E00A9A41D /* Roots */ = {
 			isa = PBXGroup;
 			children = (
@@ -142,6 +154,7 @@
 		D96B636D1E7CC0B200A9A41D /* Basic */ = {
 			isa = PBXGroup;
 			children = (
+				D903384B1E8E033100BB5332 /* views */,
 				D96B63801E7D289200A9A41D /* utils */,
 				D96B636E1E7CC0C300A9A41D /* controllers */,
 			);
@@ -468,6 +481,7 @@
 			files = (
 				D9F2417C1E86186600210FC8 /* GNRTaskStatus.m in Sources */,
 				D9F2418C1E864D3600210FC8 /* GNRTaskListViewController.m in Sources */,
+				D903384E1E8E034600BB5332 /* GNRButton.m in Sources */,
 				D96B63761E7CC14300A9A41D /* GNRRootViewController.m in Sources */,
 				D9A851B21E7D2C7C00F9EC54 /* GNRIntegrater.m in Sources */,
 				D96EEAB21E8A7B9900680AFF /* GNRUserNotificationCenter.m in Sources */,

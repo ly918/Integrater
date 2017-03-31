@@ -8,7 +8,7 @@
 
 #import "GNRIntegrater.h"
 #import "GNRUserNotificationCenter.h"
-
+#import "GNRTaskManager.h"
 
 @interface GNRIntegrater ()
 
@@ -108,6 +108,7 @@ MARK: - 初始化方法
 - (instancetype)initWithTaskInfo:(GNRTaskInfo *)taskInfo{
     if (self = [super init]) {
         _name = taskInfo.taskName;
+        _taskStatus = [GNRTaskStatus new];
         self.taskInfo = taskInfo;
         _taskQueue = dispatch_queue_create([taskInfo.taskName cStringUsingEncoding:NSUTF8StringEncoding], DISPATCH_QUEUE_SERIAL);
     }
@@ -117,7 +118,7 @@ MARK: - 初始化方法
 - (void)taskStatusCallback:(GNRTaskRunStatusBlock)block{
     _taskBlock = nil;
     _taskBlock = [block copy];
-    [self runTask];
+//    [self runTask];
 }
 
 //TODO: - 总任务
@@ -130,68 +131,78 @@ MARK: - 初始化方法
     _running = YES;
     
     //状态对象
-    GNRTaskStatus * taskStatus = [GNRTaskStatus new];
-    self.taskStatus = taskStatus;
-    
-    taskStatus.taskStatus = GNRIntegraterTaskStatusCleaning;
+    self.taskStatus.taskStatus = GNRIntegraterTaskStatusCleaning;
     if (_taskBlock) {
-        _taskBlock(taskStatus);
+        _taskBlock(_taskStatus);
     }
     
     WEAK_SELF;
     //archive task
     [[[[self runArchiveTask:wself.cleanTask completion:^(BOOL state,NSDictionary * error) {//clean
         if (error) {
-            [taskStatus configWithCode:GNRIntegraterTaskStatusCleanError userInfo:error];
+            [_taskStatus configWithCode:GNRIntegraterTaskStatusCleanError userInfo:error];
         }else{
-            taskStatus.taskStatus = GNRIntegraterTaskStatusBuilding;
-            taskStatus.progress = 10;
+            _taskStatus.taskStatus = GNRIntegraterTaskStatusBuilding;
+            _taskStatus.progress = 10;
         }
         if (_taskBlock) {
-            _taskBlock(taskStatus);
+            _taskBlock(_taskStatus);
         }
     }] runArchiveTask:wself.archiveTask completion:^(BOOL state,NSDictionary * error) {//archive
         if (error) {
-            [taskStatus configWithCode:GNRIntegraterTaskStatusBuildError userInfo:error];
+            [_taskStatus configWithCode:GNRIntegraterTaskStatusBuildError userInfo:error];
         }else{
-            taskStatus.taskStatus = GNRIntegraterTaskStatusArchiving;
-            taskStatus.progress = 20;
+            _taskStatus.taskStatus = GNRIntegraterTaskStatusArchiving;
+            _taskStatus.progress = 20;
         }
         if (_taskBlock) {
-            _taskBlock(taskStatus);
+            _taskBlock(_taskStatus);
         }
     }] runArchiveTask:wself.ipaTask completion:^(BOOL state,NSDictionary * error) {//ipa
         if (error) {
-            [taskStatus configWithCode:GNRIntegraterTaskStatusArchiveError userInfo:error];
+            [_taskStatus configWithCode:GNRIntegraterTaskStatusArchiveError userInfo:error];
         }else{
-            taskStatus.taskStatus = GNRIntegraterTaskStatusUpdating;
-            taskStatus.progress = 30;
+            _taskStatus.taskStatus = GNRIntegraterTaskStatusUpdating;
+            _taskStatus.progress = 30;
         }
         if (_taskBlock) {
-            _taskBlock(taskStatus);
+            _taskBlock(_taskStatus);
         }
     }] uploadTask:wself.uploadTask completion:^(BOOL state, CGFloat progress, NSError * error) {
         if (error) {
-            taskStatus.taskStatus = GNRIntegraterTaskStatusUpdateError;
-            taskStatus.error = error;
+            _taskStatus.taskStatus = GNRIntegraterTaskStatusUpdateError;
+            _taskStatus.error = error;
         }else{
             if (state) {//上传成功
-                taskStatus.showTime = [GNRUtil showDetailTime:[[NSDate date] timeIntervalSince1970]];
-                taskStatus.taskStatus = GNRIntegraterTaskStatusSucceeded;
-                taskStatus.progress = 30 + progress;//30 ~ 100
+                _taskStatus.taskStatus = GNRIntegraterTaskStatusSucceeded;
+                _taskStatus.progress = 30 + progress;//30 ~ 100
                 _running = NO;
-                _taskInfo.lastUploadTime = [GNRUtil standardTime:[NSDate date]];//最后上传时间
+                [[GNRTaskManager manager] updateLastTimeWithTask:wself];
                 [wself pushSucceededMsg];
             }else{//上传中
-                taskStatus.taskStatus = GNRIntegraterTaskStatusUpdating;
-                taskStatus.progress = 30 + progress;//30 ~ 100
+                _taskStatus.taskStatus = GNRIntegraterTaskStatusUpdating;
+                _taskStatus.progress = 30 + progress;//30 ~ 100
                 _running = YES;
             }
         }
         if (_taskBlock) {
-            _taskBlock(taskStatus);
+            _taskBlock(_taskStatus);
         }
     }];
+    return self;
+}
+
+- (GNRIntegrater *)stopTask{
+    [self.taskGroup enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[GNRArchiveTask class]]) {
+            [(GNRArchiveTask *)obj stop];
+        }else if ([obj isKindOfClass:[GNRUploadTask class]]){
+            [(GNRUploadTask *)obj cancel];
+        }
+    }];
+    [self.taskGroup removeAllObjects];
+    //删除所有任务
+    _running = NO;
     return self;
 }
 

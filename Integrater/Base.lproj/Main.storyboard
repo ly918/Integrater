@@ -789,13 +789,13 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
-                            <button horizontalHuggingPriority="750" verticalHuggingPriority="750" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uhl-c4-WOC">
-                                <rect key="frame" x="154" y="231" width="93" height="132"/>
+                            <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uhl-c4-WOC">
+                                <rect key="frame" x="170" y="257" width="60" height="86"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="0NV-fH-fet"/>
-                                    <constraint firstAttribute="height" constant="120" id="szh-2u-IMu"/>
+                                    <constraint firstAttribute="width" constant="60" id="0NV-fH-fet"/>
+                                    <constraint firstAttribute="height" constant="86" id="szh-2u-IMu"/>
                                 </constraints>
-                                <buttonCell key="cell" type="round" title="添加任务" bezelStyle="circular" image="app_icon" imagePosition="above" alignment="center" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="W7J-gN-It8">
+                                <buttonCell key="cell" type="smallSquare" title="添加任务" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="above" alignment="center" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="W7J-gN-It8">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -828,7 +828,7 @@
         <!--Task Detail View Controller-->
         <scene sceneID="bUz-Ky-PZF">
             <objects>
-                <viewController id="6o3-x8-Ftf" customClass="GNRTaskDetailViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GNRTaskDetailViewController" id="6o3-x8-Ftf" customClass="GNRTaskDetailViewController" sceneMemberID="viewController">
                     <tabView key="view" focusRingType="none" initialItem="rbg-ST-b4R" id="4e0-xW-h5h">
                         <rect key="frame" x="0.0" y="0.0" width="514" height="316"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1435,9 +1435,8 @@
     </scenes>
     <resources>
         <image name="NSAddTemplate" width="11" height="11"/>
-        <image name="app_icon" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="YN9-Ys-upB"/>
+        <segue reference="Act-hi-Q09"/>
     </inferredMetricsTieBreakers>
 </document>

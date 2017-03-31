@@ -8,7 +8,11 @@
 
 #import "GNRBaseViewController.h"
 
+@class GNRTaskInfo;
+
 @interface GNRTaskDetailViewController : GNRBaseViewController
+//编辑时传
+@property (nonatomic, strong)GNRTaskInfo * taskInfo;
 
 @property (strong) IBOutlet NSTabView *tabView;
 @property (strong) IBOutlet NSView *toolBar;

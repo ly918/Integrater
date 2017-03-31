@@ -7,16 +7,19 @@
 //
 
 #import "GNRTaskListViewController.h"
+#import "GNRTaskDetailViewController.h"
+
 #import "GNRTaskListCell.h"
 #import "GNRTaskManager.h"
 #import "GNRDBManager.h"
 
-@interface GNRTaskListViewController ()<NSTableViewDelegate,NSTableViewDataSource,GNRTaskManagerDelegate>
+@interface GNRTaskListViewController ()<NSTableViewDelegate,NSTableViewDataSource,GNRTaskManagerDelegate,GNRTaskListCellDelegate>
 {
     NSString * kTaskLiskCellID;
 }
 @property (weak) IBOutlet NSTableView *tableView;
 @property (weak) IBOutlet NSButton *addTaskBtn;
+@property (nonatomic, strong) NSMutableArray * models;
 
 @end
 
@@ -30,18 +33,20 @@
 
 - (void)initData{
     [[GNRTaskManager manager] setDelegate:self];
+    [[GNRTaskManager manager] readTaskInfoListFromDB];
+    _models = [[GNRTaskManager manager] taskListModels];
     [self reloadData];
 }
 
 - (void)reloadData{
     [self refreshUI];
-
 }
 
 - (void)configUI{
     kTaskLiskCellID = @"GNRTaskListCell";
     NSNib * nib = [[NSNib alloc]initWithNibNamed:kTaskLiskCellID bundle:nil];
     [self.tableView registerNib:nib forIdentifier:kTaskLiskCellID];
+    
 }
 
 - (void)refreshUI{
@@ -56,13 +61,14 @@
 
 #pragma mark - table delegate
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView{
-    return [[GNRTaskManager manager] taskListModels].count;
+    return _models.count;
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row{
     GNRTaskListCell * cell = (GNRTaskListCell *)[tableView makeViewWithIdentifier:kTaskLiskCellID owner:self];
-    GNRTaskListModel * model = [[[GNRTaskManager manager] taskListModels] objectAtIndex:row];
+    GNRTaskListModel * model = [_models objectAtIndex:row];
     cell.model = model;
+    cell.delegate= self;
     return cell;
 }
 
@@ -74,20 +80,6 @@
     return tableView.bounds.size.width;
 }
 
-- (void)updateListModel:(GNRTaskListModel *)model status:(GNRTaskStatus *)status{
-    
-    if (status && model) {
-        model.statusMsg = status.statusMsg;
-        model.progress = status.progress;
-        model.lastTime = status.showTime;
-        if (status.taskStatus<0) {
-            model.textColor = [NSColor redColor];
-        }else if(status.taskStatus>0){
-            model.textColor = [NSColor greenColor];
-        }
-    }
-}
-
 - (void)reloadRow:(NSInteger)row{
     [self.tableView reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row] columnIndexes:[NSIndexSet indexSetWithIndex:0]];
 }
@@ -97,13 +89,45 @@
     [self reloadData];
     WEAK_SELF;
     [task taskStatusCallback:^(GNRTaskStatus * status) {
-        [wself updateListModel:taskListModel status:status];
-        [wself reloadRow:[[[GNRTaskManager manager] taskListModels] indexOfObject:taskListModel]];
+        [[GNRTaskManager manager] updateListModel:taskListModel status:status];
+        [wself reloadRow:[_models indexOfObject:taskListModel]];
+    }];
+}
+
+- (void)manager:(GNRTaskManager *)manager readTask_DB:(GNRIntegrater *)task taskListModel:(GNRTaskListModel *)taskListModel{
+    [self reloadData];
+    WEAK_SELF;
+    [task taskStatusCallback:^(GNRTaskStatus * status) {
+        [[GNRTaskManager manager] updateListModel:taskListModel status:status];
+        [wself reloadRow:[_models indexOfObject:taskListModel]];
     }];
 }
 
 - (void)manager:(GNRTaskManager *)manager removeTask:(GNRIntegrater *)task taskListModel:(GNRTaskListModel *)taskListModel{
     [self reloadData];
+}
+
+- (void)cell:(GNRTaskListCell *)cell editTaskListModel:(GNRTaskListModel *)model{
+    [self showDetail:model];
+}
+
+- (void)cell:(GNRTaskListCell *)cell deleteTaskListModel:(GNRTaskListModel *)model{
+    [GNRUtil alertMessage:@"您确认删除么？" completion:^(NSModalResponse returnCode) {
+        if (returnCode==1000) {
+            GNRIntegrater * task = [[GNRTaskManager manager]getTaskWithModel:model];
+            [[GNRTaskManager manager]removeTask:task];
+        }
+    }];
+}
+
+#pragma mark - show detail
+- (void)showDetail:(GNRTaskListModel *)model{
+    GNRIntegrater * task = [[GNRTaskManager manager]getTaskWithModel:model];
+    
+    NSStoryboard * SB = [NSStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+    GNRTaskDetailViewController * detail = (GNRTaskDetailViewController *)[SB instantiateControllerWithIdentifier:@"GNRTaskDetailViewController"];
+    detail.taskInfo = task.taskInfo;
+    [self presentViewControllerAsSheet:detail];
 }
 
 @end

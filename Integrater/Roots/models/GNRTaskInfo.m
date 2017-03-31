@@ -8,7 +8,6 @@
 
 #import "GNRTaskInfo.h"
 
-
 @interface GNRTaskInfo ()
 
 @property (nonatomic, strong) NSString * nowTime;
@@ -27,6 +26,7 @@
     }
     return self;
 }
+
 
 //自动生成其他字段
 - (void)configValues{

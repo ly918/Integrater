@@ -16,6 +16,7 @@
 @property (nonatomic, copy) NSString * iconLetter;
 
 @property (nonatomic, copy) NSString * statusMsg;
+@property (nonatomic, copy) NSString * createTime;
 @property (nonatomic, copy) NSString * lastTime;
 
 @property (nonatomic, copy) NSColor * textColor;

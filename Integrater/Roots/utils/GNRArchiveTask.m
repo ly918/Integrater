@@ -30,4 +30,8 @@
     return error;
 }
 
+- (void)stop{
+    _script = nil;
+}
+
 @end

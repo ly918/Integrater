@@ -17,4 +17,6 @@
 
 - (void)uploadIPAWithrogress:(void(^)(NSProgress *))progress completion:(void(^)(BOOL,id responseObject,NSError *))completion;
 
+- (void)cancel;
+
 @end

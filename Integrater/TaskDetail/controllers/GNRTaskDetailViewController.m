@@ -8,11 +8,10 @@
 
 #import "GNRTaskDetailViewController.h"
 #import "GNRTaskManager.h"
+#import "GNRTaskInfo.h"
 
 @interface GNRTaskDetailViewController ()
-
-@property (nonatomic, strong) GNRTaskInfo * taskInfo;
-
+@property (nonatomic, assign)BOOL isEdit;
 @end
 
 @implementation GNRTaskDetailViewController
@@ -37,8 +36,7 @@
 - (void)installUI{
     [self.view addSubview:self.toolBar];
     self.toolBar.frame = CGRectMake((self.view.bounds.size.width - _toolBar.bounds.size.width)/2.0, (self.view.bounds.size.height - _toolBar.bounds.size.height)/2.0 - 8.f, self.view.bounds.size.width, self.view.bounds.size.height);
-    
-    
+    [self showEditForTaskInfo];
 }
 
 
@@ -98,9 +96,34 @@
 - (void)saveTask{
     [self.taskInfo configValues];
     GLog(@"%@",self.taskInfo);
-    GNRIntegrater * task = [[GNRIntegrater alloc]initWithTaskInfo:self.taskInfo];
-    [[GNRTaskManager manager] addTask:task];
-    [self dismissController:nil];
+    if (_isEdit) {
+        //编辑保存操作
+    }else{
+        GNRIntegrater * task = [[GNRIntegrater alloc]initWithTaskInfo:self.taskInfo];
+        [[GNRTaskManager manager] addTask:task];
+        [self dismissController:nil];
+    }
+}
+
+//编辑任务信息
+- (void)showEditForTaskInfo{
+    
+    if (_taskInfo) {
+        _isEdit = YES;
+        _projPathField.stringValue = _taskInfo.projectDir;
+        _archivePathField.stringValue = _taskInfo.archivePath;
+        _uploadUrlField.stringValue = _taskInfo.uploadURL;
+        _appkeyField.stringValue = _taskInfo.appkey;
+        _userKeyField.stringValue = _taskInfo.userkey;
+    }
+    
+    [_saveBtn setTitle:_isEdit?@"应用":@"添加"];
+    
+    [_projPathField setRefusesFirstResponder:_isEdit];
+    [_archivePathField setRefusesFirstResponder:_isEdit];
+    [_uploadUrlField setRefusesFirstResponder:_isEdit];
+    [_appkeyField setRefusesFirstResponder:_isEdit];
+    [_userKeyField setRefusesFirstResponder:_isEdit];
 }
 
 @end

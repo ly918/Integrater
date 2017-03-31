@@ -9,7 +9,17 @@
 #import <Cocoa/Cocoa.h>
 #import "GNRTaskListModel.h"
 
+@class GNRTaskListCell;
+@protocol GNRTaskListCellDelegate <NSObject>
+
+- (void)cell:(GNRTaskListCell *)cell editTaskListModel:(GNRTaskListModel *)model;
+- (void)cell:(GNRTaskListCell *)cell deleteTaskListModel:(GNRTaskListModel *)model;
+
+@end
+
 @interface GNRTaskListCell : NSTableCellView
+
+@property (nonatomic, weak)id<GNRTaskListCellDelegate> delegate;
 
 @property (weak) IBOutlet NSTextField *iconL;
 @property (weak) IBOutlet NSTextField *nameL;
@@ -17,7 +27,8 @@
 @property (weak) IBOutlet NSTextField *updateTimeL;
 @property (weak) IBOutlet NSProgressIndicator *progressIndicator;
 
-@property (weak) IBOutlet NSButton *errorLogBtn;
+@property (weak) IBOutlet NSButton *checkErrorBtn;
+@property (weak) IBOutlet NSButton *actionBtn;
 
 @property (nonatomic, strong)GNRTaskListModel * model;
 

@@ -12,7 +12,6 @@
 
 - (instancetype)init{
     if (self = [super init]) {
-        _showTime = [GNRUtil showDetailTime:[[NSDate date] timeIntervalSince1970]];
         self.taskStatus = GNRIntegraterTaskStatusPreparing;
     }
     return self;
@@ -28,7 +27,7 @@
 
 - (void)setTaskStatus:(GNRIntegraterTaskStatus)taskStatus{
     _taskStatus = taskStatus;
-    _statusMsg = [GNRTaskStatus statusMsgWithStatus:self.taskStatus];
+    _statusMsg = [GNRTaskStatus statusMsgWithStatus:taskStatus];
 }
 
 + (NSString *)statusMsgWithStatus:(GNRIntegraterTaskStatus)status{

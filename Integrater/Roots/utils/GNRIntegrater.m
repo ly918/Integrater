@@ -35,64 +35,47 @@
 }
 
 - (GNRArchiveTask *)cleanTask{
-    if (!_cleanTask) {
-        _cleanTask = [GNRArchiveTask new];
-        _cleanTask.identifier = @"kArchiveTask_Clean";
-    }
+    _cleanTask = [GNRArchiveTask new];
+    _cleanTask.identifier = @"kArchiveTask_Clean";
+    _cleanTask.scriptFormat = [NSString stringWithFormat:_taskInfo.projectType==GNRProjectType_Proj?k_ScripFromat_Project_Clean:k_ScripFromat_Workspace_Clean,
+                               _taskInfo.projectType==GNRProjectType_Proj?_taskInfo.projectPath:_taskInfo.workspacePath,
+                               _taskInfo.schemeName,
+                               _taskInfo.configuration];
+    
     return _cleanTask;
 }
 
 - (GNRArchiveTask *)archiveTask{
-    if (!_archiveTask) {
-        _archiveTask = [GNRArchiveTask new];
-        _archiveTask.identifier = @"kArchiveTask_Archive";
-    }
+    _archiveTask = [GNRArchiveTask new];
+    _archiveTask.identifier = @"kArchiveTask_Archive";
+    _archiveTask.scriptFormat = [NSString stringWithFormat:_taskInfo.projectType==GNRProjectType_Proj?k_ScripFromat_Project:k_ScripFromat_Workspace,
+                                 _taskInfo.projectType==GNRProjectType_Proj?_taskInfo.projectPath:_taskInfo.workspacePath,
+                                 _taskInfo.schemeName,
+                                 _taskInfo.archiveFileOutputPath,
+                                 _taskInfo.configuration];
+    
     return _archiveTask;
 }
 
 - (GNRArchiveTask *)ipaTask{
-    if (!_ipaTask) {
-        _ipaTask = [GNRArchiveTask new];
-        _ipaTask.identifier = @"kArchiveTask_IPA";
-    }
+    _ipaTask = [GNRArchiveTask new];
+    _ipaTask.identifier = @"kArchiveTask_IPA";
+    _ipaTask.scriptFormat = [NSString stringWithFormat:k_ScriptFormat_IPA,
+                             _taskInfo.archiveFileOutputPath,
+                             _taskInfo.ipaFileOutputHeadPath,
+                             _taskInfo.optionsPlistPath];
+    
     return _ipaTask;
 }
 
 - (GNRUploadTask *)uploadTask{
-    if (!_uploadTask) {
-        _uploadTask = [GNRUploadTask new];
-        _uploadTask.identifier = @"kUploadTask_IPA";
-    }
+    _uploadTask = [GNRUploadTask new];
+    _uploadTask.identifier = @"kUploadTask_IPA";
+    _uploadTask.uploadUrl = _taskInfo.uploadURL;
+    _uploadTask.appkey = _taskInfo.appkey;
+    _uploadTask.userkey = _taskInfo.userkey;
+    _uploadTask.importIPAPath = _taskInfo.ipaFileOutputPath;
     return _uploadTask;
-}
-
-- (void)setTaskInfo:(GNRTaskInfo *)taskInfo{
-    _taskInfo = taskInfo;
-    if (taskInfo) {
-        //1 clean
-        self.cleanTask.scriptFormat = [NSString stringWithFormat:taskInfo.projectType==GNRProjectType_Proj?k_ScripFromat_Project_Clean:k_ScripFromat_Workspace_Clean,
-                                       taskInfo.projectType==GNRProjectType_Proj?taskInfo.projectPath:taskInfo.workspacePath,
-                                       taskInfo.schemeName,
-                                       taskInfo.configuration];
-        
-        //2 archive
-        self.archiveTask.scriptFormat = [NSString stringWithFormat:taskInfo.projectType==GNRProjectType_Proj?k_ScripFromat_Project:k_ScripFromat_Workspace,
-                                         taskInfo.projectType==GNRProjectType_Proj?taskInfo.projectPath:taskInfo.workspacePath,
-                                         taskInfo.schemeName,
-                                         taskInfo.archiveFileOutputPath,
-                                         taskInfo.configuration];
-        //3 ipa
-        self.ipaTask.scriptFormat = [NSString stringWithFormat:k_ScriptFormat_IPA,
-                                     taskInfo.archiveFileOutputPath,
-                                     taskInfo.ipaFileOutputHeadPath,
-                                     taskInfo.optionsPlistPath];
-        
-        //4 upload
-        self.uploadTask.uploadUrl = taskInfo.uploadURL;
-        self.uploadTask.appkey = taskInfo.appkey;
-        self.uploadTask.userkey = taskInfo.userkey;
-        self.uploadTask.importIPAPath = taskInfo.ipaFileOutputPath;
-    }
 }
 
 /**
@@ -110,7 +93,6 @@ MARK: - 初始化方法
         _name = taskInfo.taskName;
         _taskStatus = [GNRTaskStatus new];
         self.taskInfo = taskInfo;
-        _taskQueue = dispatch_queue_create([taskInfo.taskName cStringUsingEncoding:NSUTF8StringEncoding], DISPATCH_QUEUE_SERIAL);
     }
     return self;
 }
@@ -118,7 +100,11 @@ MARK: - 初始化方法
 - (void)taskStatusCallback:(GNRTaskRunStatusBlock)block{
     _taskBlock = nil;
     _taskBlock = [block copy];
-//    [self runTask];
+}
+
+//队列任务
+- (NSString *)newTaskQueueName{
+    return [NSString stringWithFormat:@"%@_%@",self.taskInfo.taskName,[GNRUtil standardTimeForFile:[NSDate date]]];
 }
 
 //TODO: - 总任务
@@ -130,6 +116,9 @@ MARK: - 初始化方法
     
     _running = YES;
     
+    _taskQueue = nil;
+    _taskQueue = dispatch_queue_create([self.newTaskQueueName cStringUsingEncoding:NSUTF8StringEncoding], DISPATCH_QUEUE_SERIAL);
+    
     //状态对象
     self.taskStatus.taskStatus = GNRIntegraterTaskStatusCleaning;
     if (_taskBlock) {
@@ -137,7 +126,6 @@ MARK: - 初始化方法
     }
     
     WEAK_SELF;
-    //archive task
     [[[[self runArchiveTask:wself.cleanTask completion:^(BOOL state,NSDictionary * error) {//clean
         if (error) {
             [_taskStatus configWithCode:GNRIntegraterTaskStatusCleanError userInfo:error];
@@ -194,15 +182,16 @@ MARK: - 初始化方法
 
 - (GNRIntegrater *)stopTask{
     [self.taskGroup enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-        if ([obj isKindOfClass:[GNRArchiveTask class]]) {
-            [(GNRArchiveTask *)obj stop];
-        }else if ([obj isKindOfClass:[GNRUploadTask class]]){
-            [(GNRUploadTask *)obj cancel];
-        }
+        [(GNRBaseTask *)obj cancel];
     }];
     [self.taskGroup removeAllObjects];
     //删除所有任务
     _running = NO;
+    _taskStatus.taskStatus = GNRIntegraterTaskStatusPrepared;
+    _taskStatus.progress = 0;
+    if (_taskBlock) {
+        _taskBlock(_taskStatus);
+    }
     return self;
 }
 

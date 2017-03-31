@@ -92,6 +92,7 @@
         [[GNRTaskManager manager] updateListModel:taskListModel status:status];
         [wself reloadRow:[_models indexOfObject:taskListModel]];
     }];
+    [task runTask];//添加后 执行
 }
 
 - (void)manager:(GNRTaskManager *)manager readTask_DB:(GNRIntegrater *)task taskListModel:(GNRTaskListModel *)taskListModel{

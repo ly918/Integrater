@@ -11,7 +11,11 @@
 @implementation GNRBaseTask
 
 - (void)dealloc{
-    GLog(@"");
+    GLog(@"%@",_identifier);
+}
+
+- (void)cancel{
+    canceled = YES;
 }
 
 @end

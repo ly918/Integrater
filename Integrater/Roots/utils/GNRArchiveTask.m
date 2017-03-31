@@ -23,14 +23,15 @@
  */
 - (NSDictionary *)runScrip{
     NSDictionary * error = nil;
-    if (_script) {
+    if (_script && canceled == NO) {
         error = [NSDictionary new];
         [self.script executeAndReturnError:&error];
     }
     return error;
 }
 
-- (void)stop{
+- (void)cancel{
+    [super cancel];
     _script = nil;
 }
 

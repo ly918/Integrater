@@ -101,7 +101,6 @@
     }else{
         GNRIntegrater * task = [[GNRIntegrater alloc]initWithTaskInfo:self.taskInfo];
         [[GNRTaskManager manager] addTask:task];
-        [task runTask];//添加后 立即执行
         [self dismissController:nil];
     }
 }

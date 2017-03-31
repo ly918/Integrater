@@ -20,6 +20,6 @@
  */
 - (NSDictionary *)runScrip;
 
-- (void)stop;
+
 
 @end

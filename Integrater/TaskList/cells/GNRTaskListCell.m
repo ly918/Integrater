@@ -58,7 +58,7 @@
         _updateTimeL.stringValue = [self showTime];
         _statusMsgL.textColor = _model.textColor;
         _progressIndicator.doubleValue = _model.progress;
-        _progressIndicator.hidden = _model.progress==_progressIndicator.maxValue?YES:NO;
+        _progressIndicator.hidden = (_model.progress<_progressIndicator.maxValue&&_model.progress>0)?NO:YES;
         
         _theTask = self.theTask;
         _checkErrorBtn.hidden = _theTask.taskStatus.taskStatus>=0;

@@ -28,6 +28,24 @@
 - (void)setTaskStatus:(GNRIntegraterTaskStatus)taskStatus{
     _taskStatus = taskStatus;
     _statusMsg = [GNRTaskStatus statusMsgWithStatus:taskStatus];
+    _progress = [GNRTaskStatus progressWithStatus:taskStatus];
+}
+
++ (CGFloat)progressWithStatus:(GNRIntegraterTaskStatus)status{
+    if (status>=0&&status<GNRIntegraterTaskStatusCleaning) {
+        return 0;
+    }else if (status == GNRIntegraterTaskStatusCleaning){
+        return 1;
+    }else if (status == GNRIntegraterTaskStatusBuilding){
+        return 10;
+    }else if (status == GNRIntegraterTaskStatusArchiving){
+        return 20;
+    }else if (status == GNRIntegraterTaskStatusUpdating){
+        return 30;
+    }else if (status == GNRIntegraterTaskStatusSucceeded) {
+        return 130;
+    }
+    return 0;
 }
 
 + (NSString *)statusMsgWithStatus:(GNRIntegraterTaskStatus)status{

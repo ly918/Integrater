@@ -131,7 +131,6 @@ MARK: - 初始化方法
             [_taskStatus configWithCode:GNRIntegraterTaskStatusCleanError userInfo:error];
         }else{
             _taskStatus.taskStatus = GNRIntegraterTaskStatusBuilding;
-            _taskStatus.progress = 10;
         }
         if (_taskBlock) {
             _taskBlock(_taskStatus);
@@ -141,7 +140,6 @@ MARK: - 初始化方法
             [_taskStatus configWithCode:GNRIntegraterTaskStatusBuildError userInfo:error];
         }else{
             _taskStatus.taskStatus = GNRIntegraterTaskStatusArchiving;
-            _taskStatus.progress = 20;
         }
         if (_taskBlock) {
             _taskBlock(_taskStatus);
@@ -151,7 +149,6 @@ MARK: - 初始化方法
             [_taskStatus configWithCode:GNRIntegraterTaskStatusArchiveError userInfo:error];
         }else{
             _taskStatus.taskStatus = GNRIntegraterTaskStatusUpdating;
-            _taskStatus.progress = 30;
         }
         if (_taskBlock) {
             _taskBlock(_taskStatus);
@@ -163,7 +160,6 @@ MARK: - 初始化方法
         }else{
             if (state) {//上传成功
                 _taskStatus.taskStatus = GNRIntegraterTaskStatusSucceeded;
-                _taskStatus.progress = 30 + progress;//30 ~ 100
                 _running = NO;
                 [[GNRTaskManager manager] updateLastTimeWithTask:wself];
                 [wself pushSucceededMsg];
@@ -188,7 +184,6 @@ MARK: - 初始化方法
     //删除所有任务
     _running = NO;
     _taskStatus.taskStatus = GNRIntegraterTaskStatusPrepared;
-    _taskStatus.progress = 0;
     if (_taskBlock) {
         _taskBlock(_taskStatus);
     }

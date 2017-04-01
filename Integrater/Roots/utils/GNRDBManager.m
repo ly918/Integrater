@@ -84,6 +84,9 @@
 
 //insert
 - (void)insertNewTaskInfo:(GNRTaskInfo *)taskInfo{
+    if ([self isEsists:taskInfo.taskName]) {
+        return;
+    }
     [self open];
     bool insert = [self.db executeUpdate:@"INSERT INTO TaskList (Id , name, projectDir, archivePath, uploadURL, appkey, userkey, createTime, lastUploadTime) VALUES (?,?,?,?,?,?,?,?,?)",taskInfo.taskName,taskInfo.schemeName,taskInfo.projectDir,taskInfo.archivePath,taskInfo.uploadURL,taskInfo.appkey,taskInfo.userkey,taskInfo.createTime,taskInfo.lastUploadTime];
     if (insert) {
@@ -96,6 +99,9 @@
 
 //delete
 - (void)deleteTaskInfo:(GNRTaskInfo *)taskInfo{
+    if (![self isEsists:taskInfo.taskName]) {
+        return;
+    }
     [self open];
     bool delete = [self.db executeUpdate:@"DELETE FROM TaskList where Id like ?",taskInfo.taskName];
     if (delete) {
@@ -109,6 +115,9 @@
 
 //update
 - (void)updateTaskInfo:(GNRTaskInfo *)taskInfo{
+    if (![self isEsists:taskInfo.taskName]) {
+        return;
+    }
     [self open];
     bool update = [self.db executeUpdate:@"UPDATE TaskList SET name = ? , projectDir = ? , archivePath = ? , uploadURL = ? , appkey = ? , userkey = ? , createTime = ? , lastUploadTime = ?  where Id = ?",taskInfo.schemeName,taskInfo.projectDir,taskInfo.archivePath,taskInfo.uploadURL,taskInfo.appkey,taskInfo.userkey,taskInfo.createTime,taskInfo.lastUploadTime,taskInfo.taskName];
     if (update) {
@@ -120,7 +129,6 @@
 }
 
 - (NSMutableArray <GNRTaskInfo *>*)taskInfos{
-    
     [self open];
     NSMutableArray * taskInfos = [NSMutableArray array];
     
@@ -129,15 +137,22 @@
     while ([set next]) {
         GNRTaskInfo * taskInfo = [[GNRTaskInfo alloc]init];
         NSDictionary * dict = [set resultDictionary];
-    
         [taskInfo setValuesForKeysWithDictionary:dict];
-//        taskInfo.name = [set stringForColumn:@"name"];
         [taskInfos addObject:taskInfo];
-        GLog(@"%@",taskInfo);
+        GLog(@"TaskInfo From DB %@",taskInfo);
     }
-    
     [self close];
     return taskInfos;
+}
+
+//是否存在
+- (BOOL)isEsists:(NSString *)taskName{
+    for (GNRTaskInfo * obj in [self taskInfos]) {
+        if ([obj.taskName isEqualToString:taskName]) {
+            return YES;
+        }
+    }
+    return NO;
 }
 
 @end

@@ -63,8 +63,11 @@
         _theTask = self.theTask;
         _checkErrorBtn.hidden = _theTask.taskStatus.taskStatus>=0;
         [_startItem setTitle:_theTask.running?@"停止任务":@"开始任务"];
+        BOOL en = !_theTask.running;
+        [self.deleteItem setEnabled:en];
     }
 }
+
 
 - (GNRIntegrater *)theTask{
     GNRIntegrater * task = nil;

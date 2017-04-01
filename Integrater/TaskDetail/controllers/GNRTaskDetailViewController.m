@@ -98,10 +98,17 @@
     GLog(@"%@",self.taskInfo);
     if (_isEdit) {
         //编辑保存操作
-    }else{
-        GNRIntegrater * task = [[GNRIntegrater alloc]initWithTaskInfo:self.taskInfo];
-        [[GNRTaskManager manager] addTask:task];
+        //更新task & taskInfo & DB
+        [[GNRTaskManager manager] updateTaskInfo:self.taskInfo];
         [self dismissController:nil];
+    }else{
+        if ([[GNRTaskManager manager] isExsitsTask:self.taskInfo.taskName] == NO) {
+            GNRIntegrater * task = [[GNRIntegrater alloc]initWithTaskInfo:self.taskInfo];
+            [[GNRTaskManager manager] addTask:task];
+            [self dismissController:nil];
+        }else{
+            [GNRUtil alertMessage:@"该任务已存在！"];
+        }
     }
 }
 

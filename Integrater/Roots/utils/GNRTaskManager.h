@@ -32,6 +32,8 @@
 - (void)readTaskInfoListFromDB;
 //新添加一个任务
 - (void)addTask:(GNRIntegrater *)task;
+//update任务
+- (void)updateTaskInfo:(GNRTaskInfo *)taskInfo;
 //删除一个任务
 - (void)removeTask:(GNRIntegrater *)task;
 //MARK: - 从列表数据 获取 任务
@@ -40,5 +42,6 @@
 - (void)updateLastTimeWithTask:(GNRIntegrater *)task;
 //MARK: - 通过任务状态 更新列表数据
 - (void)updateListModel:(GNRTaskListModel *)model status:(GNRTaskStatus *)status;
-
+//是否存在 该任务
+- (BOOL)isExsitsTask:(NSString *)taskName;
 @end

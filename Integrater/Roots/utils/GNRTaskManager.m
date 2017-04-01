@@ -55,7 +55,7 @@
 
 //MARK: - 新添加任务
 - (void)addTask:(GNRIntegrater *)task{
-    if (task && ![self isExsitsTask:task]) {
+    if (task && ![self isExsitsTask:task.taskInfo.taskName]) {
         [_tasks addObject:task];
         GNRTaskListModel * model=[self addTaskListModelWithTask:task];
         task.taskInfo.createTime = @([[NSDate date] timeIntervalSince1970]).stringValue;//创建时间
@@ -65,6 +65,11 @@
             [_delegate manager:self addTask:task taskListModel:model];
         }
     }
+}
+
+//update任务
+- (void)updateTaskInfo:(GNRTaskInfo *)taskInfo{
+    [[GNRDBManager manager] updateTaskInfo:taskInfo];
 }
 
 - (GNRTaskListModel *)addTaskListModelWithTask:(GNRIntegrater *)task{
@@ -103,10 +108,10 @@
 }
 
 //是否存在 该任务
-- (BOOL)isExsitsTask:(GNRIntegrater *)task{
-    if (task) {
+- (BOOL)isExsitsTask:(NSString *)taskName{
+    if (taskName.length) {
         for (GNRIntegrater * obj in _tasks) {
-            if (obj.taskInfo.taskName == task.taskInfo.taskName) {
+            if ([obj.taskInfo.taskName isEqualToString:taskName]) {
                 return YES;
             }
         }

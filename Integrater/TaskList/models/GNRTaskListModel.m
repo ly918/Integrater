@@ -20,7 +20,11 @@
 - (instancetype)initWithTaskName:(NSString *)taskName appName:(NSString *)appName{
     if (self = [super init]) {
         _iconLetter = @"";
+        _appName = @"";
+        _statusMsg = @"";
+        _createTime = @"";
         _lastTime = @"";
+        _progress = 0;
         _textColor = [NSColor textColor];
         _taskName = taskName;
         self.appName = appName;

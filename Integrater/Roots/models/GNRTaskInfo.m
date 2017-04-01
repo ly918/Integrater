@@ -19,10 +19,13 @@
 
 - (instancetype)init{
     if (self = [super init]) {
-        _configuration = k_Configuration_Debug;
-        _platform = GNRTaskInfoPlatform_iOS;
+        _projectPath = @"";
+        _workspacePath = @"";
         _createTime = @"";
         _lastUploadTime = @"";
+        _configuration = k_Configuration_Debug;
+        _platform = GNRTaskInfoPlatform_iOS;
+        
     }
     return self;
 }
@@ -73,10 +76,10 @@
     //type proj schemeName
     if (hasWorkspace) {
         _projectType = GNRProjectType_Workspace;
-        self.schemeName = [projectContent substringWithRange:NSMakeRange(0,workspaceContent.length - k_Xcworkspace.length)];
+        self.schemeName = [workspaceContent substringWithRange:NSMakeRange(0,workspaceContent.length - k_Xcworkspace.length)];
     }else if (hasProj) {
         _projectType = GNRProjectType_Proj;
-        self.schemeName = [workspaceContent substringWithRange:NSMakeRange(0, projectContent.length - k_XcodeProject.length)];
+        self.schemeName = [projectContent substringWithRange:NSMakeRange(0, projectContent.length - k_XcodeProject.length)];
     }
     
     NSDate * date = [NSDate date];

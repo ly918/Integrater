@@ -52,10 +52,10 @@
 - (void)setModel:(GNRTaskListModel *)model{
     _model = model;
     if (model) {
-        _nameL.stringValue = _model.appName;
-        _iconL.stringValue = _model.iconLetter;
-        _statusMsgL.stringValue = _model.statusMsg;
-        _updateTimeL.stringValue = [self showTime];
+        _nameL.stringValue = _model.appName?:@"";
+        _iconL.stringValue = _model.iconLetter?:@"";
+        _statusMsgL.stringValue = _model.statusMsg?:@"";
+        _updateTimeL.stringValue = [self showTime]?:@"";
         _statusMsgL.textColor = _model.textColor;
         _progressIndicator.doubleValue = _model.progress;
         _progressIndicator.hidden = (_model.progress<_progressIndicator.maxValue&&_model.progress>0)?NO:YES;

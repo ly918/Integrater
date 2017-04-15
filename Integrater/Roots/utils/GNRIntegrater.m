@@ -9,12 +9,12 @@
 #import "GNRIntegrater.h"
 #import "GNRUserNotificationCenter.h"
 #import "GNRTaskManager.h"
+#import "GNRBlockOperation.h"
 
 @interface GNRIntegrater ()
 
 @property (nonatomic, strong)NSMutableDictionary * taskGroup;
 @property (nonatomic, strong)NSOperationQueue * operationQueue;//任务队列
-
 @property (nonatomic, copy)GNRTaskRunStatusBlock taskBlock;
 
 @end
@@ -53,7 +53,7 @@
 }
 
 - (GNRArchiveTask *)ipaTask{
-    GNRArchiveTask *_ipaTask = [GNRArchiveTask new];
+    GNRArchiveTask * _ipaTask = [GNRArchiveTask new];
     _ipaTask.identifier = [NSString stringWithFormat:@"%@%@",k_TaskID_ArchiveTask_IPA,self.taskInfo.schemeName];
     _ipaTask.scriptFormat = [NSString stringWithFormat:k_ScriptFormat_IPA,
                              _taskInfo.archiveFileOutputPath,
@@ -64,7 +64,7 @@
 }
 
 - (GNRUploadTask *)uploadTask{
-    GNRUploadTask *_uploadTask = [GNRUploadTask new];
+    GNRUploadTask * _uploadTask = [GNRUploadTask new];
     _uploadTask.identifier = [NSString stringWithFormat:@"%@%@",k_TaskID_UploadTask_IPA,self.taskInfo.schemeName];
     _uploadTask.uploadUrl = _taskInfo.uploadURL;
     _uploadTask.appkey = _taskInfo.appkey;
@@ -73,12 +73,11 @@
     return _uploadTask;
 }
 
-- (NSOperationQueue *)operationQueue{
-    if (!_operationQueue) {
-        _operationQueue = [[NSOperationQueue alloc]init];
-        _operationQueue.maxConcurrentOperationCount = 1;
-    }
-    return _operationQueue;
+- (NSOperationQueue *)newOperationQueue{
+    NSOperationQueue * operationQueue = [[NSOperationQueue alloc]init];
+    operationQueue.maxConcurrentOperationCount = 1;
+    operationQueue.name = self.taskInfo.taskName;
+    return operationQueue;
 }
 
 /**
@@ -86,7 +85,7 @@ MARK: - 初始化方法
  */
 - (instancetype)init{
     if (self = [super init]) {
-        self.operationQueue.name = @"";
+    
     }
     return self;
 }
@@ -105,30 +104,30 @@ MARK: - 初始化方法
     _taskBlock = [block copy];
 }
 
-//队列任务
-- (NSString *)newTaskQueueName{
-    return [NSString stringWithFormat:@"%@_%@",self.taskInfo.taskName,[GNRUtil standardTimeForFile:[NSDate date]]];
-}
-
 //TODO: - 总任务
 - (GNRIntegrater *)runTask{
-    
+
     if (_running==YES) {//防止重复调用
         return self;
     }
     
+    [self clearQueue];
+
     _running = YES;
-    //队列名
-    self.operationQueue.name = self.newTaskQueueName;
+    
+    _operationQueue = [self newOperationQueue];
 
     //状态对象
     self.taskStatus.taskStatus = GNRIntegraterTaskStatusCleaning;
+
     if (_taskBlock) {
         _taskBlock(_taskStatus);
     }
     
+    
     WEAK_SELF;
-    [[[[self runArchiveTask:wself.cleanTask completion:^(BOOL state,NSDictionary * error) {//clean
+    //clean
+    [self runArchiveTask:wself.cleanTask completion:^(BOOL state,NSDictionary * error) {
         if (error) {
             [_taskStatus configWithCode:GNRIntegraterTaskStatusCleanError userInfo:error];
         }else{
@@ -137,7 +136,10 @@ MARK: - 初始化方法
         if (_taskBlock) {
             _taskBlock(_taskStatus);
         }
-    }] runArchiveTask:wself.archiveTask completion:^(BOOL state,NSDictionary * error) {//archive
+    }];
+    
+    //build
+    [self runArchiveTask:wself.archiveTask completion:^(BOOL state,NSDictionary * error) {
         if (error) {
             [_taskStatus configWithCode:GNRIntegraterTaskStatusBuildError userInfo:error];
         }else{
@@ -146,7 +148,10 @@ MARK: - 初始化方法
         if (_taskBlock) {
             _taskBlock(_taskStatus);
         }
-    }] runArchiveTask:wself.ipaTask completion:^(BOOL state,NSDictionary * error) {//ipa
+    }];
+    
+    //archive
+    [self runArchiveTask:wself.ipaTask completion:^(BOOL state,NSDictionary * error) {
         if (error) {
             [_taskStatus configWithCode:GNRIntegraterTaskStatusArchiveError userInfo:error];
         }else{
@@ -155,7 +160,10 @@ MARK: - 初始化方法
         if (_taskBlock) {
             _taskBlock(_taskStatus);
         }
-    }] uploadTask:wself.uploadTask completion:^(BOOL state, CGFloat progress, NSError * error) {
+    }];
+    
+    //upload
+    [self uploadTask:wself.uploadTask completion:^(BOOL state, CGFloat progress, NSError * error) {
         if (error) {
             if(error.code == -999){//手动取消
                 _taskStatus.taskStatus = GNRIntegraterTaskStatusPrepared;
@@ -183,13 +191,22 @@ MARK: - 初始化方法
     return self;
 }
 
-- (GNRIntegrater *)stopTask{
+- (void)clearQueue{
+    [self.operationQueue.operations enumerateObjectsUsingBlock:^(__kindof GNRBlockOperation * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [obj cancel];
+        [obj setStop:YES];
+    }];
     [self.operationQueue cancelAllOperations];//取消所有任务
+    GLog(@"%@ all operations %ld",self.name,self.operationQueue.operationCount);
     [self.taskGroup enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
         [(GNRBaseTask *)obj cancel];
     }];
     [self.taskGroup removeAllObjects];
+}
+
+- (GNRIntegrater *)stopTask{
     [self returnTaskStatus];
+    [self clearQueue];
     return self;
 }
 
@@ -222,22 +239,27 @@ TODO: - 打包任务
     [self addToGroupWithTask:task];
     //2 异步执行队列
     WEAK_SELF;
-    NSBlockOperation * operation = [NSBlockOperation blockOperationWithBlock:^{
+    __block GNRBlockOperation * operation = [GNRBlockOperation blockOperationWithBlock:^{
+        if (operation.stop) {
+            return;
+        }
         //队列中
         //1 执行
         NSDictionary * error = [task runScrip];
         //2 删除此任务
         [wself removeFromGroupWithTask:task];
         //3 主线程回调
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (completion) {
-                completion(error.allKeys.count?NO:YES,error.allKeys.count?error:nil);
-            }
-            _running = error.allKeys.count?NO:YES;
-            if (error.allKeys.count) {
-                [wself pushErrorMsg];
-            }
-        });
+        if (operation.stop==NO) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (completion&&operation.stop==NO) {
+                    completion(error.allKeys.count?NO:YES,error.allKeys.count?error:nil);
+                }
+                _running = error.allKeys.count?NO:YES;
+                if (error.allKeys.count) {
+                    [wself pushErrorMsg];
+                }
+            });
+        }
     }];
     operation.name = task.identifier;
     [self.operationQueue addOperation:operation];
@@ -251,21 +273,29 @@ TODO: - 打包任务
     //1 加入任务组
     [self addToGroupWithTask:task];
     //2 异步执行队列
-    NSBlockOperation * operation = [NSBlockOperation blockOperationWithBlock:^{
+    __block GNRBlockOperation * operation = [GNRBlockOperation blockOperationWithBlock:^{
+        if (operation.stop) {
+            return;
+        }
         [task uploadIPAWithrogress:^(NSProgress * progress) {
             //3 上传进度
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (completion) {
-                    completion(NO,100.f*(double)progress.completedUnitCount/(double)progress.totalUnitCount,nil);
-                }
-            });
+            if (operation.stop==NO) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (completion) {
+                        completion(NO,100.f*(double)progress.completedUnitCount/(double)progress.totalUnitCount,nil);
+                    }
+                });
+            }
+
         } completion:^(BOOL state, id responseObject, NSError * error) {
             //4 上传结束
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (completion) {
-                    completion(state,100.f,state?nil:error);
-                }
-            });
+            if (operation.stop==NO) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (completion) {
+                        completion(state,100.f,state?nil:error);
+                    }
+                });
+            }
         }];
     }];
     operation.name = task.identifier;
@@ -283,7 +313,7 @@ TODO: - 打包任务
 }
 
 /**
- 从数组中任务组
+ 从数组中移除任务组
  */
 - (void)removeFromGroupWithTask:(GNRBaseTask *)task{
     if (task.identifier) {

@@ -8,6 +8,11 @@
 
 #import "GNRTaskManager.h"
 #import "GNRDBManager.h"
+
+@interface GNRTaskManager()
+
+@end
+
 @implementation GNRTaskManager
 
 + (instancetype)manager{
@@ -159,6 +164,27 @@
     NSString * lastUpdateTime = @([[NSDate date] timeIntervalSince1970]).stringValue;//最后更新时间
     task.taskInfo.lastUploadTime = lastUpdateTime;
     [[GNRDBManager manager]updateTaskInfo:task.taskInfo];
+}
+
+//MARK: - 过滤
+- (NSMutableArray *)filter:(NSString *)keyword{
+    __block NSMutableArray * names = [NSMutableArray array];
+    __block NSMutableArray * fileters = [NSMutableArray array];
+    
+    [_taskListModels enumerateObjectsUsingBlock:^(GNRTaskListModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [names addObject:obj.appName];
+    }];
+    NSPredicate * pred = [NSPredicate predicateWithFormat:@"SELF CONTAINS[cd] %@",keyword];
+    [names filterUsingPredicate:pred];
+    
+    for (NSString * name in names) {
+        [_taskListModels enumerateObjectsUsingBlock:^(GNRTaskListModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([name isEqualToString:obj.appName]) {
+                [fileters addObject:obj];
+            }
+        }];
+    }
+    return fileters;
 }
 
 @end

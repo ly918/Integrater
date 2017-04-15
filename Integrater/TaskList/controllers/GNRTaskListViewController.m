@@ -13,14 +13,17 @@
 #import "GNRTaskManager.h"
 #import "GNRDBManager.h"
 
-@interface GNRTaskListViewController ()<NSTableViewDelegate,NSTableViewDataSource,GNRTaskManagerDelegate,GNRTaskListCellDelegate>
+@interface GNRTaskListViewController ()<NSTableViewDelegate,NSTableViewDataSource,GNRTaskManagerDelegate,GNRTaskListCellDelegate,
+    NSSearchFieldDelegate>
 {
     NSString * kTaskLiskCellID;
+    BOOL searching;
 }
+@property (weak) IBOutlet NSSearchField *searchField;
 @property (weak) IBOutlet NSTableView *tableView;
 @property (weak) IBOutlet NSButton *addTaskBtn;
 @property (nonatomic, strong) NSMutableArray * models;
-
+@property (nonatomic, strong) NSMutableArray * filtersModels;
 @end
 
 @implementation GNRTaskListViewController
@@ -35,6 +38,7 @@
     [[GNRTaskManager manager] setDelegate:self];
     [[GNRTaskManager manager] readTaskInfoListFromDB];
     _models = [[GNRTaskManager manager] taskListModels];
+    _filtersModels = [NSMutableArray array];
     [self reloadData];
 }
 
@@ -46,12 +50,12 @@
     kTaskLiskCellID = @"GNRTaskListCell";
     NSNib * nib = [[NSNib alloc]initWithNibNamed:kTaskLiskCellID bundle:nil];
     [self.tableView registerNib:nib forIdentifier:kTaskLiskCellID];
-    
+    [_searchField setTarget:self];
+    [_searchField setAction:@selector(searchFieldTextChanged:)];
 }
 
 - (void)refreshUI{
     [self.tableView reloadData];
-
     if ([[GNRTaskManager manager] taskListModels].count) {
         _addTaskBtn.hidden = YES;
     }else{
@@ -61,12 +65,12 @@
 
 #pragma mark - table delegate
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView{
-    return _models.count;
+    return searching?_filtersModels.count:_models.count;
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row{
     GNRTaskListCell * cell = (GNRTaskListCell *)[tableView makeViewWithIdentifier:kTaskLiskCellID owner:self];
-    GNRTaskListModel * model = [_models objectAtIndex:row];
+    GNRTaskListModel * model = [searching?_filtersModels:_models objectAtIndex:row];
     cell.model = model;
     cell.delegate= self;
     return cell;
@@ -84,13 +88,34 @@
     [self.tableView reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row] columnIndexes:[NSIndexSet indexSetWithIndex:0]];
 }
 
+//search
+- (void)searchFieldDidStartSearching:(NSSearchField *)sender{
+    GLog(@"");
+    searching = YES;
+    [_filtersModels removeAllObjects];
+}
+
+- (void)searchFieldDidEndSearching:(NSSearchField *)sender{
+    GLog(@"");
+    searching = NO;
+}
+
+- (void)searchFieldTextChanged:(id)sender{
+    GLog(@"");
+    if (!_models.count) {
+        return;
+    }
+    _filtersModels = [[GNRTaskManager manager] filter:_searchField.stringValue];
+    [self refreshUI];
+}
+
 #pragma mark - task manager delegate
 - (void)manager:(GNRTaskManager *)manager addTask:(GNRIntegrater *)task taskListModel:(GNRTaskListModel *)taskListModel{
     [self reloadData];
     WEAK_SELF;
     [task taskStatusCallback:^(GNRTaskStatus * status) {
         [[GNRTaskManager manager] updateListModel:taskListModel status:status];
-        [wself reloadRow:[_models indexOfObject:taskListModel]];
+        [wself reloadRow:[searching?_filtersModels:_models indexOfObject:taskListModel]];
     }];
     [task runTask];//添加后 执行
 }
@@ -100,7 +125,7 @@
     WEAK_SELF;
     [task taskStatusCallback:^(GNRTaskStatus * status) {
         [[GNRTaskManager manager] updateListModel:taskListModel status:status];
-        [wself reloadRow:[_models indexOfObject:taskListModel]];
+        [wself reloadRow:[searching?_filtersModels:_models indexOfObject:taskListModel]];
     }];
 }
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16B2555" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12118"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -715,6 +716,9 @@
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </searchFieldCell>
+                                        <connections>
+                                            <outlet property="delegate" destination="RqU-lT-3Ov" id="ZQN-Nn-MgB"/>
+                                        </connections>
                                     </searchField>
                                 </subviews>
                                 <constraints>
@@ -818,6 +822,7 @@
                     </view>
                     <connections>
                         <outlet property="addTaskBtn" destination="uhl-c4-WOC" id="7Sz-15-tlD"/>
+                        <outlet property="searchField" destination="q4b-oc-Ng0" id="TRR-rc-6wU"/>
                         <outlet property="tableView" destination="JYM-ek-YxC" id="kwv-Zm-Xeg"/>
                     </connections>
                 </viewController>

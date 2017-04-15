@@ -19,6 +19,7 @@
 		D96B63891E7D29B100A9A41D /* GNRGitTask.m in Sources */ = {isa = PBXBuildFile; fileRef = D96B63881E7D29B100A9A41D /* GNRGitTask.m */; };
 		D96B638C1E7D29D600A9A41D /* GNRUploadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = D96B638B1E7D29D600A9A41D /* GNRUploadTask.m */; };
 		D96EEAB21E8A7B9900680AFF /* GNRUserNotificationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = D96EEAB11E8A7B9900680AFF /* GNRUserNotificationCenter.m */; };
+		D9749E981EA1C60400E67A55 /* GNRBlockOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = D9749E971EA1C60400E67A55 /* GNRBlockOperation.m */; };
 		D987363C1E7D3F0D006A84CB /* GNRTaskInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D987363B1E7D3F0D006A84CB /* GNRTaskInfo.m */; };
 		D9A851B21E7D2C7C00F9EC54 /* GNRIntegrater.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A851B11E7D2C7C00F9EC54 /* GNRIntegrater.m */; };
 		D9A851B81E7D315500F9EC54 /* GNRBaseTask.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A851B71E7D315500F9EC54 /* GNRBaseTask.m */; };
@@ -65,6 +66,8 @@
 		D96B638B1E7D29D600A9A41D /* GNRUploadTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRUploadTask.m; sourceTree = "<group>"; };
 		D96EEAB01E8A7B9900680AFF /* GNRUserNotificationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRUserNotificationCenter.h; sourceTree = "<group>"; };
 		D96EEAB11E8A7B9900680AFF /* GNRUserNotificationCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRUserNotificationCenter.m; sourceTree = "<group>"; };
+		D9749E961EA1C60400E67A55 /* GNRBlockOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRBlockOperation.h; sourceTree = "<group>"; };
+		D9749E971EA1C60400E67A55 /* GNRBlockOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRBlockOperation.m; sourceTree = "<group>"; };
 		D98736321E7D36CF006A84CB /* GNRHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GNRHeader.h; sourceTree = "<group>"; };
 		D987363A1E7D3F0D006A84CB /* GNRTaskInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRTaskInfo.h; sourceTree = "<group>"; };
 		D987363B1E7D3F0D006A84CB /* GNRTaskInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRTaskInfo.m; sourceTree = "<group>"; };
@@ -182,6 +185,8 @@
 		D96B63731E7CC12600A9A41D /* tools */ = {
 			isa = PBXGroup;
 			children = (
+				D9749E961EA1C60400E67A55 /* GNRBlockOperation.h */,
+				D9749E971EA1C60400E67A55 /* GNRBlockOperation.m */,
 			);
 			path = tools;
 			sourceTree = "<group>";
@@ -500,6 +505,7 @@
 				D92CBB631E8D038000AE93A8 /* GNRDBManager.m in Sources */,
 				D9C6DFEE1E88B9470006FE50 /* GNRHelper.m in Sources */,
 				D96B63711E7CC10000A9A41D /* GNRBaseViewController.m in Sources */,
+				D9749E981EA1C60400E67A55 /* GNRBlockOperation.m in Sources */,
 				D9CAC9711E7BB61D00CBFA81 /* AppDelegate.m in Sources */,
 				D9EFF3B11E86601300585C5D /* GNRUtil.m in Sources */,
 				D9E70F991E88F3BA00D00C69 /* NSObject+Extension.m in Sources */,

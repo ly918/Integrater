@@ -99,9 +99,6 @@
 
 //delete
 - (void)deleteTaskInfo:(GNRTaskInfo *)taskInfo{
-    if (![self isEsists:taskInfo.taskName]) {
-        return;
-    }
     [self open];
     bool delete = [self.db executeUpdate:@"DELETE FROM TaskList where Id like ?",taskInfo.taskName];
     if (delete) {
@@ -137,9 +134,21 @@
     while ([set next]) {
         GNRTaskInfo * taskInfo = [[GNRTaskInfo alloc]init];
         NSDictionary * dict = [set resultDictionary];
-        [taskInfo setValuesForKeysWithDictionary:dict];
-        [taskInfos addObject:taskInfo];
-        GLog(@"TaskInfo From DB %@",taskInfo);
+        NSString * Id = [dict objectForKey:@"Id"];
+        NSLog(@"%@",Id);
+        if (Id
+            &&![Id isKindOfClass:[NSNull class]]
+            &&![Id isEqualToString:@"<null>"]) {
+            [taskInfo setValuesForKeysWithDictionary:dict];
+            [taskInfo configValues];
+            [taskInfos addObject:taskInfo];
+            GLog(@"TaskInfo From DB %@",taskInfo);
+        }else{
+            bool delete = [self.db executeUpdate:@"DELETE FROM TaskList where Id like ?",[dict objectForKey:@"Id"]];
+            if (delete) {
+                GLog(@"delete error data %d",delete);
+            }
+        }
     }
     [self close];
     return taskInfos;

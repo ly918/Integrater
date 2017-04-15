@@ -22,14 +22,12 @@
 @implementation GNRTaskListCell
 
 - (IBAction)startMenuAction:(id)sender {
-    if (_theTask) {
-        if (_theTask.running) {
-            [_theTask stopTask];
-        }else{
-            [_theTask runTask];
-        }
-        [_startItem setTitle:_theTask.running?@"停止任务":@"开始任务"];
+    if (_theTask.running) {
+        [_theTask stopTask];
+    }else{
+        [_theTask runTask];
     }
+    [_startItem setTitle:_theTask.running?@"停止任务":@"开始任务"];
 }
 
 - (IBAction)editMenuAction:(id)sender {
@@ -64,7 +62,7 @@
         _checkErrorBtn.hidden = _theTask.taskStatus.taskStatus>=0;
         [_startItem setTitle:_theTask.running?@"停止任务":@"开始任务"];
         BOOL en = !_theTask.running;
-        [self.deleteItem setEnabled:en];
+        [self.deleteItem setHidden:!en];
     }
 }
 

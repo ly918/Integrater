@@ -22,8 +22,11 @@
  运行脚本
  */
 - (NSDictionary *)runScrip{
+    if (canceled) {
+        return nil;
+    }
     NSDictionary * error = nil;
-    if (_script && canceled == NO) {
+    if (_script) {
         error = [NSDictionary new];
         [self.script executeAndReturnError:&error];
     }

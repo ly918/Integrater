@@ -88,13 +88,18 @@
     self.taskInfo.uploadURL = _uploadUrlField.stringValue;
     self.taskInfo.appkey = _appkeyField.stringValue;
     self.taskInfo.userkey = _userKeyField.stringValue;
+    
+    [self.taskInfo configValues];
+
+    if (![self check]) {
+        return;
+    }
 
     [self saveTask];
 }
 
 //MARK: - 保存该任务
 - (void)saveTask{
-    [self.taskInfo configValues];
     GLog(@"%@",self.taskInfo);
     if (_isEdit) {
         //编辑保存操作
@@ -110,6 +115,15 @@
             [GNRUtil alertMessage:@"该任务已存在！"];
         }
     }
+}
+
+- (BOOL)check{
+    if (!self.taskInfo.taskName.length||
+        !self.taskInfo.schemeName.length) {
+        [GNRUtil alertMessage:@"请检查工程目录是否正确"];
+        return NO;
+    }
+    return YES;
 }
 
 //编辑任务信息

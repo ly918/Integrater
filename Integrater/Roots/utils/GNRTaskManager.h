@@ -44,4 +44,6 @@
 - (void)updateListModel:(GNRTaskListModel *)model status:(GNRTaskStatus *)status;
 //是否存在 该任务
 - (BOOL)isExsitsTask:(NSString *)taskName;
+//MARK: - 过滤
+- (NSMutableArray *)filter:(NSString *)keyword;
 @end

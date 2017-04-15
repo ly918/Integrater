@@ -34,7 +34,7 @@
         _parameters = [NSMutableDictionary dictionary];
         [_parameters setObject:self.userkey forKey:@"uKey"];
         [_parameters setObject:self.appkey forKey:@"_api_key"];
-        [_parameters setObject:@"自动打包上传工具(v1.0)\n测试！测试！" forKey:@"updateDescription"];
+        [_parameters setObject:@"上传自--自动部署工具(v1.0)" forKey:@"updateDescription"];
     }
     return _parameters;
 }
@@ -92,6 +92,7 @@
     [super cancel];
     if (_uploadTask) {
         [_uploadTask cancel];
+        _uploadTask = nil;
     }
 }
 

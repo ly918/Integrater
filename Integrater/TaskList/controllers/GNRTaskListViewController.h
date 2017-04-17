@@ -7,7 +7,8 @@
 //
 
 #import "GNRBaseViewController.h"
-
+@class GNRTaskListModel;
 @interface GNRTaskListViewController : GNRBaseViewController
-
+#pragma mark - show detail
+- (void)showDetail:(GNRTaskListModel *)model;
 @end

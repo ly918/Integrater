@@ -11,7 +11,6 @@
 		D903384E1E8E034600BB5332 /* GNRButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D903384D1E8E034600BB5332 /* GNRButton.m */; };
 		D92CBB601E8CF25A00AE93A8 /* GNRConstString.m in Sources */ = {isa = PBXBuildFile; fileRef = D92CBB5F1E8CF25A00AE93A8 /* GNRConstString.m */; };
 		D92CBB631E8D038000AE93A8 /* GNRDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D92CBB621E8D038000AE93A8 /* GNRDBManager.m */; };
-		D94844BD1EA4650100CC5226 /* GNRWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = D94844BC1EA4650100CC5226 /* GNRWindow.m */; };
 		D96B63661E7CC05000A9A41D /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D96B63651E7CC05000A9A41D /* Info.plist */; };
 		D96B63711E7CC10000A9A41D /* GNRBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D96B63701E7CC10000A9A41D /* GNRBaseViewController.m */; };
 		D96B63761E7CC14300A9A41D /* GNRRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D96B63751E7CC14300A9A41D /* GNRRootViewController.m */; };
@@ -52,9 +51,6 @@
 		D92CBB5F1E8CF25A00AE93A8 /* GNRConstString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRConstString.m; sourceTree = "<group>"; };
 		D92CBB611E8D038000AE93A8 /* GNRDBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRDBManager.h; sourceTree = "<group>"; };
 		D92CBB621E8D038000AE93A8 /* GNRDBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRDBManager.m; sourceTree = "<group>"; };
-		D94844B71EA460D200CC5226 /* Integrater.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Integrater.entitlements; sourceTree = "<group>"; };
-		D94844BB1EA4650100CC5226 /* GNRWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRWindow.h; sourceTree = "<group>"; };
-		D94844BC1EA4650100CC5226 /* GNRWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRWindow.m; sourceTree = "<group>"; };
 		D96B63651E7CC05000A9A41D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D96B636F1E7CC10000A9A41D /* GNRBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRBaseViewController.h; sourceTree = "<group>"; };
 		D96B63701E7CC10000A9A41D /* GNRBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRBaseViewController.m; sourceTree = "<group>"; };
@@ -143,8 +139,6 @@
 			children = (
 				D903384C1E8E034600BB5332 /* GNRButton.h */,
 				D903384D1E8E034600BB5332 /* GNRButton.m */,
-				D94844BB1EA4650100CC5226 /* GNRWindow.h */,
-				D94844BC1EA4650100CC5226 /* GNRWindow.m */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -261,7 +255,6 @@
 		D9CAC96E1E7BB61D00CBFA81 /* Integrater */ = {
 			isa = PBXGroup;
 			children = (
-				D94844B71EA460D200CC5226 /* Integrater.entitlements */,
 				D98736321E7D36CF006A84CB /* GNRHeader.h */,
 				D9CAC96F1E7BB61D00CBFA81 /* AppDelegate.h */,
 				D9CAC9701E7BB61D00CBFA81 /* AppDelegate.m */,
@@ -403,11 +396,6 @@
 						CreatedOnToolsVersion = 8.2;
 						DevelopmentTeam = 3637NJMX7D;
 						ProvisioningStyle = Automatic;
-						SystemCapabilities = {
-							com.apple.Sandbox = {
-								enabled = 0;
-							};
-						};
 					};
 				};
 			};
@@ -522,7 +510,6 @@
 				D9EFF3B11E86601300585C5D /* GNRUtil.m in Sources */,
 				D9E70F991E88F3BA00D00C69 /* NSObject+Extension.m in Sources */,
 				D96B63831E7D289200A9A41D /* GNRObject.m in Sources */,
-				D94844BD1EA4650100CC5226 /* GNRWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -635,7 +622,6 @@
 			baseConfigurationReference = 0BB1458C646669185C09F47B /* Pods-Integrater.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Integrater/Integrater.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 3637NJMX7D;
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
@@ -654,7 +640,6 @@
 			baseConfigurationReference = B7C9C8509DA11CB504954B43 /* Pods-Integrater.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Integrater/Integrater.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 3637NJMX7D;
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;

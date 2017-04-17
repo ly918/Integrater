@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16B2555" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="RqU-lT-3Ov">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16B2555" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12118"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -61,7 +61,7 @@
                                     <items>
                                         <menuItem title="New" keyEquivalent="n" id="Was-JA-tGl">
                                             <connections>
-                                                <action selector="createNewTask:" target="Voe-Tx-rLC" id="YOo-aV-7Oa"/>
+                                                <action selector="newDocument:" target="Ady-hI-5gd" id="4Si-XN-c54"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Open…" keyEquivalent="o" id="IAo-SY-fd9">
@@ -663,30 +663,26 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
-                    <window key="window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="IQv-IB-iLA">
+                    <window key="window" title="自动部署工具" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="自动部署工具" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" texturedBackground="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="400" height="600"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
                         <value key="minSize" type="size" width="400" height="600"/>
                         <value key="maxSize" type="size" width="1000" height="1000"/>
-                        <connections>
-                            <binding destination="0fl-qi-LQT" name="representedFilename" keyPath="values" id="QnC-U6-6Bk"/>
-                        </connections>
                     </window>
                     <connections>
                         <segue destination="RqU-lT-3Ov" kind="relationship" relationship="window.shadowedContentViewController" id="phj-Wx-7rD"/>
                     </connections>
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-                <userDefaultsController representsSharedInstance="YES" id="0fl-qi-LQT"/>
             </objects>
             <point key="canvasLocation" x="-660" y="252"/>
         </scene>
-        <!--自动打包发布工具-->
+        <!--自动部署工具-->
         <scene sceneID="6wN-Tu-iUl">
             <objects>
-                <viewController title="自动打包发布工具" id="RqU-lT-3Ov" customClass="GNRTaskListViewController" sceneMemberID="viewController">
+                <viewController title="自动部署工具" id="RqU-lT-3Ov" customClass="GNRTaskListViewController" sceneMemberID="viewController">
                     <view key="view" id="o0h-yI-cEb">
                         <rect key="frame" x="0.0" y="0.0" width="400" height="600"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -831,7 +827,7 @@
                 </viewController>
                 <customObject id="1Hh-ca-h51" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-660" y="1025"/>
+            <point key="canvasLocation" x="-660" y="936"/>
         </scene>
         <!--Task Detail View Controller-->
         <scene sceneID="bUz-Ky-PZF">
@@ -864,7 +860,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="22" id="dXa-Oe-X3F"/>
                                             </constraints>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="暂时不用" drawsBackground="YES" id="bO9-MM-3dR">
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="请填写Git源URL" drawsBackground="YES" id="bO9-MM-3dR">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1152,7 +1148,7 @@
                     </constraints>
                 </customView>
             </objects>
-            <point key="canvasLocation" x="-65" y="883"/>
+            <point key="canvasLocation" x="-80" y="800"/>
         </scene>
         <!--Root View Controller-->
         <scene sceneID="hIz-AP-VOD">

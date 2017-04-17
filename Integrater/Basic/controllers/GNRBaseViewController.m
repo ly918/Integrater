@@ -14,10 +14,6 @@
 
 @implementation GNRBaseViewController
 
-- (void)dealloc{
-    GLog(@"");
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.

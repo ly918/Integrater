@@ -11,6 +11,7 @@
 @interface GNRConstString : GNRObject
 
 FOUNDATION_EXPORT NSString * const k_Key_ExportPlist_BitCode;
+FOUNDATION_EXPORT NSString * const k_Key_ExportPlist_TeamID;
 FOUNDATION_EXPORT NSString * const k_Key_ExportPlist_Method;
 
 FOUNDATION_EXPORT NSString * const k_Configuration_Debug;

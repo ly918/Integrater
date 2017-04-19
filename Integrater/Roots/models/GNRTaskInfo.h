@@ -10,6 +10,7 @@
 
 typedef NS_ENUM(NSInteger,GNRTaskInfoPlatform) {
     GNRTaskInfoPlatform_iOS=1,
+    GNRTaskInfoPlatform_OSX,
     GNRTaskInfoPlatform_Android
 };
 

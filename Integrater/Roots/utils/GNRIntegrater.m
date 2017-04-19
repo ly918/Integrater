@@ -112,9 +112,7 @@ MARK: - 初始化方法
     }
     
     [self clearQueue];
-
     _running = YES;
-    
     _operationQueue = [self newOperationQueue];
 
     //状态对象
@@ -130,6 +128,7 @@ MARK: - 初始化方法
     [self runArchiveTask:wself.cleanTask completion:^(BOOL state,NSDictionary * error) {
         if (error) {
             [_taskStatus configWithCode:GNRIntegraterTaskStatusCleanError userInfo:error];
+            [wself clearQueue];
         }else{
             _taskStatus.taskStatus = GNRIntegraterTaskStatusBuilding;
         }
@@ -142,6 +141,7 @@ MARK: - 初始化方法
     [self runArchiveTask:wself.archiveTask completion:^(BOOL state,NSDictionary * error) {
         if (error) {
             [_taskStatus configWithCode:GNRIntegraterTaskStatusBuildError userInfo:error];
+            [wself clearQueue];
         }else{
             _taskStatus.taskStatus = GNRIntegraterTaskStatusArchiving;
         }
@@ -154,6 +154,7 @@ MARK: - 初始化方法
     [self runArchiveTask:wself.ipaTask completion:^(BOOL state,NSDictionary * error) {
         if (error) {
             [_taskStatus configWithCode:GNRIntegraterTaskStatusArchiveError userInfo:error];
+            [wself clearQueue];
         }else{
             _taskStatus.taskStatus = GNRIntegraterTaskStatusUpdating;
         }
@@ -172,7 +173,7 @@ MARK: - 初始化方法
                 _taskStatus.error = error;
                 [wself pushErrorMsg];
             }
-            _running = NO;
+            [wself clearQueue];
         }else{
             if (state) {//上传成功
                 _taskStatus.taskStatus = GNRIntegraterTaskStatusSucceeded;
@@ -197,6 +198,7 @@ MARK: - 初始化方法
         [obj setStop:YES];
     }];
     [self.operationQueue cancelAllOperations];//取消所有任务
+    _running = NO;
     GLog(@"%@ all operations %ld",self.name,self.operationQueue.operationCount);
     [self.taskGroup enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
         [(GNRBaseTask *)obj cancel];

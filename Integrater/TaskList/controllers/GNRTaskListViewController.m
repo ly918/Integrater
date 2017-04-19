@@ -156,4 +156,14 @@
     [self presentViewControllerAsSheet:detail];
 }
 
+- (void)viewDidAppear{
+    [super viewDidAppear];
+    self.view.window.title = @"自动部署工具";
+}
+
+- (void)viewWillAppear{
+    [super viewWillAppear];
+    self.view.window.title = @"自动部署工具";
+}
+
 @end

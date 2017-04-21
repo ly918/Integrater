@@ -11,5 +11,5 @@
 @interface GNRHelper : NSObject
 //检查path
 + (BOOL)validPath:(NSString *)path;
-
++ (NSString *)getAppVersion;
 @end

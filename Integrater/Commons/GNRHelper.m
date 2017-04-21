@@ -14,4 +14,11 @@
     return path.length>0;
 }
 
++ (NSString *)getAppVersion{
+    NSString * path=[[NSBundle mainBundle]pathForResource:@"Info" ofType:@"plist"];
+    NSDictionary * info=[NSDictionary dictionaryWithContentsOfFile:path];
+    NSString * versionString=[info objectForKey:@"CFBundleShortVersionString"];
+    NSString * bundleVersion=[info objectForKey:@"CFBundleVersion"];
+    return [NSString stringWithFormat:@"v%@(%@)",versionString,bundleVersion];
+}
 @end

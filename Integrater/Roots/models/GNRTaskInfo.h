@@ -46,9 +46,10 @@ typedef NS_ENUM(NSInteger,GNRProjectType) {
 
 //upload
 @property (nonatomic, copy)NSString * uploadURL;
-@property (nonatomic, copy)NSString * appkey;
+@property (nonatomic, copy)NSString * appkey;//本地
 @property (nonatomic, copy)NSString * userkey;
-
+@property (nonatomic, copy)NSString * appkey_formal;//线上
+@property (nonatomic, copy)NSString * userkey_formal;
 @property (nonatomic, copy)NSString * optionsPlistPath;
 
 @property (nonatomic, copy)NSString * createTime;//创建时间

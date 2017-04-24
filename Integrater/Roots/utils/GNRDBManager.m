@@ -8,9 +8,11 @@
 
 #import "GNRDBManager.h"
 #import "FMDB.h"
+#import "FMDatabaseAdditions.h"
 #import "GNRIntegrater.h"
 
 #define k_DB_SPLITE_NAME @"Task.sqlite"
+#define k_TB_Name @"TaskList"
 
 @interface GNRDBManager ()
 
@@ -61,10 +63,28 @@
 }
 
 - (void)createTable{
-    if ([self.db tableExists:self.dbPath]) {//已存在
+    if ([self.db tableExists:k_TB_Name]) {//已存在
         GLog(@"Table Exists!");
+        //数据库升级
+        
+        if (![self.db columnExists:@"appkey_formal" inTableWithName:k_TB_Name]) {
+            NSString * str=  [NSString stringWithFormat:@"ALTER TABLE %@ ADD %@ text",k_TB_Name,@"appkey_formal"];
+            BOOL work = [self.db executeUpdate:str];
+            if (work) {
+                NSLog(@"add %d",work);
+            }
+        }
+        
+        if (![self.db columnExists:@"userkey_formal" inTableWithName:k_TB_Name]) {
+            NSString * str=  [NSString stringWithFormat:@"ALTER TABLE %@ ADD %@ text",k_TB_Name,@"userkey_formal"];
+            BOOL work = [self.db executeUpdate:str];
+            if (work) {
+                NSLog(@"add %d",work);
+            }
+        }
+        
     }else{
-        BOOL created = [self.db executeUpdate:@"CREATE TABLE TaskList (Id text, name text, projectDir text, archivePath text, uploadURL text, appkey text, userkey text, createTime text, lastUploadTime text)"];
+        BOOL created = [self.db executeUpdate:@"CREATE TABLE TaskList (Id text, name text, projectDir text, archivePath text, uploadURL text, appkey text, userkey text, appkey_formal text, userkey_formal text, createTime text, lastUploadTime text)"];
         if (created) {
             GLog(@"Table created!");
         }else{
@@ -88,7 +108,7 @@
         return;
     }
     [self open];
-    bool insert = [self.db executeUpdate:@"INSERT INTO TaskList (Id , name, projectDir, archivePath, uploadURL, appkey, userkey, createTime, lastUploadTime) VALUES (?,?,?,?,?,?,?,?,?)",taskInfo.taskName,taskInfo.schemeName,taskInfo.projectDir,taskInfo.archivePath,taskInfo.uploadURL,taskInfo.appkey,taskInfo.userkey,taskInfo.createTime,taskInfo.lastUploadTime];
+    bool insert = [self.db executeUpdate:@"INSERT INTO TaskList (Id , name, projectDir, archivePath, uploadURL, appkey, userkey, appkey_formal, userkey_formal,createTime, lastUploadTime) VALUES (?,?,?,?,?,?,?,?,?)",taskInfo.taskName,taskInfo.schemeName,taskInfo.projectDir,taskInfo.archivePath,taskInfo.uploadURL,taskInfo.appkey,taskInfo.userkey,taskInfo.appkey_formal,taskInfo.userkey_formal,taskInfo.createTime,taskInfo.lastUploadTime];
     if (insert) {
         GLog(@"Inserted!");
     }else{
@@ -116,7 +136,7 @@
         return;
     }
     [self open];
-    bool update = [self.db executeUpdate:@"UPDATE TaskList SET name = ? , projectDir = ? , archivePath = ? , uploadURL = ? , appkey = ? , userkey = ? , createTime = ? , lastUploadTime = ?  where Id = ?",taskInfo.schemeName,taskInfo.projectDir,taskInfo.archivePath,taskInfo.uploadURL,taskInfo.appkey,taskInfo.userkey,taskInfo.createTime,taskInfo.lastUploadTime,taskInfo.taskName];
+    bool update = [self.db executeUpdate:@"UPDATE TaskList SET name = ? , projectDir = ? , archivePath = ? , uploadURL = ? , appkey = ? , userkey = ? ,appkey_formal = ? , userkey_formal = ? , createTime = ? , lastUploadTime = ?  where Id = ?",taskInfo.schemeName,taskInfo.projectDir,taskInfo.archivePath,taskInfo.uploadURL,taskInfo.appkey,taskInfo.userkey,taskInfo.appkey_formal,taskInfo.userkey_formal,taskInfo.createTime,taskInfo.lastUploadTime,taskInfo.taskName];
     if (update) {
         GLog(@"Updated!");
     }else{

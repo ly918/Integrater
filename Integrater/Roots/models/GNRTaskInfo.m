@@ -30,7 +30,6 @@
     return self;
 }
 
-
 //自动生成其他字段
 - (void)configValues{
     if ([GNRHelper validPath:_projectDir]) {

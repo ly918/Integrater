@@ -11,7 +11,16 @@
 #import "GNRTaskInfo.h"
 
 @interface GNRTaskDetailViewController ()
+{
+    //临时存储
+    NSString * _apikey_local;
+    NSString * _userkey_local;
+    NSString * _apikey_formal;
+    NSString * _userkey_formal;
+}
+
 @property (nonatomic, assign)BOOL isEdit;
+
 @end
 
 @implementation GNRTaskDetailViewController
@@ -30,7 +39,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self initData];
     [self installUI];
+}
+
+- (void)initData{
+    _apikey_local = @"";
+    _userkey_local = @"";
+    _apikey_formal = @"";
+    _userkey_formal = @"";
 }
 
 - (void)installUI{
@@ -70,24 +87,22 @@
         [GNRUtil alertMessage:@"请archive输出目录"];
         return;
     }
-    if ([GNRHelper validPath:_uploadUrlField.stringValue]==NO) {
-        [GNRUtil alertMessage:@"请填写ipa上传URL"];
-        return;
-    }
-    if ([GNRHelper validPath:_appkeyField.stringValue]==NO) {
-        [GNRUtil alertMessage:@"请填写appkey"];
-        return;
-    }
-    if ([GNRHelper validPath:_userKeyField.stringValue]==NO) {
-        [GNRUtil alertMessage:@"请填写userkey"];
-        return;
+
+    if ([_selectSubmitBtn.selectedItem.title isEqualToString:@"本地"]) {
+        _apikey_local = _appkeyField.stringValue;
+        _userkey_local = _userKeyField.stringValue;
+    }else{
+        _apikey_formal = _appkeyField.stringValue;
+        _userkey_formal = _userKeyField.stringValue;
     }
     
     self.taskInfo.projectDir = _projPathField.stringValue;//本地工程目录
     self.taskInfo.archivePath = _archivePathField.stringValue;
     self.taskInfo.uploadURL = _uploadUrlField.stringValue;
-    self.taskInfo.appkey = _appkeyField.stringValue;
-    self.taskInfo.userkey = _userKeyField.stringValue;
+    self.taskInfo.appkey = _apikey_local;
+    self.taskInfo.userkey = _userkey_local;
+    self.taskInfo.appkey_formal = _apikey_formal;
+    self.taskInfo.userkey_formal = _userkey_formal;
     
     [self.taskInfo configValues];
 
@@ -131,11 +146,15 @@
     
     if (_taskInfo) {
         _isEdit = YES;
-        _projPathField.stringValue = _taskInfo.projectDir;
-        _archivePathField.stringValue = _taskInfo.archivePath;
-        _uploadUrlField.stringValue = _taskInfo.uploadURL;
-        _appkeyField.stringValue = _taskInfo.appkey;
-        _userKeyField.stringValue = _taskInfo.userkey;
+        _apikey_local = _taskInfo.appkey?:@"";
+        _userkey_local = _taskInfo.userkey?:@"";
+        _apikey_formal = _taskInfo.appkey_formal?:@"";
+        _userkey_formal = _taskInfo.userkey_formal?:@"";
+        _projPathField.stringValue = _taskInfo.projectDir?:@"";
+        _archivePathField.stringValue = _taskInfo.archivePath?:@"";
+        _uploadUrlField.stringValue = _taskInfo.uploadURL?:@"";
+        _appkeyField.stringValue = _apikey_local?:@"";
+        _userKeyField.stringValue = _userkey_local?:@"";
     }
     
     [_saveBtn setTitle:_isEdit?@"应用":@"添加"];
@@ -145,6 +164,24 @@
     [_uploadUrlField setRefusesFirstResponder:_isEdit];
     [_appkeyField setRefusesFirstResponder:_isEdit];
     [_userKeyField setRefusesFirstResponder:_isEdit];
+}
+
+- (IBAction)selectSubmit:(id)sender {
+    if ([[(NSMenu *)sender title] isEqualToString:@"本地"]) {//本地
+        _apikey_formal = _appkeyField.stringValue;
+        _userkey_formal = _userKeyField.stringValue;
+        _appkeyField.stringValue = _apikey_local;
+        _userKeyField.stringValue = _userkey_local;
+        _appkeyField.placeholderString = @"请填写本地ApiKey";
+        _userKeyField.placeholderString = @"请填写本地UserKey";
+    }else{//线上
+        _apikey_local = _appkeyField.stringValue;
+        _userkey_local = _userKeyField.stringValue;
+        _appkeyField.stringValue = _apikey_formal;
+        _userKeyField.stringValue = _userkey_formal;
+        _appkeyField.placeholderString = @"请填写线上ApiKey";
+        _userKeyField.placeholderString = @"请填写线上UserKey";
+    }
 }
 
 @end

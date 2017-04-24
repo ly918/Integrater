@@ -34,7 +34,7 @@
         _parameters = [NSMutableDictionary dictionary];
         [_parameters setObject:self.userkey forKey:@"uKey"];
         [_parameters setObject:self.appkey forKey:@"_api_key"];
-        [_parameters setObject:@"上传自--自动部署工具(v1.0)" forKey:@"updateDescription"];
+        [_parameters setObject:[NSString stringWithFormat:@"From——自动部署工具 %@",[GNRHelper getAppVersion]] forKey:@"updateDescription"];
     }
     return _parameters;
 }

@@ -67,6 +67,14 @@
                         <color key="backgroundColor" red="1" green="0.5450980392" blue="0.01176470588" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </textFieldCell>
                 </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bIm-Ue-FQq">
+                    <rect key="frame" x="79" y="53" width="35" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="本地" id="8HG-oJ-jpB">
+                        <font key="font" metaFont="systemBold"/>
+                        <color key="textColor" red="0.0" green="0.53725490200000003" blue="0.2274509804" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="muT-eD-o3T">
                     <rect key="frame" x="94" y="19" width="32" height="32"/>
                     <constraints>
@@ -89,11 +97,13 @@
                 <constraint firstItem="uLu-uc-jhZ" firstAttribute="centerY" secondItem="x2I-EA-wv3" secondAttribute="centerY" id="JGy-24-yhh"/>
                 <constraint firstAttribute="bottom" secondItem="5aK-k6-mQz" secondAttribute="bottom" id="LRH-vb-SgY"/>
                 <constraint firstItem="muT-eD-o3T" firstAttribute="centerY" secondItem="Ixa-u0-NR0" secondAttribute="centerY" constant="-1" id="Naq-Ah-lnf"/>
+                <constraint firstItem="bIm-Ue-FQq" firstAttribute="centerY" secondItem="R05-1t-myD" secondAttribute="centerY" id="Q1H-X1-lKu"/>
                 <constraint firstItem="IAN-Cd-BtL" firstAttribute="leading" secondItem="x2I-EA-wv3" secondAttribute="leading" constant="3" id="QEU-2P-gnH"/>
                 <constraint firstItem="muT-eD-o3T" firstAttribute="leading" secondItem="Ixa-u0-NR0" secondAttribute="trailing" id="QcA-7f-493"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Ixa-u0-NR0" secondAttribute="trailing" constant="80" id="RYZ-K1-nYp"/>
                 <constraint firstAttribute="trailing" secondItem="uLu-uc-jhZ" secondAttribute="trailing" constant="11" id="SZx-rB-IJO"/>
                 <constraint firstItem="BqV-0v-Zjd" firstAttribute="leading" secondItem="x2I-EA-wv3" secondAttribute="leading" constant="43" id="Yy2-zg-pBx"/>
+                <constraint firstItem="bIm-Ue-FQq" firstAttribute="leading" secondItem="R05-1t-myD" secondAttribute="trailing" constant="6" id="Zse-su-bBc"/>
                 <constraint firstItem="5aK-k6-mQz" firstAttribute="leading" secondItem="x2I-EA-wv3" secondAttribute="leading" id="bit-33-miV"/>
                 <constraint firstItem="BqV-0v-Zjd" firstAttribute="top" secondItem="Ixa-u0-NR0" secondAttribute="bottom" constant="3" id="buU-w0-Lnv"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="R05-1t-myD" secondAttribute="trailing" constant="150" id="d4M-UP-S61"/>
@@ -110,18 +120,19 @@
                 <outlet property="menu" destination="E2Z-pg-cvO" id="Wdx-aO-SCg"/>
                 <outlet property="nameL" destination="R05-1t-myD" id="kd3-qD-WII"/>
                 <outlet property="progressIndicator" destination="uLu-uc-jhZ" id="Z8G-T5-5sD"/>
-                <outlet property="startItem" destination="6Cw-zB-s3m" id="88u-A2-FqJ"/>
+                <outlet property="startItem" destination="4u5-NC-HiO" id="fps-eg-49C"/>
                 <outlet property="statusMsgL" destination="Ixa-u0-NR0" id="Gp5-hw-tD9"/>
+                <outlet property="submitL" destination="bIm-Ue-FQq" id="gJ5-rq-k1d"/>
                 <outlet property="updateTimeL" destination="BqV-0v-Zjd" id="DFa-rD-9GM"/>
             </connections>
             <point key="canvasLocation" x="1135" y="129"/>
         </tableCellView>
         <menu id="E2Z-pg-cvO">
             <items>
-                <menuItem title="开始" id="6Cw-zB-s3m">
+                <menuItem title="开始任务" id="4u5-NC-HiO">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="startMenuAction:" target="x2I-EA-wv3" id="4gV-oJ-8YV"/>
+                        <action selector="startMenuAction:" target="x2I-EA-wv3" id="Bg6-fa-rHW"/>
                     </connections>
                 </menuItem>
                 <menuItem title="编辑" id="azi-ik-NFZ">

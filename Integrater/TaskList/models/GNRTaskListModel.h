@@ -21,6 +21,7 @@
 
 @property (nonatomic, copy) NSColor * textColor;
 
+@property (nonatomic, assign) BOOL submit_formal;//发布到线上？
 @property (nonatomic, assign) CGFloat progress;
 
 - (instancetype)initWithTaskName:(NSString *)taskName appName:(NSString *)appName;

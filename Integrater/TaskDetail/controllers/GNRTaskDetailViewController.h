@@ -24,12 +24,16 @@
 @property (weak) IBOutlet NSTextField *uploadUrlField;
 @property (weak) IBOutlet NSTextField *appkeyField;
 @property (weak) IBOutlet NSTextField *userKeyField;
+@property (weak) IBOutlet NSPopUpButton *selectSubmitBtn;
 
 - (IBAction)selectProjPath:(id)sender;//本地工程目录
+
 - (IBAction)selectDebug:(id)sender;
 - (IBAction)selectArchivePath:(id)sender;
 
 - (IBAction)closeAction:(id)sender;
 - (IBAction)saveAction:(id)sender;
+//选择发布环境
+- (IBAction)selectSubmit:(id)sender;
 
 @end

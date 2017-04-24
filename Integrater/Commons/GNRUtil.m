@@ -19,12 +19,27 @@
     }];
 }
 
-+ (void)alertMessage:(NSString *)msg completion:(void (^)(NSInteger code))completion{
++ (void)alertMessage:(NSString *)msg cancel:(NSString *)cancel confirm:(NSString *)confirm completion:(void (^)(NSInteger code))completion{
     NSAlert *alert = [[NSAlert alloc] init];
-    [alert addButtonWithTitle:@"确定"];
-    [alert addButtonWithTitle:@"取消"];
+    [alert addButtonWithTitle:confirm?:@"确定"];
+    [alert addButtonWithTitle:cancel?:@"取消"];
     [alert setMessageText:msg];
     [alert setAlertStyle:NSAlertStyleCritical];
+    [alert beginSheetModalForWindow:[NSApplication sharedApplication].keyWindow completionHandler:^(NSModalResponse returnCode) {
+        if(completion){
+            completion(returnCode);
+        }
+    }];
+}
+
++ (void)alertMessage:(NSString *)msg cancel:(NSString *)cancel ortherBtns:(NSArray *)ortherBtns completion:(void (^)(NSInteger code))completion{
+    NSAlert *alert = [[NSAlert alloc] init];
+    [ortherBtns enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [alert addButtonWithTitle:obj?:@""];
+    }];
+    [alert addButtonWithTitle:cancel?:@"取消"];
+    [alert setMessageText:msg];
+    [alert setAlertStyle:NSAlertStyleInformational];
     [alert beginSheetModalForWindow:[NSApplication sharedApplication].keyWindow completionHandler:^(NSModalResponse returnCode) {
         if(completion){
             completion(returnCode);

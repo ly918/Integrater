@@ -138,8 +138,8 @@
 }
 
 - (void)cell:(GNRTaskListCell *)cell deleteTaskListModel:(GNRTaskListModel *)model{
-    [GNRUtil alertMessage:@"您确认删除么？" completion:^(NSModalResponse returnCode) {
-        if (returnCode==1000) {
+    [GNRUtil alertMessage:@"您确认删除么？" cancel:@"取消" confirm:@"确认删除" completion:^(NSInteger code) {
+        if (code==1000) {
             GNRIntegrater * task = [[GNRTaskManager manager]getTaskWithModel:model];
             [[GNRTaskManager manager]removeTask:task];
         }

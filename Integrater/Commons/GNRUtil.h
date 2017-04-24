@@ -11,8 +11,8 @@
 
 + (void)alertMessage:(NSString *)msg;
 
-+ (void)alertMessage:(NSString *)msg completion:(void (^)(NSModalResponse returnCode))completion;
-
++ (void)alertMessage:(NSString *)msg cancel:(NSString *)cancel confirm:(NSString *)confirm completion:(void (^)(NSInteger code))completion;
++ (void)alertMessage:(NSString *)msg cancel:(NSString *)cancel ortherBtns:(NSArray *)ortherBtns completion:(void (^)(NSInteger code))completion;
 //MARK: - path select board
 + (NSString *)openPanelForCanCreateDir:(BOOL)canCreateDir canChooseDir:(BOOL)canChooseDir canChooseFiles:(BOOL)canChooseFiles;
 

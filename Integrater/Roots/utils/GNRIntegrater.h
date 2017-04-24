@@ -20,7 +20,7 @@ typedef void(^GNRTaskRunStatusBlock)(GNRTaskStatus *);
 @property (nonatomic, assign, getter=isRunning)BOOL running;//运行中？
 @property (nonatomic, strong)GNRTaskInfo * taskInfo;//任务信息汇总
 @property (nonatomic, strong)GNRTaskStatus * taskStatus;//任务状态
-
+@property (nonatomic, assign)BOOL submit_formal;//发布到线上？
 /**
  初始化方法
 

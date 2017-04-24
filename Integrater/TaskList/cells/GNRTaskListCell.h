@@ -26,9 +26,9 @@
 @property (weak) IBOutlet NSTextField *statusMsgL;
 @property (weak) IBOutlet NSTextField *updateTimeL;
 @property (weak) IBOutlet NSProgressIndicator *progressIndicator;
+@property (weak) IBOutlet NSTextField *submitL;
 
 @property (weak) IBOutlet NSButton *checkErrorBtn;
-@property (weak) IBOutlet NSButton *actionBtn;
 
 @property (nonatomic, strong)GNRTaskListModel * model;
 

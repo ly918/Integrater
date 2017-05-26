@@ -50,6 +50,8 @@ typedef NS_ENUM(NSInteger,GNRProjectType) {
 @property (nonatomic, copy)NSString * userkey;
 @property (nonatomic, copy)NSString * appkey_formal;//线上
 @property (nonatomic, copy)NSString * userkey_formal;
+@property (nonatomic, assign)BOOL submit_formal;//发布到线上？
+
 @property (nonatomic, copy)NSString * optionsPlistPath;
 
 @property (nonatomic, copy)NSString * createTime;//创建时间

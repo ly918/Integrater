@@ -860,7 +860,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="22" id="dXa-Oe-X3F"/>
                                             </constraints>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="请填写Git源URL" drawsBackground="YES" id="bO9-MM-3dR">
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="暂不可用" drawsBackground="YES" id="bO9-MM-3dR">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -960,14 +960,13 @@
                                             </connections>
                                         </button>
                                         <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pFM-ee-eKe">
-                                            <rect key="frame" x="121" y="216" width="85" height="26"/>
+                                            <rect key="frame" x="121" y="216" width="77" height="26"/>
                                             <popUpButtonCell key="cell" type="push" title="Debug" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="vQG-1y-kyp" id="MkE-Yy-Tmk">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
                                                 <menu key="menu" id="0s6-to-ZwL">
                                                     <items>
                                                         <menuItem title="Debug" state="on" id="vQG-1y-kyp"/>
-                                                        <menuItem title="Release" id="tTY-Dy-RBG"/>
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
@@ -1075,12 +1074,12 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rsV-nA-kkp">
-                                            <rect key="frame" x="27" y="250" width="62" height="17"/>
+                                            <rect key="frame" x="27" y="250" width="117" height="17"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="58" id="dyB-GM-EHF"/>
+                                                <constraint firstAttribute="width" constant="113" id="dyB-GM-EHF"/>
                                                 <constraint firstAttribute="height" constant="17" id="lGX-DM-JE2"/>
                                             </constraints>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="蒲公英" id="lF1-rj-dn6">
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="请填写蒲公英相关" id="lF1-rj-dn6">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>

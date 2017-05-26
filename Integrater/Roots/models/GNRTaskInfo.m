@@ -10,6 +10,7 @@
 
 @interface GNRTaskInfo ()
 
+@property (nonatomic, strong) NSString * submit_Str;
 @property (nonatomic, strong) NSString * nowTime;
 @property (nonatomic, strong) NSString * nowDate;
 
@@ -93,9 +94,13 @@
     return _ipaFileOutputPath;
 }
 
+- (NSString *)submit_Str{
+    return self.submit_formal?@"Formal":@"Local";
+}
+
 - (NSString *)ipaFileOutputHeadPath{
     if (self.archiveOutputDir.length&&_schemeName.length) {
-        _ipaFileOutputHeadPath = [NSString stringWithFormat:@"%@/%@_%@_%@",_archiveOutputDir,_schemeName,_nowTime,_configuration];
+        _ipaFileOutputHeadPath = [NSString stringWithFormat:@"%@/%@_%@_%@",_archiveOutputDir,_schemeName,_nowTime,self.submit_Str];
     }
     return _ipaFileOutputHeadPath;
 }
@@ -103,7 +108,7 @@
 //archive path
 - (NSString *)archiveFileOutputPath{
     if (self.archiveOutputDir.length&&_schemeName.length) {
-        _archiveFileOutputPath = [NSString stringWithFormat:@"%@/%@_%@_%@.xcarchive",_archiveOutputDir,_schemeName,_nowTime,_configuration];
+        _archiveFileOutputPath = [NSString stringWithFormat:@"%@/%@_%@_%@.xcarchive",_archiveOutputDir,_schemeName,_nowTime,self.submit_Str];
     }
     return _archiveFileOutputPath;
 }
@@ -119,7 +124,7 @@
 //xxx/archive_app/app_2017-03-30
 - (NSString *)archiveOutputDir{
     if (self.archiveOutputParentDir.length&&_schemeName.length) {
-        _archiveOutputDir =  [NSString stringWithFormat:@"%@/%@_%@_%@",_archiveOutputParentDir,_schemeName,_nowDate,_configuration];
+        _archiveOutputDir =  [NSString stringWithFormat:@"%@/%@_%@_%@",_archiveOutputParentDir,_schemeName,_nowDate,self.submit_Str];
 
     }
     return _archiveOutputDir;
@@ -144,8 +149,9 @@
 
 //MARK: - 生存plist文件
 - (void)createOptionsPlist{
+    NSString * method = [_configuration isEqualToString:@"Debug"]?@"development":@"app-store";
     NSDictionary * dict = @{k_Key_ExportPlist_BitCode:@NO,
-                            k_Key_ExportPlist_Method:@"development"};
+                            k_Key_ExportPlist_Method:method};
     
     [GNRUtil createPlist:dict path:self.optionsPlistPath];
 }

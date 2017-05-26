@@ -12,7 +12,6 @@
 @interface GNRUploadTask ()
 
 @property (nonatomic, strong)NSMutableURLRequest * request;
-@property (nonatomic, strong)NSMutableDictionary * parameters;
 @property (nonatomic, strong)AFURLSessionManager * manager;
 @property (nonatomic, strong)NSURLSessionUploadTask * uploadTask;
 @end
@@ -22,7 +21,7 @@
 - (NSMutableURLRequest *)request{
     if (!_request) {
         WEAK_SELF;
-        _request = [[AFHTTPRequestSerializer serializer]multipartFormRequestWithMethod:@"POST" URLString:self.uploadUrl parameters:self.parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        _request = [[AFHTTPRequestSerializer serializer]multipartFormRequestWithMethod:@"POST" URLString:self.uploadUrl parameters:[self parameters] constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
              [formData appendPartWithFileURL:[NSURL fileURLWithPath:wself.importIPAPath] name:@"file" fileName:@"app.ipa" mimeType:@"application/octet-stream" error:nil];
         } error:nil];
     }
@@ -30,12 +29,10 @@
 }
 
 - (NSMutableDictionary *)parameters{
-    if (!_parameters) {
-        _parameters = [NSMutableDictionary dictionary];
-        [_parameters setObject:self.userkey forKey:@"uKey"];
-        [_parameters setObject:self.appkey forKey:@"_api_key"];
-        [_parameters setObject:[NSString stringWithFormat:@"From——自动部署工具 %@",[GNRHelper getAppVersion]] forKey:@"updateDescription"];
-    }
+    NSMutableDictionary * _parameters = [NSMutableDictionary dictionary];
+    [_parameters setObject:self.userkey?:@"" forKey:@"uKey"];
+    [_parameters setObject:self.appkey?:@"" forKey:@"_api_key"];
+    [_parameters setObject:[NSString stringWithFormat:@"From——自动部署工具 %@",[GNRHelper getAppVersion]] forKey:@"updateDescription"];
     return _parameters;
 }
 
@@ -46,8 +43,24 @@
     return _manager;
 }
 
+- (BOOL)check{
+    if (self.appkey.length &&
+        self.userkey.length &&
+        self.uploadUrl.length) {//都有值
+        return YES;
+    }
+    return NO;
+}
+
 - (void)uploadIPAWithrogress:(void(^)(NSProgress *))progress completion:(void(^)(BOOL,id responseObject,NSError *))completion{
     if (canceled) {
+        return;
+    }
+    if (![self check]) {
+        if (completion) {
+            NSError * error = [NSError errorWithDomain:@"请检查上传URL/ApiKey/UserKey是否填写！" code:200 userInfo:nil];
+            completion(NO,nil,error);
+        }
         return;
     }
     _uploadTask = [self.manager

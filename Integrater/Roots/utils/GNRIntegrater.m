@@ -67,8 +67,8 @@
     GNRUploadTask * _uploadTask = [GNRUploadTask new];
     _uploadTask.identifier = [NSString stringWithFormat:@"%@%@",k_TaskID_UploadTask_IPA,self.taskInfo.schemeName];
     _uploadTask.uploadUrl = _taskInfo.uploadURL;
-    _uploadTask.appkey = self.submit_formal?_taskInfo.appkey_formal:_taskInfo.appkey;
-    _uploadTask.userkey = self.submit_formal?_taskInfo.userkey_formal:_taskInfo.userkey;
+    _uploadTask.appkey = self.taskInfo.submit_formal?_taskInfo.appkey_formal:_taskInfo.appkey;
+    _uploadTask.userkey = self.taskInfo.submit_formal?_taskInfo.userkey_formal:_taskInfo.userkey;
     _uploadTask.importIPAPath = _taskInfo.ipaFileOutputPath;
     return _uploadTask;
 }

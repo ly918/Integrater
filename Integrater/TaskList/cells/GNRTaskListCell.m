@@ -46,7 +46,7 @@
 }
 
 - (void)start{
-    _theTask.submit_formal = _model.submit_formal;
+    _theTask.taskInfo.submit_formal = _model.submit_formal;
     if (!_theTask.running) {
         [_theTask runTask];
     }

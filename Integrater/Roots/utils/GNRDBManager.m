@@ -108,7 +108,7 @@
         return;
     }
     [self open];
-    bool insert = [self.db executeUpdate:@"INSERT INTO TaskList (Id , name, projectDir, archivePath, uploadURL, appkey, userkey, appkey_formal, userkey_formal,createTime, lastUploadTime) VALUES (?,?,?,?,?,?,?,?,?)",taskInfo.taskName,taskInfo.schemeName,taskInfo.projectDir,taskInfo.archivePath,taskInfo.uploadURL,taskInfo.appkey,taskInfo.userkey,taskInfo.appkey_formal,taskInfo.userkey_formal,taskInfo.createTime,taskInfo.lastUploadTime];
+    bool insert = [self.db executeUpdate:@"INSERT INTO TaskList (Id , name, projectDir, archivePath, uploadURL, appkey, userkey, appkey_formal, userkey_formal,createTime, lastUploadTime) VALUES (?,?,?,?,?,?,?,?,?,?,?)",taskInfo.taskName,taskInfo.schemeName,taskInfo.projectDir,taskInfo.archivePath,taskInfo.uploadURL,taskInfo.appkey,taskInfo.userkey,taskInfo.appkey_formal,taskInfo.userkey_formal,taskInfo.createTime,taskInfo.lastUploadTime];
     if (insert) {
         GLog(@"Inserted!");
     }else{

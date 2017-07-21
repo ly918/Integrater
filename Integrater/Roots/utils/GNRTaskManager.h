@@ -32,7 +32,7 @@
 - (void)readTaskInfoListFromDB;
 //新添加一个任务
 - (void)addTask:(GNRIntegrater *)task;
-//update任务
+//update任务信息
 - (void)updateTaskInfo:(GNRTaskInfo *)taskInfo;
 //删除一个任务
 - (void)removeTask:(GNRIntegrater *)task;

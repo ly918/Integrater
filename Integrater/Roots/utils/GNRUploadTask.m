@@ -21,6 +21,7 @@
 - (NSMutableURLRequest *)request{
     if (!_request) {
         WEAK_SELF;
+        GLog(@"filePath %@",wself.importIPAPath);
         _request = [[AFHTTPRequestSerializer serializer]multipartFormRequestWithMethod:@"POST" URLString:self.uploadUrl parameters:[self parameters] constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
              [formData appendPartWithFileURL:[NSURL fileURLWithPath:wself.importIPAPath] name:@"file" fileName:@"app.ipa" mimeType:@"application/octet-stream" error:nil];
         } error:nil];

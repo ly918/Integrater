@@ -13,6 +13,8 @@
 NSString * const k_Key_ExportPlist_BitCode = @"compileBitcode";
 NSString * const k_Key_ExportPlist_TeamID = @"teamID";
 NSString * const k_Key_ExportPlist_Method = @"method";
+NSString * const k_Key_ProvisioningProfiles = @"provisioningProfiles";
+
 NSString * const k_Configuration_Debug = @"Debug";
 NSString * const k_Configuration_Release = @"Release";
 NSString * const k_XcodeProject = @".xcodeproj";

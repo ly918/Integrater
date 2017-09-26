@@ -32,6 +32,8 @@ typedef NS_ENUM(NSInteger,GNRProjectType) {
 @property (nonatomic, copy)NSString * projectPath;
 @property (nonatomic, copy)NSString * workspacePath;
 @property (nonatomic, copy)NSString * schemeName;
+@property (nonatomic, copy)NSString * bundleId;
+@property (nonatomic, copy)NSString * profile_dev;
 /********/
 
 @property (nonatomic, copy)NSString * configuration;//构建环境: Debug Release
@@ -45,12 +47,13 @@ typedef NS_ENUM(NSInteger,GNRProjectType) {
 @property (nonatomic, copy)NSString * ipaFileOutputPath;//ipa输出path
 
 //upload
+@property (nonatomic, assign)BOOL submit_formal;//发布到线上？
+
 @property (nonatomic, copy)NSString * uploadURL;
 @property (nonatomic, copy)NSString * appkey;//本地
 @property (nonatomic, copy)NSString * userkey;
 @property (nonatomic, copy)NSString * appkey_formal;//线上
 @property (nonatomic, copy)NSString * userkey_formal;
-@property (nonatomic, assign)BOOL submit_formal;//发布到线上？
 
 @property (nonatomic, copy)NSString * optionsPlistPath;
 

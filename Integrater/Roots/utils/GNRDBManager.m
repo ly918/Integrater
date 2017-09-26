@@ -83,8 +83,24 @@
             }
         }
         
+        if (![self.db columnExists:@"bundleId" inTableWithName:k_TB_Name]) {
+            NSString * str=  [NSString stringWithFormat:@"ALTER TABLE %@ ADD %@ text",k_TB_Name,@"bundleId"];
+            BOOL work = [self.db executeUpdate:str];
+            if (work) {
+                NSLog(@"add %d",work);
+            }
+        }
+        
+        if (![self.db columnExists:@"profile_dev" inTableWithName:k_TB_Name]) {
+            NSString * str=  [NSString stringWithFormat:@"ALTER TABLE %@ ADD %@ text",k_TB_Name,@"profile_dev"];
+            BOOL work = [self.db executeUpdate:str];
+            if (work) {
+                NSLog(@"add %d",work);
+            }
+        }
+        
     }else{
-        BOOL created = [self.db executeUpdate:@"CREATE TABLE TaskList (Id text, name text, projectDir text, archivePath text, uploadURL text, appkey text, userkey text, appkey_formal text, userkey_formal text, createTime text, lastUploadTime text)"];
+        BOOL created = [self.db executeUpdate:@"CREATE TABLE TaskList (Id text, name text, projectDir text, archivePath text, uploadURL text, appkey text, userkey text, appkey_formal text, userkey_formal text, createTime text, lastUploadTime text, bundleId text,profile_dev text)"];
         if (created) {
             GLog(@"Table created!");
         }else{
@@ -108,7 +124,7 @@
         return;
     }
     [self open];
-    bool insert = [self.db executeUpdate:@"INSERT INTO TaskList (Id , name, projectDir, archivePath, uploadURL, appkey, userkey, appkey_formal, userkey_formal,createTime, lastUploadTime) VALUES (?,?,?,?,?,?,?,?,?,?,?)",taskInfo.taskName,taskInfo.schemeName,taskInfo.projectDir,taskInfo.archivePath,taskInfo.uploadURL,taskInfo.appkey,taskInfo.userkey,taskInfo.appkey_formal,taskInfo.userkey_formal,taskInfo.createTime,taskInfo.lastUploadTime];
+    bool insert = [self.db executeUpdate:@"INSERT INTO TaskList (Id , name, projectDir, archivePath, uploadURL, appkey, userkey, appkey_formal, userkey_formal,createTime, lastUploadTime, bundleId, profile_dev) VALUES (?,?,?,?,?,?,?,?,?,?,?)",taskInfo.taskName,taskInfo.schemeName,taskInfo.projectDir,taskInfo.archivePath,taskInfo.uploadURL,taskInfo.appkey,taskInfo.userkey,taskInfo.appkey_formal,taskInfo.userkey_formal,taskInfo.createTime,taskInfo.lastUploadTime,taskInfo.bundleId,taskInfo.profile_dev];
     if (insert) {
         GLog(@"Inserted!");
     }else{
@@ -136,7 +152,7 @@
         return;
     }
     [self open];
-    bool update = [self.db executeUpdate:@"UPDATE TaskList SET name = ? , projectDir = ? , archivePath = ? , uploadURL = ? , appkey = ? , userkey = ? ,appkey_formal = ? , userkey_formal = ? , createTime = ? , lastUploadTime = ?  where Id = ?",taskInfo.schemeName,taskInfo.projectDir,taskInfo.archivePath,taskInfo.uploadURL,taskInfo.appkey,taskInfo.userkey,taskInfo.appkey_formal,taskInfo.userkey_formal,taskInfo.createTime,taskInfo.lastUploadTime,taskInfo.taskName];
+    bool update = [self.db executeUpdate:@"UPDATE TaskList SET name = ? , projectDir = ? , archivePath = ? , uploadURL = ? , appkey = ? , userkey = ? ,appkey_formal = ? , userkey_formal = ? , createTime = ? , lastUploadTime = ? , bundleId = ? , profile_dev = ? where Id = ?",taskInfo.schemeName,taskInfo.projectDir,taskInfo.archivePath,taskInfo.uploadURL,taskInfo.appkey,taskInfo.userkey,taskInfo.appkey_formal,taskInfo.userkey_formal,taskInfo.createTime,taskInfo.lastUploadTime,taskInfo.bundleId,taskInfo.profile_dev,taskInfo.taskName];
     if (update) {
         GLog(@"Updated!");
     }else{
@@ -155,7 +171,6 @@
         GNRTaskInfo * taskInfo = [[GNRTaskInfo alloc]init];
         NSDictionary * dict = [set resultDictionary];
         NSString * Id = [dict objectForKey:@"Id"];
-        NSLog(@"%@",Id);
         if (Id
             &&![Id isKindOfClass:[NSNull class]]
             &&![Id isEqualToString:@"<null>"]) {

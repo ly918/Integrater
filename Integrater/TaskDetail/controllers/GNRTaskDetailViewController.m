@@ -103,6 +103,8 @@
     self.taskInfo.userkey = _userkey_local;
     self.taskInfo.appkey_formal = _apikey_formal;
     self.taskInfo.userkey_formal = _userkey_formal;
+    self.taskInfo.bundleId = _bundleIDField.stringValue;
+    self.taskInfo.profile_dev = _profileField.stringValue;
     
     [self.taskInfo configValues];
 
@@ -134,8 +136,10 @@
 
 - (BOOL)check{
     if (!self.taskInfo.taskName.length||
-        !self.taskInfo.schemeName.length) {
-        [GNRUtil alertMessage:@"请检查工程目录是否正确"];
+        !self.taskInfo.schemeName.length||
+        !self.taskInfo.bundleId.length||
+        !self.taskInfo.profile_dev.length) {
+        [GNRUtil alertMessage:@"请完善Project选项卡！"];
         return NO;
     }
     return YES;
@@ -155,15 +159,18 @@
         _uploadUrlField.stringValue = _taskInfo.uploadURL?:@"";
         _appkeyField.stringValue = _apikey_local?:@"";
         _userKeyField.stringValue = _userkey_local?:@"";
+        _bundleIDField.stringValue = _taskInfo.bundleId?:@"";
+        _profileField.stringValue = _taskInfo.profile_dev?:@"";
     }
     
     [_saveBtn setTitle:_isEdit?@"应用":@"添加"];
-    
     [_projPathField setRefusesFirstResponder:_isEdit];
     [_archivePathField setRefusesFirstResponder:_isEdit];
     [_uploadUrlField setRefusesFirstResponder:_isEdit];
     [_appkeyField setRefusesFirstResponder:_isEdit];
     [_userKeyField setRefusesFirstResponder:_isEdit];
+    [_bundleIDField setRefusesFirstResponder:_isEdit];
+    [_profileField setRefusesFirstResponder:_isEdit];
 }
 
 - (IBAction)selectSubmit:(id)sender {

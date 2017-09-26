@@ -25,6 +25,8 @@
 @property (weak) IBOutlet NSTextField *appkeyField;
 @property (weak) IBOutlet NSTextField *userKeyField;
 @property (weak) IBOutlet NSPopUpButton *selectSubmitBtn;
+@property (weak) IBOutlet NSTextField *bundleIDField;
+@property (weak) IBOutlet NSTextField *profileField;
 
 - (IBAction)selectProjPath:(id)sender;//本地工程目录
 

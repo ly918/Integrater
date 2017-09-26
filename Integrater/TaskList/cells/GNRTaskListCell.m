@@ -26,6 +26,13 @@
     if (_theTask.running) {
         [self stop];
     }else{
+        if (!_theTask.taskInfo.bundleId.length ||
+            !_theTask.taskInfo.profile_dev.length) {
+            if (_delegate && [_delegate respondsToSelector:@selector(cell:editTaskListModel:)]) {
+                [_delegate cell:self editTaskListModel:_model];
+            }//完善Project
+            return;
+        }
         [GNRUtil alertMessage:@"请选择蒲公英部署环境" cancel:@"取消" ortherBtns:@[@"本地环境",@"线上环境"] completion:^(NSInteger code) {
             if (code == 1001) {//线上
                 _model.submit_formal = YES;

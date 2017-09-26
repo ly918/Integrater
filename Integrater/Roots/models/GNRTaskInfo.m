@@ -24,9 +24,10 @@
         _workspacePath = @"";
         _createTime = @"";
         _lastUploadTime = @"";
+        _bundleId = @"";
+        _profile_dev = @"";
         _configuration = k_Configuration_Debug;
         _platform = GNRTaskInfoPlatform_iOS;
-        
     }
     return self;
 }
@@ -149,11 +150,16 @@
 
 //MARK: - 生存plist文件
 - (void)createOptionsPlist{
+
     NSString * method = [_configuration isEqualToString:@"Debug"]?@"development":@"app-store";
-    NSDictionary * dict = @{k_Key_ExportPlist_BitCode:@NO,
-                            k_Key_ExportPlist_Method:method};
-    
-    [GNRUtil createPlist:dict path:self.optionsPlistPath];
+    if (_bundleId && _profile_dev ) {
+        NSDictionary * profiles = @{_bundleId:_profile_dev};
+        NSDictionary * dict = @{k_Key_ExportPlist_BitCode:@NO,
+                                k_Key_ExportPlist_Method:method,
+                                k_Key_ProvisioningProfiles:profiles
+                                };
+        [GNRUtil createPlist:dict path:self.optionsPlistPath];
+    }
 }
 
 - (NSString *)description{

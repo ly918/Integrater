@@ -124,11 +124,13 @@
         return;
     }
     [self open];
-    bool insert = [self.db executeUpdate:@"INSERT INTO TaskList (Id , name, projectDir, archivePath, uploadURL, appkey, userkey, appkey_formal, userkey_formal,createTime, lastUploadTime, bundleId, profile_dev) VALUES (?,?,?,?,?,?,?,?,?,?,?)",taskInfo.taskName,taskInfo.schemeName,taskInfo.projectDir,taskInfo.archivePath,taskInfo.uploadURL,taskInfo.appkey,taskInfo.userkey,taskInfo.appkey_formal,taskInfo.userkey_formal,taskInfo.createTime,taskInfo.lastUploadTime,taskInfo.bundleId,taskInfo.profile_dev];
+    bool insert = [self.db executeUpdate:@"INSERT INTO TaskList (Id , name, projectDir, archivePath, uploadURL, appkey, userkey, appkey_formal, userkey_formal,createTime, lastUploadTime, bundleId, profile_dev) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",taskInfo.taskName,taskInfo.schemeName,taskInfo.projectDir,taskInfo.archivePath,taskInfo.uploadURL,taskInfo.appkey,taskInfo.userkey,taskInfo.appkey_formal,taskInfo.userkey_formal,taskInfo.createTime,taskInfo.lastUploadTime,taskInfo.bundleId,taskInfo.profile_dev];
     if (insert) {
         GLog(@"Inserted!");
+        [GNRUtil alertMessage:@"Inserted！"];
     }else{
         GLog(@"Insert error!");
+        [GNRUtil alertMessage:@"Insert error！"];
     }
     [self close];
 }
@@ -155,7 +157,9 @@
     bool update = [self.db executeUpdate:@"UPDATE TaskList SET name = ? , projectDir = ? , archivePath = ? , uploadURL = ? , appkey = ? , userkey = ? ,appkey_formal = ? , userkey_formal = ? , createTime = ? , lastUploadTime = ? , bundleId = ? , profile_dev = ? where Id = ?",taskInfo.schemeName,taskInfo.projectDir,taskInfo.archivePath,taskInfo.uploadURL,taskInfo.appkey,taskInfo.userkey,taskInfo.appkey_formal,taskInfo.userkey_formal,taskInfo.createTime,taskInfo.lastUploadTime,taskInfo.bundleId,taskInfo.profile_dev,taskInfo.taskName];
     if (update) {
         GLog(@"Updated!");
+        [GNRUtil alertMessage:@"Updated！"];
     }else{
+        [GNRUtil alertMessage:@"Update error！"];
         GLog(@"Update error!");
     }
     [self close];

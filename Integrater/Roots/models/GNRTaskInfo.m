@@ -48,6 +48,18 @@
     }
 }
 
+- (NSString *)nowDate{
+    NSDate * date = [NSDate date];
+    _nowDate = [GNRUtil standardDateForFile:date];
+    return _nowDate;
+}
+
+- (NSString *)nowTime{
+    NSDate * date = [NSDate date];
+    _nowTime = [GNRUtil standardTimeForFile:date];
+    return _nowTime;
+}
+
 //设置工程类型 和 scheme
 - (void)setupProjTypeAndScheme{
     NSError * error = nil;
@@ -60,6 +72,10 @@
     BOOL hasWorkspace = NO;
     NSString * projectContent = nil;
     NSString * workspaceContent = nil;
+    
+    if (paths == nil) {
+        return;
+    }
     
     //proj path
     for (NSString * content in paths) {
@@ -82,10 +98,6 @@
         _projectType = GNRProjectType_Proj;
         self.schemeName = [projectContent substringWithRange:NSMakeRange(0, projectContent.length - k_XcodeProject.length)];
     }
-    
-    NSDate * date = [NSDate date];
-    _nowDate = [GNRUtil standardDateForFile:date];
-    _nowTime = [GNRUtil standardTimeForFile:date];
 }
 
 - (NSString *)ipaFileOutputPath{
@@ -101,7 +113,7 @@
 
 - (NSString *)ipaFileOutputHeadPath{
     if (self.archiveOutputDir.length&&_schemeName.length) {
-        _ipaFileOutputHeadPath = [NSString stringWithFormat:@"%@/%@_%@_%@",_archiveOutputDir,_schemeName,_nowTime,self.submit_Str];
+        _ipaFileOutputHeadPath = [NSString stringWithFormat:@"%@/%@_%@_%@",_archiveOutputDir,_schemeName,self.nowTime,self.submit_Str];
     }
     return _ipaFileOutputHeadPath;
 }
@@ -109,7 +121,7 @@
 //archive path
 - (NSString *)archiveFileOutputPath{
     if (self.archiveOutputDir.length&&_schemeName.length) {
-        _archiveFileOutputPath = [NSString stringWithFormat:@"%@/%@_%@_%@.xcarchive",_archiveOutputDir,_schemeName,_nowTime,self.submit_Str];
+        _archiveFileOutputPath = [NSString stringWithFormat:@"%@/%@_%@_%@.xcarchive",_archiveOutputDir,_schemeName,self.nowTime,self.submit_Str];
     }
     return _archiveFileOutputPath;
 }
@@ -125,7 +137,7 @@
 //xxx/archive_app/app_2017-03-30
 - (NSString *)archiveOutputDir{
     if (self.archiveOutputParentDir.length&&_schemeName.length) {
-        _archiveOutputDir =  [NSString stringWithFormat:@"%@/%@_%@_%@",_archiveOutputParentDir,_schemeName,_nowDate,self.submit_Str];
+        _archiveOutputDir =  [NSString stringWithFormat:@"%@/%@_%@_%@",_archiveOutputParentDir,_schemeName,self.nowDate,self.submit_Str];
 
     }
     return _archiveOutputDir;

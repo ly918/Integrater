@@ -27,5 +27,6 @@
 
 #pragma mark - 颜色转换
 + (NSColor *)colorWithHexString:(NSString *)stringToConvert;
++ (NSColor *)randColor;
 
 @end

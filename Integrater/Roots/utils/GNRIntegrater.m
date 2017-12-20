@@ -76,7 +76,7 @@
 - (NSOperationQueue *)newOperationQueue{
     NSOperationQueue * operationQueue = [[NSOperationQueue alloc]init];
     operationQueue.maxConcurrentOperationCount = 1;
-    operationQueue.name = self.taskInfo.taskName;
+    operationQueue.name = self.taskInfo.Id;
     return operationQueue;
 }
 
@@ -92,7 +92,7 @@ MARK: - 初始化方法
 
 - (instancetype)initWithTaskInfo:(GNRTaskInfo *)taskInfo{
     if (self = [super init]) {
-        _name = taskInfo.taskName;
+        _name = taskInfo.Id;
         _taskStatus = [GNRTaskStatus new];
         self.taskInfo = taskInfo;
     }
@@ -182,7 +182,7 @@ MARK: - 初始化方法
                 [wself pushSucceededMsg];
             }else{//上传中
                 _taskStatus.taskStatus = GNRIntegraterTaskStatusUpdating;
-                _taskStatus.progress = 30 + progress;//30 ~ 100
+                _taskStatus.progress = 60 + progress;//60 ~ 100
             }
         }
         if (_taskBlock) {

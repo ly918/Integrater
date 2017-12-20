@@ -80,6 +80,8 @@
 - (void)setModel:(GNRTaskListModel *)model{
     _model = model;
     if (model) {
+        _iconL.backgroundColor = [GNRUtil randColor];
+        
         _nameL.stringValue = _model.appName?:@"";
         _submitL.stringValue = model.submit_formal==NO?@"Local":@"Formal";
         _iconL.stringValue = _model.iconLetter?:@"";

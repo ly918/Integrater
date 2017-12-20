@@ -9,6 +9,7 @@
 #import "GNRObject.h"
 
 @interface GNRTaskListModel : GNRObject
+@property (nonatomic, copy) NSString * Id;
 
 @property (nonatomic, copy) NSString * taskName;
 @property (nonatomic, copy) NSString * appName;
@@ -24,6 +25,6 @@
 @property (nonatomic, assign) BOOL submit_formal;//发布到线上？
 @property (nonatomic, assign) CGFloat progress;
 
-- (instancetype)initWithTaskName:(NSString *)taskName appName:(NSString *)appName;
+- (instancetype)initWithId:(NSString *)Id taskName:(NSString *)taskName appName:(NSString *)appName;
 
 @end

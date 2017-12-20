@@ -17,8 +17,9 @@
     _progress = 0;
 }
 
-- (instancetype)initWithTaskName:(NSString *)taskName appName:(NSString *)appName{
+- (instancetype)initWithId:(NSString *)Id taskName:(NSString *)taskName appName:(NSString *)appName{
     if (self = [super init]) {
+        _Id = Id;
         _iconLetter = @"";
         _appName = @"";
         _statusMsg = @"";
@@ -27,7 +28,7 @@
         _progress = 0;
         _textColor = [NSColor textColor];
         _taskName = taskName;
-        self.appName = appName;
+        self.appName = appName?:@"警告！读取目录出错！";
         [self initData];
     }
     return self;

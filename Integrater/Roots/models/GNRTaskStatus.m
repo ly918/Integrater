@@ -39,9 +39,9 @@
     }else if (status == GNRIntegraterTaskStatusBuilding){
         return 10;
     }else if (status == GNRIntegraterTaskStatusArchiving){
-        return 20;
-    }else if (status == GNRIntegraterTaskStatusUpdating){
         return 30;
+    }else if (status == GNRIntegraterTaskStatusUpdating){
+        return 60;
     }else if (status == GNRIntegraterTaskStatusSucceeded) {
         return 130;
     }
@@ -56,14 +56,14 @@
                              @(GNRIntegraterTaskStatusCleaning):@"Cleaning",
                              @(GNRIntegraterTaskStatusBuilding):@"Building",
                              @(GNRIntegraterTaskStatusArchiving):@"Archiving",
-                             @(GNRIntegraterTaskStatusUpdating):@"Updating",
-                             @(GNRIntegraterTaskStatusSucceeded):@"Update Succeeded",
+                             @(GNRIntegraterTaskStatusUpdating):@"Uploading",
+                             @(GNRIntegraterTaskStatusSucceeded):@"Upload Successfully",
                              @(GNRIntegraterTaskStatusPrepareError):@"Prepare Error",
                              @(GNRIntegraterTaskStatusGitError):@"Git Error",
                              @(GNRIntegraterTaskStatusCleanError):@"Clean Error",
                              @(GNRIntegraterTaskStatusBuildError):@"Build Error",
                              @(GNRIntegraterTaskStatusArchiveError):@"Archive Error",
-                             @(GNRIntegraterTaskStatusUpdateError):@"Update Error",
+                             @(GNRIntegraterTaskStatusUpdateError):@"Upload Error",
                              };
     return [infos objectForKey:number];
 }

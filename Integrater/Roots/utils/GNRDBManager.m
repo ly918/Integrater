@@ -138,7 +138,7 @@
 //delete
 - (void)deleteTaskInfo:(GNRTaskInfo *)taskInfo{
     [self open];
-    bool delete = [self.db executeUpdate:@"DELETE FROM TaskList where Id like ?",taskInfo.taskName];
+    bool delete = [self.db executeUpdate:@"DELETE FROM TaskList where Id like ?",taskInfo.Id];
     if (delete) {
         GLog(@"Deleted!");
     }else{
@@ -150,11 +150,11 @@
 
 //update
 - (void)updateTaskInfo:(GNRTaskInfo *)taskInfo{
-    if (![self isEsists:taskInfo.taskName]) {
+    if (![self isEsists:taskInfo.Id]) {
         return;
     }
     [self open];
-    bool update = [self.db executeUpdate:@"UPDATE TaskList SET name = ? , projectDir = ? , archivePath = ? , uploadURL = ? , appkey = ? , userkey = ? ,appkey_formal = ? , userkey_formal = ? , createTime = ? , lastUploadTime = ? , bundleId = ? , profile_dev = ? where Id = ?",taskInfo.schemeName,taskInfo.projectDir,taskInfo.archivePath,taskInfo.uploadURL,taskInfo.appkey,taskInfo.userkey,taskInfo.appkey_formal,taskInfo.userkey_formal,taskInfo.createTime,taskInfo.lastUploadTime,taskInfo.bundleId,taskInfo.profile_dev,taskInfo.taskName];
+    bool update = [self.db executeUpdate:@"UPDATE TaskList SET name = ? , projectDir = ? , archivePath = ? , uploadURL = ? , appkey = ? , userkey = ? ,appkey_formal = ? , userkey_formal = ? , createTime = ? , lastUploadTime = ? , bundleId = ? , profile_dev = ? where Id = ?",taskInfo.schemeName,taskInfo.projectDir,taskInfo.archivePath,taskInfo.uploadURL,taskInfo.appkey,taskInfo.userkey,taskInfo.appkey_formal,taskInfo.userkey_formal,taskInfo.createTime,taskInfo.lastUploadTime,taskInfo.bundleId,taskInfo.profile_dev,taskInfo.Id];
     if (update) {
         GLog(@"Updated!");
         [GNRUtil alertMessage:@"Updated！"];
@@ -194,9 +194,9 @@
 }
 
 //是否存在
-- (BOOL)isEsists:(NSString *)taskName{
+- (BOOL)isEsists:(NSString *)taskId{
     for (GNRTaskInfo * obj in [self taskInfos]) {
-        if ([obj.taskName isEqualToString:taskName]) {
+        if ([obj.Id isEqualToString:taskId]) {
             return YES;
         }
     }

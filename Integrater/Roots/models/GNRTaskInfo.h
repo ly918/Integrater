@@ -26,7 +26,9 @@ typedef NS_ENUM(NSInteger,GNRProjectType) {
 @property (nonatomic, assign, readonly)GNRProjectType projectType;
 @property (nonatomic, copy)NSString * projectDir;//工程目录
 
-@property (nonatomic, copy, readonly)NSString * taskName;//任务名称 用于创建GNRIntegrater对象
+@property (nonatomic, copy)NSString *Id;//Id == taskName
+
+@property (nonatomic, copy, readonly)NSString * taskName;//任务名称 用于创建GNRIntegrater对象 为nil时说明本地目录不存在或出错
 
 /********/
 @property (nonatomic, copy)NSString * projectPath;

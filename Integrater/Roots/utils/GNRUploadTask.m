@@ -99,7 +99,6 @@
                   }];
     
     [_uploadTask resume];//开始上传
-
 }
 
 - (void)cancel{

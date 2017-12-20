@@ -48,7 +48,7 @@
 - (void)addTaskFromDBTaskInfo:(GNRTaskInfo *)taskInfo{
     if (taskInfo) {
         GNRIntegrater * task = [[GNRIntegrater alloc]initWithTaskInfo:taskInfo];
-        task.taskStatus.taskStatus = GNRIntegraterTaskStatusPrepared;
+        task.taskStatus.taskStatus = taskInfo.taskName?GNRIntegraterTaskStatusPrepared:GNRIntegraterTaskStatusPrepareError;
         [_tasks addObject:task];
         GNRTaskListModel * model = [self addTaskListModelWithTask:task];
         //MARK: - 从DB读取
@@ -60,7 +60,7 @@
 
 //MARK: - 新添加任务
 - (void)addTask:(GNRIntegrater *)task{
-    if (task && ![self isExsitsTask:task.taskInfo.taskName]) {
+    if (task && ![self isExsitsTask:task.taskInfo.Id]) {
         [_tasks addObject:task];
         GNRTaskListModel * model=[self addTaskListModelWithTask:task];
         task.taskInfo.createTime = @([[NSDate date] timeIntervalSince1970]).stringValue;//创建时间
@@ -79,7 +79,7 @@
 
 - (GNRTaskListModel *)addTaskListModelWithTask:(GNRIntegrater *)task{
     GNRTaskInfo * taskInfo = task.taskInfo;
-    GNRTaskListModel * model = [[GNRTaskListModel new]initWithTaskName:taskInfo.taskName appName:taskInfo.schemeName];
+    GNRTaskListModel * model = [[GNRTaskListModel new]initWithId:taskInfo.Id taskName:taskInfo.taskName appName:taskInfo.schemeName];
     [_taskListModels addObject:model];
     [self updateListModel:model status:task.taskStatus];//根据状态 更新ListModel
     return model;
@@ -99,10 +99,10 @@
 }
 
 - (GNRTaskListModel *)removeTaskListModelWithTask:(GNRIntegrater *)task{
-    NSString * taskName = task.taskInfo.taskName;
+    NSString * taskId = task.taskInfo.Id;
     __block GNRTaskListModel * model = nil;
     [_taskListModels enumerateObjectsUsingBlock:^(GNRTaskListModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj.taskName isEqualToString:taskName]) {
+        if ([obj.Id isEqualToString:taskId]) {
             model = obj;
         }
     }];
@@ -113,10 +113,10 @@
 }
 
 //是否存在 该任务
-- (BOOL)isExsitsTask:(NSString *)taskName{
-    if (taskName.length) {
+- (BOOL)isExsitsTask:(NSString *)taskId{
+    if (taskId.length) {
         for (GNRIntegrater * obj in _tasks) {
-            if ([obj.taskInfo.taskName isEqualToString:taskName]) {
+            if ([obj.taskInfo.Id isEqualToString:taskId]) {
                 return YES;
             }
         }
@@ -126,12 +126,12 @@
 
 //MARK: - 从列表数据 获取 任务
 - (GNRIntegrater *)getTaskWithModel:(GNRTaskListModel *)model{
-    if (!model.taskName.length) {
+    if (!model.Id.length) {
         return nil;
     }
     __block GNRIntegrater * task = nil;
     [_tasks enumerateObjectsUsingBlock:^(GNRIntegrater * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj.name isEqualToString:model.taskName]) {
+        if ([obj.name isEqualToString:model.Id]) {
             task = obj;
         }
     }];

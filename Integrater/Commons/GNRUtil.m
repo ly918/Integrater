@@ -70,6 +70,13 @@
     return ret;
 }
 
++ (NSColor *)randColor{
+    float r = arc4random_uniform(256);
+    float g = arc4random_uniform(256);
+    float b = arc4random_uniform(256);
+    return [NSColor colorWithRed:((float)r / 255.0f) green:((float)g / 255.0f) blue:((float)b / 255.0f) alpha:1];
+}
+
 + (NSColor *)colorWithHexString:(NSString *)stringToConvert
 {
     NSString *cString = [[stringToConvert stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];

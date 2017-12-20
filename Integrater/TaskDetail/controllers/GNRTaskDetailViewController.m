@@ -124,7 +124,7 @@
         [[GNRTaskManager manager] updateTaskInfo:self.taskInfo];
         [self dismissController:nil];
     }else{
-        if ([[GNRTaskManager manager] isExsitsTask:self.taskInfo.taskName] == NO) {
+        if ([[GNRTaskManager manager] isExsitsTask:self.taskInfo.Id] == NO) {
             GNRIntegrater * task = [[GNRIntegrater alloc]initWithTaskInfo:self.taskInfo];
             [[GNRTaskManager manager] addTask:task];
             [self dismissController:nil];

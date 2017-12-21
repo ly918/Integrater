@@ -29,6 +29,7 @@
 @property (weak) IBOutlet NSTextField *submitL;
 
 @property (weak) IBOutlet NSButton *checkErrorBtn;
+@property (weak) IBOutlet NSButton *buildShortcutUrlBtn;
 
 @property (nonatomic, strong)GNRTaskListModel * model;
 

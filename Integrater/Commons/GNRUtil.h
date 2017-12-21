@@ -29,4 +29,7 @@
 + (NSColor *)colorWithHexString:(NSString *)stringToConvert;
 + (NSColor *)randColor;
 
+//复制到剪贴板
++ (BOOL)writeFileContentsToPastBoard:(NSString *)content;
+
 @end

@@ -238,4 +238,15 @@
     return [daysOfWeekDict objectForKey:@(dayOfWeek)];
 }
 
+//复制到剪贴板
++ (BOOL)writeFileContentsToPastBoard:(NSString *)content{
+    if (content) {
+        NSPasteboard *pastboard = [NSPasteboard generalPasteboard];
+        [pastboard clearContents];
+        BOOL ret = [pastboard writeObjects:@[content]];
+        return ret;
+    }
+    return NO;
+}
+
 @end

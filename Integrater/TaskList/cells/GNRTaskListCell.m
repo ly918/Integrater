@@ -88,17 +88,33 @@
         _statusMsgL.stringValue = _model.statusMsg?:@"";
         _updateTimeL.stringValue = [self showTime]?:@"";
         _statusMsgL.textColor = _model.textColor;
-        _progressIndicator.doubleValue = _model.progress;
-        _progressIndicator.hidden = (_model.progress<_progressIndicator.maxValue&&_model.progress>0)?NO:YES;
-        
+
         _theTask = self.theTask;
         _checkErrorBtn.hidden = _theTask.taskStatus.taskStatus>=0;
         [_startItem setTitle:_theTask.running?@"停止任务":@"开始任务"];
         BOOL en = !_theTask.running;
         [self.deleteItem setHidden:!en];
+        
+        if (_theTask.taskStatus.taskStatus == GNRIntegraterTaskStatusSucceeded &&
+            model.downloadUrl.length) {
+            _progressIndicator.hidden = YES;
+            _buildShortcutUrlBtn.hidden = NO;
+        } else {
+            _progressIndicator.doubleValue = _model.progress;
+            _progressIndicator.hidden = (_model.progress<=_progressIndicator.maxValue&&_model.progress>0)?NO:YES;
+            _buildShortcutUrlBtn.hidden = YES;
+        }
     }
 }
 
+- (IBAction)copyAction:(id)sender {
+    if (_model.downloadUrl) {
+       BOOL ret= [GNRUtil writeFileContentsToPastBoard:_model.downloadUrl];
+        if (!ret) {
+            [GNRUtil alertMessage:@"赋值失败"];
+        }
+    }
+}
 
 - (GNRIntegrater *)theTask{
     GNRIntegrater * task = nil;

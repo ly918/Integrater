@@ -93,7 +93,7 @@
                                   }
                               }
                           }
-                          NSLog(@"%@ %@", response, responseObject);
+                          NSLog(@"completionHandler %@ %@", response, responseObject);
                       }
                       
                   }];

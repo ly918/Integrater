@@ -164,7 +164,7 @@ MARK: - 初始化方法
     }];
     
     //upload
-    [self uploadTask:wself.uploadTask completion:^(BOOL state, CGFloat progress, NSError * error) {
+    [self uploadTask:wself.uploadTask completion:^(BOOL state, CGFloat progress, id result, NSError * error) {
         if (error) {
             if(error.code == -999){//手动取消
                 _taskStatus.taskStatus = GNRIntegraterTaskStatusPrepared;
@@ -178,6 +178,7 @@ MARK: - 初始化方法
             if (state) {//上传成功
                 _taskStatus.taskStatus = GNRIntegraterTaskStatusSucceeded;
                 _running = NO;
+                wself.taskInfo.buildShortcutUrl = [self buildShortcutUrlWithResult:result];//获取短链
                 [[GNRTaskManager manager] updateLastTimeWithTask:wself];
                 [wself pushSucceededMsg];
             }else{//上传中
@@ -190,6 +191,18 @@ MARK: - 初始化方法
         }
     }];
     return self;
+}
+
+//获取短链接
+- (NSString *)buildShortcutUrlWithResult:(NSDictionary *)result{
+    if ([result isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *data =[result objectForKey:@"data"];
+        if ([data isKindOfClass:[NSDictionary class]]) {
+            NSString *buildShortcutUrl = [data objectForKey:@"appShortcutUrl"];
+            return buildShortcutUrl;
+        }
+    }
+    return nil;
 }
 
 - (void)clearQueue{
@@ -271,7 +284,7 @@ TODO: - 打包任务
 /**
  TODO: - 上传
  */
-- (GNRIntegrater *)uploadTask:(GNRUploadTask *)task completion:(void(^)(BOOL,CGFloat,NSError *))completion{
+- (GNRIntegrater *)uploadTask:(GNRUploadTask *)task completion:(void(^)(BOOL,CGFloat,id,NSError *))completion{
     //1 加入任务组
     [self addToGroupWithTask:task];
     //2 异步执行队列
@@ -284,7 +297,7 @@ TODO: - 打包任务
             if (operation.stop==NO) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     if (completion) {
-                        completion(NO,100.f*(double)progress.completedUnitCount/(double)progress.totalUnitCount,nil);
+                        completion(NO,100.f*(double)progress.completedUnitCount/(double)progress.totalUnitCount,nil,nil);
                     }
                 });
             }
@@ -294,7 +307,7 @@ TODO: - 打包任务
             if (operation.stop==NO) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     if (completion) {
-                        completion(state,100.f,state?nil:error);
+                        completion(state,100.f,responseObject,state?nil:error);
                     }
                 });
             }

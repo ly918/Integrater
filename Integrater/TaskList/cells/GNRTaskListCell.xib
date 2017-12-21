@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -90,6 +90,16 @@
                         <action selector="errorLogAction:" target="x2I-EA-wv3" id="iLP-uk-sie"/>
                     </connections>
                 </button>
+                <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RtC-3I-rx4">
+                    <rect key="frame" x="304" y="30" width="88" height="19"/>
+                    <buttonCell key="cell" type="roundRect" title="复制下载链接" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Uad-Jc-YD8">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="cellTitle"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="copyAction:" target="x2I-EA-wv3" id="wzx-ez-qzr"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="Ixa-u0-NR0" firstAttribute="top" secondItem="R05-1t-myD" secondAttribute="bottom" constant="8" id="3fR-3Y-f3u"/>
@@ -108,12 +118,15 @@
                 <constraint firstItem="5aK-k6-mQz" firstAttribute="leading" secondItem="x2I-EA-wv3" secondAttribute="leading" id="bit-33-miV"/>
                 <constraint firstItem="BqV-0v-Zjd" firstAttribute="top" secondItem="Ixa-u0-NR0" secondAttribute="bottom" constant="3" id="buU-w0-Lnv"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="R05-1t-myD" secondAttribute="trailing" constant="150" id="d4M-UP-S61"/>
+                <constraint firstItem="RtC-3I-rx4" firstAttribute="trailing" secondItem="5aK-k6-mQz" secondAttribute="trailing" constant="-8" id="eoU-iz-qdq"/>
                 <constraint firstItem="R05-1t-myD" firstAttribute="top" secondItem="x2I-EA-wv3" secondAttribute="top" constant="10" id="hGv-g7-1Pr"/>
                 <constraint firstItem="Ixa-u0-NR0" firstAttribute="leading" secondItem="R05-1t-myD" secondAttribute="leading" id="n28-HG-opQ"/>
                 <constraint firstItem="R05-1t-myD" firstAttribute="leading" secondItem="IAN-Cd-BtL" secondAttribute="trailing" constant="8" id="nt2-pk-oow"/>
+                <constraint firstItem="RtC-3I-rx4" firstAttribute="centerY" secondItem="uLu-uc-jhZ" secondAttribute="centerY" id="pMj-Er-PMv"/>
                 <constraint firstItem="IAN-Cd-BtL" firstAttribute="top" secondItem="x2I-EA-wv3" secondAttribute="top" constant="3" id="pQf-g5-Gc7"/>
             </constraints>
             <connections>
+                <outlet property="buildShortcutUrlBtn" destination="RtC-3I-rx4" id="ZoN-CM-gkh"/>
                 <outlet property="checkErrorBtn" destination="muT-eD-o3T" id="4c8-aj-NGk"/>
                 <outlet property="deleteItem" destination="GmS-Dd-g7i" id="6hd-Ql-HKq"/>
                 <outlet property="editItem" destination="azi-ik-NFZ" id="kyF-dK-k9A"/>

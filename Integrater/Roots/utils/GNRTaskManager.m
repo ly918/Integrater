@@ -148,6 +148,7 @@
         model.progress = status.progress;
         model.lastTime = task.taskInfo.lastUploadTime;
         model.createTime = task.taskInfo.createTime;
+        model.downloadUrl = task.taskInfo.buildShortcutUrl.length?[NSString stringWithFormat:@"%@%@",@"https://www.pgyer.com/",task.taskInfo.buildShortcutUrl]:nil;
         
         if (status.taskStatus<GNRIntegraterTaskStatusPreparing) {
             model.textColor = [GNRUtil colorWithHexString:@"#FF3300"];

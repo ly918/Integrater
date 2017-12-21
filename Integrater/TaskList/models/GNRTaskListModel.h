@@ -25,6 +25,8 @@
 @property (nonatomic, assign) BOOL submit_formal;//发布到线上？
 @property (nonatomic, assign) CGFloat progress;
 
+@property (nonatomic, copy) NSString * downloadUrl;
+
 - (instancetype)initWithId:(NSString *)Id taskName:(NSString *)taskName appName:(NSString *)appName;
 
 @end

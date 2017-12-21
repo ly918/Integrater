@@ -62,6 +62,8 @@ typedef NS_ENUM(NSInteger,GNRProjectType) {
 @property (nonatomic, copy)NSString * createTime;//创建时间
 @property (nonatomic, copy)NSString * lastUploadTime;//最后上传时间
 
+@property (nonatomic, copy)NSString * buildShortcutUrl;//上传成功后获取到的应用短链接 example: https://www.pgyer.com/buildShortcutUrl
+
 //生成其他字段
 - (void)configValues;
 

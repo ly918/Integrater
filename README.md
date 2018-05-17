@@ -3,4 +3,4 @@
 
 ## ScreenShots
 
-<p><img alt="" src="https://github.com/ly918/Integrater/blob/master/screenshoot/screenshoot.jpg?raw=true" /></p>
+<p><img alt="" src="https://github.com/ly918/Integrater/blob/master/ScreenShots/1.jpg?raw=true" /></p>
